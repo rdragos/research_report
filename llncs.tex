@@ -30,7 +30,7 @@
 %%%% list of authors for the TOC (use if author list has to be modified)
 %\tocauthor{}
 
-\institute{University of Bucharest, Romania\\
+\institute{Universitatea din Bucuresti, Romania\\
 \email{r.dragos0@gmail.com
 }
 }
@@ -40,28 +40,42 @@
 
 \begin{abstract}
   None
-\keywords{none}
+\keywords{securitate, scheme de partajare}
 \end{abstract}
-%
+
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
+
 \section{Introducere}
 \label{sec:intro}
 
+\subsection{Istoric}
+Termenul de criptografie este definit in dictionarul Oxford ca fiind "arta de a scrie si a rezolva coduri".
+Criptografia moderna s-a desprins de cea clasica in jurul anilor '80, motivand implementarea rigurozitatii matematice pentru definirea constructiilor criptografice. Asta pentru ca in anii anteriori, experienta a dovedit nesiguranta metodelor de criptare, criptanaliza lor fiind uneori triviala (cifrul lui Cezar, Vigenere \ref{wiki:caesar}, \ref{wiki:vigenere}) sau uneori atinsa cu ceva mai mult efort precum Enigma si alte metode din cel de-al doilea razboi mondial. \ref{wiki:enigma}
+
+Criptografia moderna se gaseste pretutindeni in viata de zi cu zi de la ATM-uri, cartele SIM la semnaturi digitale, protocoale de autentificare, licitatii electronice sau bani digitali, luand amploare o data cu aparitia sistemelor cu cheie publica. O definitie potrivita ar fi "studiul stiintific al tehnicililor pentru a securiza informatia digitala, tranzactiile si calculul distribuit." \ref{Katz}
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
 \section{Scheme de partajare}
 \label{sec:encryption}
-
+%TODO: find translation for multi party computation
+In cazul unor criptosisteme acestea nu pot fi compromise chiar daca adversarul dispune de o putere computationala nelimitata. Cateva exemple de criptosisteme care garanteaza securitatea teoretica-informationala sunt: schemele de partajare, unele protocoale multi-party computation, preluarea intr-un mod sigur(securizat?) informatii de la baze de date.
 \subsection{Constructii existente}
 \subsection{Clasificare}
 
 \section{Criptare vs scheme de partajare}
+
+\subsection{Securitatea Teoretica a Informatiei}
 \label{sec:crypt_vs_sharing}
 
 \section{Rezultate obtinute}
-
+\label{sec:results}
 \subsection{Arhitectura sistemului}
 \subsection{Erori gasite in articol}
 \subsection{Verificarea rezultatelor}
