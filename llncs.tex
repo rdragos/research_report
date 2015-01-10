@@ -56,7 +56,7 @@
 Termenul de criptografie este definit in dictionarul Oxford ca fiind "arta de a scrie si a rezolva coduri".
 Criptografia moderna s-a desprins de cea clasica in jurul anilor '80, motivand implementarea rigurozitatii matematice pentru definirea constructiilor criptografice. Asta pentru ca in anii anteriori, experienta a dovedit nesiguranta metodelor de criptare, criptanaliza lor fiind uneori triviala (cifrul lui Cezar, Vigenere \ref{wiki:caesar}, \ref{wiki:vigenere}) sau uneori atinsa cu ceva mai mult efort precum Enigma si alte metode din cel de-al doilea razboi mondial. \ref{wiki:enigma}
 
-Criptografia moderna se gaseste pretutindeni in viata de zi cu zi de la ATM-uri, cartele SIM la semnaturi digitale, protocoale de autentificare, licitatii electronice sau bani digitali, luand amploare o data cu aparitia sistemelor cu cheie publica. O definitie potrivita ar fi "studiul stiintific al tehnicililor pentru a securiza informatia digitala, tranzactiile si calculul distribuit." \ref{Katz}
+Criptografia moderna se gaseste pretutindeni in viata de zi cu zi de la ATM-uri, cartele telefonice la semnaturi digitale, protocoale de autentificare, licitatii electronice sau bani digitali, luand amploare o data cu aparitia sistemelor cu cheie publica. O definitie potrivita ar fi "studiul stiintific al tehnicililor pentru a securiza informatia digitala, tranzactiile si calculul distribuit.". \cite{Katz:2007}
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -65,14 +65,63 @@ Criptografia moderna se gaseste pretutindeni in viata de zi cu zi de la ATM-uri,
 \section{Scheme de partajare}
 \label{sec:encryption}
 %TODO: find translation for multi party computation
-In cazul unor criptosisteme acestea nu pot fi compromise chiar daca adversarul dispune de o putere computationala nelimitata. Cateva exemple de criptosisteme care garanteaza securitatea teoretica-informationala sunt: schemele de partajare, unele protocoale multi-party computation, preluarea intr-un mod sigur(securizat?) informatii de la baze de date.
-\subsection{Constructii existente}
-\subsection{Clasificare}
 
-\section{Criptare vs scheme de partajare}
+
+In cazul unor criptosisteme acestea nu pot fi compromise chiar daca adversarul dispune de o putere computationala nelimitata. Cateva exemple de criptosisteme care garanteaza securitatea teoretica-informationala sunt: schemele de partajare, unele protocoale multi-party computation, preluarea intr-un mod sigur(securizat?) informatii de la baze de date. Securitatea teoretica vine insa cu un cost: efortul computational depus este mult mai mare decat in cazul schemelor care nu garanteaza securitatea teoretica (se bazeaza pe dificultatea computationala unor probleme cunoscute). \cite{L:1997}
+
+O schema de partajare consta in distribuirea unui obiect, o informatie secreta $\mathcal{S}$ la mai multi participanti intr-un mod astfel incat oricare grup predefinit inainte sa poate reconstitui secretul $\mathcal{S}$.
+
+
+\subsection{Criptare vs scheme de partajare}
+
 
 \subsection{Securitatea Teoretica a Informatiei}
 \label{sec:crypt_vs_sharing}
+
+\subsection{Constructii existente}
+Primele scheme de partajare au fost dezvoltate independent de Adi Shamir si George Blakley in 1979. \cite{B:1979, S:1979}
+Denumite si scheme de treshold, acestea rezolvau cazul in care oricare grup de participanti cu cardinal  >= $k$  (dimensiunea thresholdului) puteau reconstitui secretul $\mathcal{S}$ din partile primite de la dealer. Daca schema este perfect sigura atunci oricare grup cu un numar de participanti < $k$ nu obtineau vreo informatie despre $\mathcal{S}$.
+
+Alte scheme de partajare bazandu-se pe grupuri speciale de acces (in cazul schemei lui Shamir, acestea trebuia sa aiba cardinalul >= $k$) au fost dezvoltate de Ito, Saito, si Nishizeki, realizand o generalizare a schemei lui Shamir. \cite{ITO:1989}
+Benaloh si Leichter au demonstrat ca schemele de partajare threshold nu pot garanta construirea decat unei fractiuni din multimea functiilor de partajare. Cei doi prezinta un exemplu trivial pentru care schema lui Shamir este insuficienta: consideram cazul in care vrem sa partajam un secret unor 4 participanti: $A, B, C, D$ astfel incat $A + B = \mathcal{S}$ si $C + D = \mathcal{S}$, iar restul de combinatii ale share-urilor sa nu poate reconstitui $\mathcal{S}$ unde cu $+$ notam operatia de reuniune a share-urilor dintre $2$ persoane. \cite{JJ:1990}.
+Dezavantajul acestor scheme este dimensiunea share-urilor, facand adesea majoritatea constructiilor impracticabile. \cite{Survey:2011}
+De asemenea, s-au dezvoltat scheme pentru modele de calcul neconventional, cum ar fi cel cuantic. \cite{hillery:1999}
+
+\subsection{Schema lui Shamir}
+%TODO complete description
+
+\subsection{Schema Ito, Saito, si Nishizeki}
+\label{Ito}
+
+In continuare vom descrie modalitatea de distribuire a share-urilor de la care au pornit Ito, Saito si Nishizeki pentru ca schema sa aiba o structura de acces $\mathcal{A} \subseteq 2^P$ unde $P$ este mulimea de participanti in cadrul procesului.
+Fie o multime de participanti $P = {P_1, P_2, ... P_n}$. 
+\begin{itemize}
+	\item Alegem doua numere intregi $k$ si $M$, $k \leq M$ si un $q = p^z$ unde $p$ este un numar prim iar $z$ numar intreg pozitiv. Fie $K = GF(q)$
+	\item Alegem $a_1, a_2, ...a_{k-1} \in K - {0}$ intr-un mod aleator
+	\item Luam polinomul $f(x) = a_{k-1} * x ^ {k-1} + a_{k-2} * x ^ {k - 2} + .... + a_1 + \mathcal{S}$.
+	\item Alegem $M$ elemente distincte, $x_1, x_2, \cdots, x_M \in K - {0}$ si $Q = {s_i = f(x_i), 1 \leq m \leq M}$
+	\item Alegem $S_i \subseteq Q, 1 \leq i \leq n$ si atribuim fiecarui participant $P_i$ pe $S_i$.
+	Denumim functia care se ocupa de atribuire $Assign: P \rightarrow 2^Q$. \cite{ITO:1989}
+\end{itemize}
+In mod evident, pentru ca modul de atribuire a share-urillor $Assign$ sa respecte structura de acces $A$ atunci
+$A = { \underset{i}{{\bigcup}} } |Assign(i)| \geq k$
+
+
+\section{Sisteme de stocare folosind scheme de partajare}
+
+In acesta sectiune vom arata cateva intrebuintari ale schemelor de partajare. Consideram cazul in care vrem sa stocham rapoarte medicale, imagini, documente clasificate pe un timp indelungat intr-un mediu electronic. Pe parcursul timpului, pot apare in schimb, diverse probleme precum dezastre naturale, defectiunea unor componente hardware, eroare umana, etc. \cite{SGMV:2009}
+Un sistem de stocare necesar nevoilor noastre trebuie sa satisfaca cel putin urmatoarele 3 conditii:
+\begin{itemize}
+	\item Disponibilitatea: Informatia trebuie sa ramana accesibila tot timpul, in ciuda erorilor de tip hardware.
+	\item Integritatea: Abilitatea sistemului de a raspunde cererilor intr-un mod care garanteaza corectitudinea lor.
+	\item Confidentialitatea: O persoana care nu face parte din grupul de acces sa nu obtina permisiunea de a afla informatii de orice fel despre datele existente in sistem
+\end{itemize}
+
+Una dintre solutiile existente in a construi acest sistem ar putea fi criptarea datelor insa aceasta nu garanteaza confidentialitatea lor pentru un adversar fara o limita computationala. Majoritatea tehnicilor de criptarea se bazeaza pe dificultatea factorizarii unui numar sau cea a calcularii logaritmului discret insa o data cu dezvoltarea calculatoarelor cuantice aceste probleme nu vor mai fi atat de dificile. \cite{Shor:1994}
+
+O alternativa la solutia cu criptare care asigura confidentialitatea dar si redundanta necesara este intrebuintarea sistemelor de stocare bazate pe scheme de partajare.
+
+\subsection{Arhitecturi existente}
 
 \section{Rezultate obtinute}
 \label{sec:results}

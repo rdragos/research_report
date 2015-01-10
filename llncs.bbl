@@ -1,0 +1,60 @@
+\begin{thebibliography}{10}
+
+\bibitem{Katz:2007}
+Katz, J., Lindell, Y.:
+\newblock Introduction to Modern Cryptography (Chapman \& Hall/Crc Cryptography
+  and Network Security Series).
+\newblock Chapman \& Hall/CRC (2007)
+
+\bibitem{L:1997}
+Csirmaz, L.:
+\newblock The size of a share must be large.
+\newblock Journal of cryptology \textbf{10.4} (1997)  223--231
+
+\bibitem{B:1979}
+Blakley, G.:
+\newblock Safeguarding cryptographic keys.
+\newblock Proceedings of the 1979 AFIPS National Computer Conference (1979)
+  313--317
+
+\bibitem{S:1979}
+Shamir, A.:
+\newblock How to share a secret.
+\newblock Commun. ACM \textbf{22}(11) (1979)  612--613
+
+\bibitem{ITO:1989}
+Ito, M., Saito, A., Nishizeki, T.:
+\newblock Secret sharing scheme realizing general access structure.
+\newblock Electronics and Communications in Japan (Part III: Fundamental
+  Electronic Science) \textbf{72}(9) (1989)  56--64
+
+\bibitem{JJ:1990}
+Benaloh, J., Leichter, J.:
+\newblock Generalized secret sharing and monotone functions.
+\newblock In: Proceedings on Advances in Cryptology. CRYPTO '88, New York, NY,
+  USA, Springer-Verlag New York, Inc. (1990)  27--35
+
+\bibitem{Survey:2011}
+Beimel, A.:
+\newblock Secret-sharing schemes: a survey.
+\newblock In: Coding and cryptology.
+\newblock Springer (2011)  11--46
+
+\bibitem{hillery:1999}
+Hillery, M., Bu{\v{z}}ek, V., Berthiaume, A.:
+\newblock Quantum secret sharing.
+\newblock Physical Review A \textbf{59}(3) (1999)  1829
+
+\bibitem{SGMV:2009}
+Storer, M.W., Greenan, K.M., Miller, E.L., Voruganti, K.:
+\newblock Potshards - a secure, recoverable, long-term archival storage system.
+\newblock TOS \textbf{5}(2) (2009)
+
+\bibitem{Shor:1994}
+Shor, P.W.:
+\newblock Algorithms for quantum computation: discrete logarithms and
+  factoring.
+\newblock In: Foundations of Computer Science, 1994 Proceedings., 35th Annual
+  Symposium on, IEEE (1994)  124--134
+
+\end{thebibliography}
