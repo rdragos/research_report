@@ -119,9 +119,25 @@ Un sistem de stocare necesar nevoilor noastre trebuie sa satisfaca cel putin urm
 
 Una dintre solutiile existente in a construi acest sistem ar putea fi criptarea datelor insa aceasta nu garanteaza confidentialitatea lor pentru un adversar fara o limita computationala. Majoritatea tehnicilor de criptarea se bazeaza pe dificultatea factorizarii unui numar sau cea a calcularii logaritmului discret insa o data cu dezvoltarea calculatoarelor cuantice aceste probleme nu vor mai fi atat de dificile. \cite{Shor:1994}
 
-O alternativa la solutia cu criptare care asigura confidentialitatea dar si redundanta necesara este intrebuintarea sistemelor de stocare bazate pe scheme de partajare.
+O alternativa la solutia cu criptare care asigura confidentialitatea dar si redundanta necesara este intrebuintarea sistemelor de stocare bazate pe scheme de partajare. \cite{W:2000,SB:2005,SGMV:2009}
 
 \subsection{Arhitecturi existente}
+
+%Poate cateva detalii despre RAID
+%Maybe some pictures with PASIS, just in case not enough pages
+In 2000, PASIS este oferit ca o solutie pentru un sistem descentralizat care ofera beneficii precum securitate, redundanta de date si auto-intretinere.
+Structurile descentralizate impart informatia la mai multe noduri folosind scheme de redundanta precum RAID pentru a asigura performanta, scalabilitatea sistemului dar si integritatea datelor. \cite{Patterson:1988}
+PASIS foloseste schemele de partajare pentru a distribui informatia nodurilor de stocare dintr-o retea. Aceasta presupune folosirea unor agenti pe partea clientului pentru a scrie sau sterge date din noduri. Share-urile obtinute dintr-un fisier sau orice obiecte, sunt puse in retea cu ajutorul agentilor. Pe langa continutul brut al share-urilor se adauga si overhead pentru a retine adresa nodului din retea la care a fost trimisa dar si noul nume cu care este salvata remote. Considerand o schema de partajare p-m-n unde oricare din cei m participanti pot reconstitui fisierul, dar mai putin de p nu obtin vreo informatie dintr-un total de n participanti. Atunci cand un candidat initiaza o cerere pentru a citi un fisier atunci agentul PASIS aflat local face urmatoarele: \cite{W:2000}
+\begin{itemize}
+	\item Cauta numele celor n share-uri care alcatuiesc fisierul intr-un serviciu care listeaza toate datele
+	\item Trimite cereri de a citi fisierul la cel putin m din cele n noduri
+	\item In caz ca acesta nu primeste cel putin m raspunsuri continua pasul anterior incercand query-uri la alte noduri
+	\item Reconstituie fisierul obtinut din cele m share-uri
+\end{itemize}
+Operatia de scriere este similara cu cea de citire, aceasta oprindu-se atunci cand pe cel putin $n - m + 1$ noduri s-au scris cu succes share-uri.
+In articol se mentioneaza si compromisurile de timp/spatiu folosite de PASIS. In schimb, autorii specifica solutii impracticabile pentru auto mentenanta sistemului, considerand ca se poate face prin monitorizare periodica.
+
+
 
 \section{Rezultate obtinute}
 \label{sec:results}
