@@ -57,6 +57,8 @@ Termenul de criptografie este definit in dictionarul Oxford ca fiind "arta de a 
 Criptografia moderna s-a desprins de cea clasica in jurul anilor '80, motivand implementarea rigurozitatii matematice pentru definirea constructiilor criptografice. Asta pentru ca in anii anteriori, experienta a dovedit nesiguranta metodelor de criptare, criptanaliza lor fiind uneori triviala (cifrul lui Cezar, Vigenere \ref{wiki:caesar}, \ref{wiki:vigenere}) sau uneori atinsa cu ceva mai mult efort precum Enigma si alte metode din cel de-al doilea razboi mondial. \ref{wiki:enigma}
 
 Criptografia moderna se gaseste pretutindeni in viata de zi cu zi de la ATM-uri, cartele telefonice la semnaturi digitale, protocoale de autentificare, licitatii electronice sau bani digitali, luand amploare o data cu aparitia sistemelor cu cheie publica. O definitie potrivita ar fi "studiul stiintific al tehnicililor pentru a securiza informatia digitala, tranzactiile si calculul distribuit.". \cite{Katz:2007}
+
+\subsection{Securitatea Teoretica a Informatiei}
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -72,12 +74,6 @@ In cazul unor criptosisteme acestea nu pot fi compromise chiar daca adversarul d
 O schema de partajare consta in distribuirea unui obiect, o informatie secreta $\mathcal{S}$ la mai multi participanti intr-un mod astfel incat oricare grup predefinit inainte sa poate reconstitui secretul $\mathcal{S}$.
 
 
-\subsection{Criptare vs scheme de partajare}
-
-
-\subsection{Securitatea Teoretica a Informatiei}
-\label{sec:crypt_vs_sharing}
-
 \subsection{Constructii existente}
 Primele scheme de partajare au fost dezvoltate independent de Adi Shamir si George Blakley in 1979. \cite{B:1979, S:1979}
 Denumite si scheme de treshold, acestea rezolvau cazul in care oricare grup de participanti cu cardinal  >= $k$  (dimensiunea thresholdului) puteau reconstitui secretul $\mathcal{S}$ din partile primite de la dealer. Daca schema este perfect sigura atunci oricare grup cu un numar de participanti < $k$ nu obtineau vreo informatie despre $\mathcal{S}$.
@@ -87,10 +83,10 @@ Benaloh si Leichter au demonstrat ca schemele de partajare threshold nu pot gara
 Dezavantajul acestor scheme este dimensiunea share-urilor, facand adesea majoritatea constructiilor impracticabile. \cite{Survey:2011}
 De asemenea, s-au dezvoltat scheme pentru modele de calcul neconventional, cum ar fi cel cuantic. \cite{hillery:1999}
 
-\subsection{Schema lui Shamir}
+\subsubsection{Schema lui Shamir}
 %TODO complete description
 
-\subsection{Schema Ito, Saito, si Nishizeki}
+\subsubsection{Schema Ito, Saito, si Nishizeki}
 \label{Ito}
 
 In continuare vom descrie modalitatea de distribuire a share-urilor de la care au pornit Ito, Saito si Nishizeki pentru ca schema sa aiba o structura de acces $\mathcal{A} \subseteq 2^P$ unde $P$ este mulimea de participanti in cadrul procesului.
@@ -107,8 +103,8 @@ In mod evident, pentru ca modul de atribuire a share-urillor $Assign$ sa respect
 $A = { \underset{i}{{\bigcup}} } |Assign(i)| \geq k$
 
 
-\section{Sisteme de stocare folosind scheme de partajare}
-
+\section{Sisteme de stocare de lunga durata}
+%TODO: key management issues
 In acesta sectiune vom arata cateva intrebuintari ale schemelor de partajare. Consideram cazul in care vrem sa stocham rapoarte medicale, imagini, documente clasificate pe un timp indelungat intr-un mediu electronic. Pe parcursul timpului, pot apare in schimb, diverse probleme precum dezastre naturale, defectiunea unor componente hardware, eroare umana, etc. \cite{SGMV:2009}
 Un sistem de stocare necesar nevoilor noastre trebuie sa satisfaca cel putin urmatoarele 3 conditii:
 \begin{itemize}
@@ -121,13 +117,16 @@ Una dintre solutiile existente in a construi acest sistem ar putea fi criptarea 
 
 O alternativa la solutia cu criptare care asigura confidentialitatea dar si redundanta necesara este intrebuintarea sistemelor de stocare bazate pe scheme de partajare. \cite{W:2000,SB:2005,SGMV:2009}
 
-\subsection{Arhitecturi existente}
-
 %Poate cateva detalii despre RAID
 %Maybe some pictures with PASIS, just in case not enough pages
+
+\subsection{PASIS}
 In 2000, PASIS este oferit ca o solutie pentru un sistem descentralizat care ofera beneficii precum securitate, redundanta de date si auto-intretinere.
 Structurile descentralizate impart informatia la mai multe noduri folosind scheme de redundanta precum RAID pentru a asigura performanta, scalabilitatea sistemului dar si integritatea datelor. \cite{Patterson:1988}
-PASIS foloseste schemele de partajare pentru a distribui informatia nodurilor de stocare dintr-o retea. Aceasta presupune folosirea unor agenti pe partea clientului pentru a scrie sau sterge date din noduri. Share-urile obtinute dintr-un fisier sau orice obiecte, sunt puse in retea cu ajutorul agentilor. Pe langa continutul brut al share-urilor se adauga si overhead pentru a retine adresa nodului din retea la care a fost trimisa dar si noul nume cu care este salvata remote. Considerand o schema de partajare p-m-n unde oricare din cei m participanti pot reconstitui fisierul, dar mai putin de p nu obtin vreo informatie dintr-un total de n participanti. Atunci cand un candidat initiaza o cerere pentru a citi un fisier atunci agentul PASIS aflat local face urmatoarele: \cite{W:2000}
+
+PASIS foloseste schemele de partajare pentru a distribui informatia nodurilor de stocare dintr-o retea. Aceasta presupune folosirea unor agenti pe partea clientului pentru a scrie sau sterge date din noduri. Share-urile obtinute dintr-un fisier sau orice obiecte, sunt puse in retea cu ajutorul agentilor. Pe langa continutul brut al share-urilor se adauga si overhead pentru a retine adresa nodului din retea la care a fost trimisa dar si noul nume cu care este salvata remote.
+
+Considerand o schema de partajare $p-m-n$ unde oricare din cei $m$ participanti pot reconstitui fisierul, dar mai putin de $p$ nu obtin vreo informatie dintr-un total de $n$ participanti. Atunci cand un candidat initiaza o cerere pentru a citi un fisier atunci agentul PASIS aflat local face urmatoarele: 
 \begin{itemize}
 	\item Cauta numele celor n share-uri care alcatuiesc fisierul intr-un serviciu care listeaza toate datele
 	\item Trimite cereri de a citi fisierul la cel putin m din cele n noduri
@@ -135,8 +134,30 @@ PASIS foloseste schemele de partajare pentru a distribui informatia nodurilor de
 	\item Reconstituie fisierul obtinut din cele m share-uri
 \end{itemize}
 Operatia de scriere este similara cu cea de citire, aceasta oprindu-se atunci cand pe cel putin $n - m + 1$ noduri s-au scris cu succes share-uri.
-In articol se mentioneaza si compromisurile de timp/spatiu folosite de PASIS. In schimb, autorii specifica solutii impracticabile pentru auto mentenanta sistemului, considerand ca se poate face prin monitorizare periodica.
+In articol se mentioneaza si compromisurile de timp/spatiu folosite de PASIS. In schimb, autorii specifica solutii impracticabile pentru auto mentenanta sistemului, considerand ca se poate face prin monitorizare periodica a starii sistemului.
+%TODO find a better translation for "fault tolerant"
 
+\subsection{GridSharing} 
+In 2005 Subbiah si Blough propun o noua abordare pentru a construi un sistem de stocare sigur si tolerant la erori numit GridSharing.
+Arhitectura este construita pe baza unei scheme de partajare XOR si o multitudine de servere ce folosesc mecanisme de replicare permitandu-i schimbarea parametrilor pentru diferite metrici de evaluare a performantelor. \cite{SB:2005}
+
+Articolul identifica 3 tipuri de defectiuni ale serverelor cu ajutorul carora sunt stocate datele:
+\begin{itemize}
+	\item Caderi: un server este \textit{cazut} daca nu mai raspunde vreunui mesaj din retea si s-a oprit din a mai efectua vreo operatie 
+	\item Bizantine: atunci cand serverul respecta intotdeauna protocoalele initiale. Se considera ca share-urile salvate local au fost compromise
+	\item Leakage-only(scapare?): serverul executa protocoalele corect dar e posibil ca un adversar sa fi obtinut share-urile stocate
+\end{itemize}
+Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribuite. Cel de-al 3-lea model a fost introdus pentru a defini atacatorul care foloseste vulnerabilitatile cu intentia doar de a invata din date. Arhitectura GridSharing consta in N servere unde cel mult $c$ servere pot cade(? srsly) $b$ server bizantine si $l$ leakage only. Cele $N$ pot fi aranjate intr-un grid cu $r$ linii si $N/r$ coloane. Caracteristicile modelului bizantin si leakage-only permit ca share-urile de pe cel mult $l + b$ linii sa permita dezvaluirea lor unui adeversar.  
+
+\subsection{POTSHARDS} 
+In 2007 este propus un nou sistem care combina caracteristicile PASIS si GridSharing adaugand posiblitatea de a realiza migrarea datelor la noduri noi.
+De asemenea este introdusa o tehnica noua de gasire a share-urilor folosind pointeri aproximativi. Pentru a asigura confidentialitatea, autorii adopta o schema de partajare XOR te tipul totul sau nimic, la fel ca in GridSharing.
+POTSHARDS readreseaza(?) problema in care o persoana neautorizata care incearca sa afle informatii vulnerabile sa nu scape nedetectata. Schemele existente precum PASIS si GridSharing nu indeplineau aceasta cerinta daca un atacator determina locatia share-urilor distribuite.
+Solutia pe care o ofera PASIS este reconstruirea share-urilor insa aceasta putea sa aiba repercursiuni negative, precum dezvaluirea unor date secrete,
+%maybe inserting some shard figure here
+POTSHARDS poate fi gandit ca o aplicatie pe partea de client care comunica cu o multime de noduri (arhive) independente . In prima faza, POTSHARDS partajeaza obiectele in fragmente la care adauga meta-date. Autorii le numesc shard-uri. Shard-urile sunt trimise apoi arhivelor independente, fiecare avand domeniul propriu de securitate. Pentru a reconstitui cu succes obiectele, meta-datele shard-urile contin detalii despre structura pointerilor aproximativi, indicand regiunea in care se afla urmatorul shard. Pentru un atacator, detinerea unui shard nu il ajuta foarte mult, pentru a detecta urmatorul shard, un atac brut force consta in cereri multiple in zona indicata de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este sa stocheze datele intr-un mod cat mai "imprastiat".\cite{SGMV:2009} 
+
+\section{Criptare VS scheme de partajare}
 
 
 \section{Rezultate obtinute}
