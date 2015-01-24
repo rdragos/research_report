@@ -18,12 +18,13 @@
 \pagestyle{empty}
 %
 %
-\title{Raport de cercetare pentru UROP}
+\title{TODO}
 %
 \titlerunning{Research report for UROP course}  % abbreviated title (for running head)
 %                                     also used for the TOC unless
 %                                     \toctitle is used
 %
+\subtitle{Undergraduate Research Opportunities}
 \author{Drago\c{s} Alin Rotaru}
 \authorrunning{D.A.Rotaru} % abbreviated author list (for running head)
 %
@@ -101,7 +102,7 @@ In prima faza se aleg $n - 1$ biti aleatori $b_1, b_2, \dots, b_{n - 1}$ intr-un
 
 Schema lui Shamir ofera mai multa flexibilitate ca schema XOR prin faptul oricare k (sau mai multi) participanti din cei n pot recupera $\mathcal{S}$ ie nu mai este de tipul "totul sau nimic". Modalitatea de constructie a share-urilor este urmatoarea: \cite{S:1979}
 \begin{itemize}
-	\item Alegem un corp care sa permita interpolarea de polinoame. In cazul majoritatii protocoalelor criptografice, operatiile se efectueaza in $GF(256)$.
+	\item Alegem un corp care sa permita interpolarea de polinoame. In cazul majoritatii protocoalelor criptografice, operatiile se efectueaza in $GF(256)$, utilizand un polinom ireductibil precum $x^8 + x^4 + x^3 + x + 1$
 	\item Generam aleator uniform un polinom $f$, cu gradul $k - 1$, $f(x) = a_{k-1} * x ^ {k-1} + a_{k-2} * x ^ {k - 2} + .... + a_1 * x + \mathcal{S}$
 	\item $\mathcal{S}_i$ := $f(i)$
 \end{itemize}
@@ -125,6 +126,11 @@ In mod evident, pentru ca modul de atribuire a share-urillor $Assign$ sa respect
 $A = { \underset{i}{{\bigcup}} } |Assign(i)| \geq k$
 
 
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
 \section{Sisteme de stocare de lunga durata}
 
 %TODO: key management issues
@@ -190,9 +196,17 @@ Solutia pe care o ofera PASIS este reconstruirea share-urilor insa aceasta putea
 %maybe inserting some shard figure here
 POTSHARDS poate fi gandit ca o aplicatie pe partea de client care comunica cu o multime de noduri (arhive) independente . In prima faza, POTSHARDS partajeaza obiectele in fragmente la care adauga meta-date. Autorii le numesc shard-uri. Shard-urile sunt trimise apoi arhivelor independente, fiecare avand domeniul propriu de securitate. Pentru a reconstitui cu succes obiectele, meta-datele shard-urile contin detalii despre structura pointerilor aproximativi, indicand regiunea in care se afla urmatorul shard. Pentru un atacator, detinerea unui shard nu il ajuta foarte mult, pentru a detecta urmatorul shard, un atac brut force consta in cereri multiple in zona indicata de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este sa stocheze datele intr-un mod cat mai "imprastiat".\cite{SGMV:2009} 
 
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
 \section{Rezultate obtinute}
+Impreuna cu dr. Ruxandra F. Olimid am analizat un articol aparut intr-un jurnal de clasa C unde am indentificat erori majore ale sale si am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite greseli pe care le vom evidentia in urmatoarele sectiuni. \cite{AAMK:2013}
+
 \label{sec:results}
 \subsection{Arhitectura sistemului}
+
 \subsection{Erori gasite in articol}
 \subsection{Verificarea rezultatelor}
 \subsection{Publicarea articolului}
