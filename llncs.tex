@@ -58,7 +58,17 @@ Criptografia moderna s-a desprins de cea clasica in jurul anilor '80, motivand i
 
 Criptografia moderna se gaseste pretutindeni in viata de zi cu zi de la ATM-uri, cartele telefonice la semnaturi digitale, protocoale de autentificare, licitatii electronice sau bani digitali, luand amploare o data cu aparitia sistemelor cu cheie publica. O definitie potrivita ar fi "studiul stiintific al tehnicililor pentru a securiza informatia digitala, tranzactiile si calculul distribuit.". \cite{Katz:2007}
 
+
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+
 \subsection{Securitatea Teoretica a Informatiei}
+
+In cazul unor criptosisteme acestea nu pot fi compromise chiar daca adversarul dispune de o putere computationala nelimitata. Cateva exemple de criptosisteme care garanteaza securitatea teoretica-informationala sunt: schemele de partajare, unele protocoale multi-party computation, preluarea intr-un mod sigur(securizat?) informatii de la baze de date. Securitatea teoretica vine insa cu un cost: efortul computational depus este mult mai mare decat in cazul schemelor care nu garanteaza securitatea teoretica (se bazeaza pe dificultatea computationala unor probleme cunoscute). \cite{L:1997}
+
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -67,9 +77,6 @@ Criptografia moderna se gaseste pretutindeni in viata de zi cu zi de la ATM-uri,
 \section{Scheme de partajare}
 \label{sec:encryption}
 %TODO: find translation for multi party computation
-
-
-In cazul unor criptosisteme acestea nu pot fi compromise chiar daca adversarul dispune de o putere computationala nelimitata. Cateva exemple de criptosisteme care garanteaza securitatea teoretica-informationala sunt: schemele de partajare, unele protocoale multi-party computation, preluarea intr-un mod sigur(securizat?) informatii de la baze de date. Securitatea teoretica vine insa cu un cost: efortul computational depus este mult mai mare decat in cazul schemelor care nu garanteaza securitatea teoretica (se bazeaza pe dificultatea computationala unor probleme cunoscute). \cite{L:1997}
 
 O schema de partajare consta in distribuirea unui obiect, o informatie secreta $\mathcal{S}$ la mai multi participanti intr-un mod astfel incat oricare grup predefinit inainte sa poate reconstitui secretul $\mathcal{S}$.
 
@@ -83,10 +90,25 @@ Benaloh si Leichter au demonstrat ca schemele de partajare threshold nu pot gara
 Dezavantajul acestor scheme este dimensiunea share-urilor, facand adesea majoritatea constructiilor impracticabile. \cite{Survey:2011}
 De asemenea, s-au dezvoltat scheme pentru modele de calcul neconventional, cum ar fi cel cuantic. \cite{hillery:1999}
 
-\subsubsection{Schema lui Shamir}
+\subsection{Schema XOR de tipul "totul sau nimic"}
+
+
+Presupunand ca vrem sa impartim un fisier $\mathcal{S}$ la $N$ participanti fara ca $\mathcal{S}$ sa poate fi recuperat doar daca cei $n$ isi combina share-urile detinute. Pentru simplitate, vom considera ca $\mathcal{S}$ este un singur bit, metoda putand fi usor extinsa pentru un o lungime variabila.
+In prima faza se aleg $n - 1$ biti aleatori $b_1, b_2, \dots, b_{n - 1}$ intr-un mod criptografic sigur, cel de-al $n$-lea bit va fi $\mathcal{S} \oplus b_1 \oplus b_2 \oplus \dots \oplus b_{n - 1}$. La final se impart cei $n$ biti participantilor semnificand share-urile acestora.
+
+\subsection{Schema lui Shamir}
 %TODO complete description
 
-\subsubsection{Schema Ito, Saito, si Nishizeki}
+Schema lui Shamir ofera mai multa flexibilitate ca schema XOR prin faptul oricare k (sau mai multi) participanti din cei n pot recupera $\mathcal{S}$ ie nu mai este de tipul "totul sau nimic". Modalitatea de constructie a share-urilor este urmatoarea: \cite{S:1979}
+\begin{itemize}
+	\item Alegem un corp care sa permita interpolarea de polinoame. In cazul majoritatii protocoalelor criptografice, operatiile se efectueaza in $GF(256)$.
+	\item Generam aleator uniform un polinom $f$, cu gradul $k - 1$, $f(x) = a_{k-1} * x ^ {k-1} + a_{k-2} * x ^ {k - 2} + .... + a_1 * x + \mathcal{S}$
+	\item $\mathcal{S}_i$ := $f(i)$
+\end{itemize}
+
+Evident, orice submultime de valori $\mathcal{S}_i$ de marime egala cu $k$ este suficienta si necesara pentru a reconstrui polinomul $f$. Dupa interpolarea share-urilor detinute de cel putin $k$ dintre participanti, secretul $\mathcal{S}$ se va afla in $f(0)$. Pentru un atacator care detine chiar si $k-1$ valori $\mathcal{S}_i$, acesta nu invata nimic despre $\mathcal{S}$, spatiul de solutii posibile fiind identic fata de situatia in care nu obtine vreun share.
+
+\subsection{Schema Ito, Saito, si Nishizeki}
 \label{Ito}
 
 In continuare vom descrie modalitatea de distribuire a share-urilor de la care au pornit Ito, Saito si Nishizeki pentru ca schema sa aiba o structura de acces $\mathcal{A} \subseteq 2^P$ unde $P$ este mulimea de participanti in cadrul procesului.
@@ -94,7 +116,7 @@ Fie o multime de participanti $P = {P_1, P_2, ... P_n}$.
 \begin{itemize}
 	\item Alegem doua numere intregi $k$ si $M$, $k \leq M$ si un $q = p^z$ unde $p$ este un numar prim iar $z$ numar intreg pozitiv. Fie $K = GF(q)$
 	\item Alegem $a_1, a_2, ...a_{k-1} \in K - {0}$ intr-un mod aleator
-	\item Luam polinomul $f(x) = a_{k-1} * x ^ {k-1} + a_{k-2} * x ^ {k - 2} + .... + a_1 + \mathcal{S}$.
+	\item Luam polinomul $f(x) = a_{k-1} * x ^ {k-1} + a_{k-2} * x ^ {k - 2} + .... + a_1 * x + \mathcal{S}$.
 	\item Alegem $M$ elemente distincte, $x_1, x_2, \cdots, x_M \in K - {0}$ si $Q = {s_i = f(x_i), 1 \leq m \leq M}$
 	\item Alegem $S_i \subseteq Q, 1 \leq i \leq n$ si atribuim fiecarui participant $P_i$ pe $S_i$.
 	Denumim functia care se ocupa de atribuire $Assign: P \rightarrow 2^Q$. \cite{ITO:1989}
@@ -104,6 +126,7 @@ $A = { \underset{i}{{\bigcup}} } |Assign(i)| \geq k$
 
 
 \section{Sisteme de stocare de lunga durata}
+
 %TODO: key management issues
 In acesta sectiune vom arata cateva intrebuintari ale schemelor de partajare. Consideram cazul in care vrem sa stocham rapoarte medicale, imagini, documente clasificate pe un timp indelungat intr-un mediu electronic. Pe parcursul timpului, pot apare in schimb, diverse probleme precum dezastre naturale, defectiunea unor componente hardware, eroare umana, etc. \cite{SGMV:2009}
 Un sistem de stocare necesar nevoilor noastre trebuie sa satisfaca cel putin urmatoarele 3 conditii:
@@ -113,7 +136,16 @@ Un sistem de stocare necesar nevoilor noastre trebuie sa satisfaca cel putin urm
 	\item Confidentialitatea: O persoana care nu face parte din grupul de acces sa nu obtina permisiunea de a afla informatii de orice fel despre datele existente in sistem
 \end{itemize}
 
-Una dintre solutiile existente in a construi acest sistem ar putea fi criptarea datelor insa aceasta nu garanteaza confidentialitatea lor pentru un adversar fara o limita computationala. Majoritatea tehnicilor de criptarea se bazeaza pe dificultatea factorizarii unui numar sau cea a calcularii logaritmului discret insa o data cu dezvoltarea calculatoarelor cuantice aceste probleme nu vor mai fi atat de dificile. \cite{Shor:1994}
+\subsection{Criptare VS scheme de partajare}
+
+
+Una dintre solutiile existente pentru a construi acest sistem ar putea fi criptarea datelor folosind o cheie inainte de inserarea lor in spatiul de stocare. In momentul in care un user autorizat doreste sa efectueze o citire a unor date, intrebuinteaza cheia potrivita pentru a le decripta.
+In practica exista algoritmi de criptare eficienti precum AES insa aceastia nu garanteaza confidentialitatea datelor in cazul in care avem de a face cu un adversar fara o limita computationala. Un dezavantaj al criptarii este adminstrarea cheilor, standardele de securitatea schimbandu-se in fiecare an.
+De fiecare data cand cheile sunt inlocuite atunci este necesara recriptarea datelor de pe fiecare baza de date. Cu cat disponibilitatea este mai mare - numarul de noduri duplicate creste- recriptarea lor devine o operatie costisitoare. 
+
+Majoritatea tehnicilor de criptarea se bazeaza pe dificultatea factorizarii unui numar sau cea a calcularii logaritmului discret insa o data cu posibila dezvoltare a calculatoarelor cuantice aceste probleme nu vor mai fi atat de dificile. \cite{Shor:1994}
+
+\section{Sisteme de stocare de lunga durata bazate pe scheme de partajare}
 
 O alternativa la solutia cu criptare care asigura confidentialitatea dar si redundanta necesara este intrebuintarea sistemelor de stocare bazate pe scheme de partajare. \cite{W:2000,SB:2005,SGMV:2009}
 
@@ -150,15 +182,13 @@ Articolul identifica 3 tipuri de defectiuni ale serverelor cu ajutorul carora su
 Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribuite. Cel de-al 3-lea model a fost introdus pentru a defini atacatorul care foloseste vulnerabilitatile cu intentia doar de a invata din date. Arhitectura GridSharing consta in N servere unde cel mult $c$ servere pot cade(? srsly) $b$ server bizantine si $l$ leakage only. Cele $N$ pot fi aranjate intr-un grid cu $r$ linii si $N/r$ coloane. Caracteristicile modelului bizantin si leakage-only permit ca share-urile de pe cel mult $l + b$ linii sa permita dezvaluirea lor unui adeversar.  
 
 \subsection{POTSHARDS} 
-In 2007 este propus un nou sistem care combina caracteristicile PASIS si GridSharing adaugand posiblitatea de a realiza migrarea datelor la noduri noi.
+In 2007 este propus un nou sistem care combina caracteristicile PASIS si GridSharing adaugand posiblitatea de a k migrarea datelor la noduri noi.
 De asemenea este introdusa o tehnica noua de gasire a share-urilor folosind pointeri aproximativi. Pentru a asigura confidentialitatea, autorii adopta o schema de partajare XOR te tipul totul sau nimic, la fel ca in GridSharing.
 POTSHARDS readreseaza(?) problema in care o persoana neautorizata care incearca sa afle informatii vulnerabile sa nu scape nedetectata. Schemele existente precum PASIS si GridSharing nu indeplineau aceasta cerinta daca un atacator determina locatia share-urilor distribuite.
+
 Solutia pe care o ofera PASIS este reconstruirea share-urilor insa aceasta putea sa aiba repercursiuni negative, precum dezvaluirea unor date secrete,
 %maybe inserting some shard figure here
 POTSHARDS poate fi gandit ca o aplicatie pe partea de client care comunica cu o multime de noduri (arhive) independente . In prima faza, POTSHARDS partajeaza obiectele in fragmente la care adauga meta-date. Autorii le numesc shard-uri. Shard-urile sunt trimise apoi arhivelor independente, fiecare avand domeniul propriu de securitate. Pentru a reconstitui cu succes obiectele, meta-datele shard-urile contin detalii despre structura pointerilor aproximativi, indicand regiunea in care se afla urmatorul shard. Pentru un atacator, detinerea unui shard nu il ajuta foarte mult, pentru a detecta urmatorul shard, un atac brut force consta in cereri multiple in zona indicata de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este sa stocheze datele intr-un mod cat mai "imprastiat".\cite{SGMV:2009} 
-
-\section{Criptare VS scheme de partajare}
-
 
 \section{Rezultate obtinute}
 \label{sec:results}
