@@ -88,6 +88,7 @@ Denumite si scheme de treshold, acestea rezolvau cazul in care oricare grup de p
 
 Alte scheme de partajare bazandu-se pe grupuri speciale de acces (in cazul schemei lui Shamir, acestea trebuia sa aiba cardinalul >= $k$) au fost dezvoltate de Ito, Saito, si Nishizeki, realizand o generalizare a schemei lui Shamir. \cite{ITO:1989}
 Benaloh si Leichter au demonstrat ca schemele de partajare threshold nu pot garanta construirea decat unei fractiuni din multimea functiilor de partajare. Cei doi prezinta un exemplu trivial pentru care schema lui Shamir este insuficienta: consideram cazul in care vrem sa partajam un secret unor 4 participanti: $A, B, C, D$ astfel incat $A + B = \mathcal{S}$ si $C + D = \mathcal{S}$, iar restul de combinatii ale share-urilor sa nu poate reconstitui $\mathcal{S}$ unde cu $+$ notam operatia de reuniune a share-urilor dintre $2$ persoane. \cite{JJ:1990}.
+
 Dezavantajul acestor scheme este dimensiunea share-urilor, facand adesea majoritatea constructiilor impracticabile. \cite{Survey:2011}
 De asemenea, s-au dezvoltat scheme pentru modele de calcul neconventional, cum ar fi cel cuantic. \cite{hillery:1999}
 
@@ -102,7 +103,7 @@ In prima faza se aleg $n - 1$ biti aleatori $b_1, b_2, \dots, b_{n - 1}$ intr-un
 
 Schema lui Shamir ofera mai multa flexibilitate ca schema XOR prin faptul oricare k (sau mai multi) participanti din cei n pot recupera $\mathcal{S}$ ie nu mai este de tipul "totul sau nimic". Modalitatea de constructie a share-urilor este urmatoarea: \cite{S:1979}
 \begin{itemize}
-	\item Alegem un corp care sa permita interpolarea de polinoame. In cazul majoritatii protocoalelor criptografice, operatiile se efectueaza in $GF(256)$, utilizand un polinom ireductibil precum $x^8 + x^4 + x^3 + x + 1$
+	\item Alegem un corp care sa permita interpolarea de polinoame. In cazul majoritatii protocoalelor criptografice, operatiile se efectueaza in $GF(256)$, utilizand un polinom ireductibil
 	\item Generam aleator uniform un polinom $f$, cu gradul $k - 1$, $f(x) = a_{k-1} * x ^ {k-1} + a_{k-2} * x ^ {k - 2} + .... + a_1 * x + \mathcal{S}$
 	\item $\mathcal{S}_i$ := $f(i)$
 \end{itemize}
@@ -194,7 +195,9 @@ POTSHARDS readreseaza(?) problema in care o persoana neautorizata care incearca 
 
 Solutia pe care o ofera PASIS este reconstruirea share-urilor insa aceasta putea sa aiba repercursiuni negative, precum dezvaluirea unor date secrete,
 %maybe inserting some shard figure here
-POTSHARDS poate fi gandit ca o aplicatie pe partea de client care comunica cu o multime de noduri (arhive) independente . In prima faza, POTSHARDS partajeaza obiectele in fragmente la care adauga meta-date. Autorii le numesc shard-uri. Shard-urile sunt trimise apoi arhivelor independente, fiecare avand domeniul propriu de securitate. Pentru a reconstitui cu succes obiectele, meta-datele shard-urile contin detalii despre structura pointerilor aproximativi, indicand regiunea in care se afla urmatorul shard. Pentru un atacator, detinerea unui shard nu il ajuta foarte mult, pentru a detecta urmatorul shard, un atac brut force consta in cereri multiple in zona indicata de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este sa stocheze datele intr-un mod cat mai "imprastiat".\cite{SGMV:2009} 
+POTSHARDS poate fi gandit ca o aplicatie pe partea de client care comunica cu o multime de noduri (arhive) independente . In prima faza, POTSHARDS partajeaza obiectele in fragmente la care adauga meta-date. Autorii le numesc shard-uri. Shard-urile sunt trimise apoi arhivelor independente, fiecare avand domeniul propriu de securitate. Pentru a reconstitui cu succes obiectele, meta-datele shard-urile contin detalii despre structura pointerilor aproximativi, indicand regiunea in care se afla urmatorul shard.
+
+Pentru un atacator, detinerea unui shard nu il ajuta foarte mult, pentru a detecta urmatorul shard, un atac brut force consta in cereri multiple in zona indicata de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este sa stocheze datele intr-un mod cat mai "imprastiat".\cite{SGMV:2009} 
 
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -202,12 +205,28 @@ POTSHARDS poate fi gandit ca o aplicatie pe partea de client care comunica cu o 
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 \section{Rezultate obtinute}
-Impreuna cu dr. Ruxandra F. Olimid am analizat un articol aparut intr-un jurnal de clasa C unde am indentificat erori majore ale sale si am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite greseli pe care le vom evidentia in urmatoarele sectiuni. \cite{AAMK:2013}
+Impreuna cu mentorul am analizat un articol aparut intr-un jurnal de clasa C unde am indentificat erori majore ale sale si am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite greseli pe care le vom evidentia in urmatoarele sectiuni. \cite{AAMK:2013}
 
 \label{sec:results}
 \subsection{Arhitectura sistemului}
 
+Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema lui Shamir cu cateva modificari. Aceste schimbari se vor arata esentiale mai tarziu in pastrarea securitatii.
+
+%TODO inserting figures with algoritms
+In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majoritatii sistemelor de operare - orice este un fisier), este preluat de o aplicatie de control care il imparte in blocuri de biti de lungime $k$. Bitii reprezinta coeficientii unui polinom $f$, share-ul cu index $i$ va fi reprezentat de valoarea lui $f(i) i = 1, 2, \dots, n$. Mentionam ca toate operatiile se vor efectua in $GF(256)$ modulo un polinom ireductibil.
+Autorii folosesc $x^8 + x^5 + x^3 + x + 1$.
+
+Pentru reconstituirea unui fisier se interpoleaza share-urile din orice multime $A$ de dimensiune minim $k$ prin metoda lui Lagrange, asemanator schemei lui Shamir:
+
+\begin{equation}
+	f(x)=\sum_{i \in A} f(i) \prod_{j \in A, j \neq i} \frac{x-j}{i-j}
+\end{equation}
+
 \subsection{Erori gasite in articol}
+
+Spre deosebire de schema lui Shamir in care coeficientii sunt alesi intr-un mod aleator uniform, acestia reprezinta acum continut din fisierele originale.
+
+Intuitiv, determinismul implica de cele mai multe ori vulnerabilitati (aplicarea schemei de 2 ori pe date de intrare identice $\rightarrow$ acelasi date de iesire). Autorii motiveaza alegerea prin faptul ca multimea share-urilor si efortul computational depus pentru generarea coeficientilor se reduce la un factor de $k$ spre deosebire de schema Shamir.
 \subsection{Verificarea rezultatelor}
 \subsection{Publicarea articolului}
 
