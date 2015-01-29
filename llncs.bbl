@@ -11,6 +11,11 @@ Csirmaz, L.:
 \newblock The size of a share must be large.
 \newblock Journal of cryptology \textbf{10.4} (1997)  223--231
 
+\bibitem{Olimid:2013}
+Olimid, R.F.:
+\newblock Secret Sharing-based Group Key Establishment.
+\newblock PhD thesis, University of Bucharest, Romania (2013)
+
 \bibitem{B:1979}
 Blakley, G.:
 \newblock Safeguarding cryptographic keys.
@@ -45,6 +50,11 @@ Hillery, M., Bu{\v{z}}ek, V., Berthiaume, A.:
 \newblock Quantum secret sharing.
 \newblock Physical Review A \textbf{59}(3) (1999)  1829
 
+\bibitem{Karnin:83}
+Karnin, E.D., Member, S., Greene, J.W., Member, S., Hellman, M.E.:
+\newblock On secret sharing systems.
+\newblock IEEE Transactions on Information Theory \textbf{29} (1983)  35--41
+
 \bibitem{SGMV:2009}
 Storer, M.W., Greenan, K.M., Miller, E.L., Voruganti, K.:
 \newblock Potshards - a secure, recoverable, long-term archival storage system.
@@ -56,5 +66,28 @@ Shor, P.W.:
   factoring.
 \newblock In: Foundations of Computer Science, 1994 Proceedings., 35th Annual
   Symposium on, IEEE (1994)  124--134
+
+\bibitem{W:2000}
+Wylie, J.J., Bigrigg, M.W., Strunk, J.D., Ganger, G.R., Kili\c{c}\c{c}\"{o}te,
+  H., Khosla, P.K.:
+\newblock Survivable information storage systems.
+\newblock Computer \textbf{33}(8) (2000)  61--68
+
+\bibitem{SB:2005}
+Subbiah, A., Blough, D.M.:
+\newblock An approach for fault tolerant and secure data storage in
+  collaborative work environments.
+\newblock In: StorageSS. (2005)  84--93
+
+\bibitem{Patterson:1988}
+Patterson, D.A., Gibson, G., Katz, R.H.:
+\newblock A case for redundant arrays of inexpensive disks (raid).
+\newblock SIGMOD Rec. \textbf{17}(3) (June 1988)  109--116
+
+\bibitem{AAMK:2013}
+Alouneh, S., Abed, S., Mohd, B.J., Kharbutli, M.:
+\newblock An efficient backup technique for database systems based on threshold
+  sharing.
+\newblock {JCP} \textbf{8}(11) (2013)  2980--2989
 
 \end{thebibliography}

@@ -3,44 +3,48 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: llncs.aux
 The style file: splncs.bst
 Database file #1: llncs.bib
-You've used 8 entries,
+A bad cross reference---entry "SB:2005"
+refers to entry "2005", which doesn't exist
+Warning--I didn't find a database entry for "2005"
+You've used 16 entries,
             2087 wiz_defined-function locations,
-            554 strings with 4873 characters,
-and the built_in function-call counts, 2455 in all, are:
-= -- 265
-> -- 54
-< -- 7
-+ -- 22
-- -- 14
-* -- 153
-:= -- 315
-add.period$ -- 10
-call.type$ -- 8
-change.case$ -- 7
+            615 strings with 6303 characters,
+and the built_in function-call counts, 4984 in all, are:
+= -- 523
+> -- 146
+< -- 13
++ -- 56
+- -- 40
+* -- 337
+:= -- 651
+add.period$ -- 19
+call.type$ -- 16
+change.case$ -- 14
 chr.to.int$ -- 0
-cite$ -- 8
-duplicate$ -- 145
-empty$ -- 236
-format.name$ -- 14
-if$ -- 614
+cite$ -- 16
+duplicate$ -- 279
+empty$ -- 466
+format.name$ -- 40
+if$ -- 1226
 int.to.chr$ -- 0
-int.to.str$ -- 8
-missing$ -- 9
-newline$ -- 44
-num.names$ -- 8
-pop$ -- 24
+int.to.str$ -- 16
+missing$ -- 16
+newline$ -- 84
+num.names$ -- 16
+pop$ -- 44
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 102
+skip$ -- 196
 stack$ -- 0
-substring$ -- 168
-swap$ -- 80
-text.length$ -- 7
+substring$ -- 340
+swap$ -- 157
+text.length$ -- 13
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 25
-width$ -- 9
-write$ -- 98
+while$ -- 50
+width$ -- 18
+write$ -- 191
+(There was 1 error message)
