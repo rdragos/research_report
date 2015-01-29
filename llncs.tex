@@ -13,6 +13,8 @@
 \usepackage{wrapfig}
 \usepackage{cite}
 \usepackage{amsmath}
+
+\newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
 %
 \begin{document}
 \pagestyle{empty}
@@ -59,6 +61,12 @@ Criptografia moderna s-a desprins de cea clasica in jurul anilor '80, motivand i
 
 Criptografia moderna se gaseste pretutindeni in viata de zi cu zi de la ATM-uri, cartele telefonice la semnaturi digitale, protocoale de autentificare, licitatii electronice sau bani digitali, luand amploare o data cu aparitia sistemelor cu cheie publica. O definitie potrivita ar fi "studiul stiintific al tehnicililor pentru a securiza informatia digitala, tranzactiile si calculul distribuit.". \cite{Katz:2007}
 
+\subsection{Motivatie}
+TODO
+%Poate aici vine mai bine sub sectiunea cu securitatea teoretica
+
+\subsection{Structura}
+TODO
 
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -80,41 +88,147 @@ In cazul unor criptosisteme acestea nu pot fi compromise chiar daca adversarul d
 %TODO: find translation for multi party computation
 
 O schema de partajare consta in distribuirea unui obiect, o informatie secreta $\mathcal{S}$ la mai multi participanti intr-un mod astfel incat oricare grup predefinit inainte sa poate reconstitui secretul $\mathcal{S}$.
+Mai formal o schema de partajare este reprezentata de o pereche de algoritmi \textbf{$(Gen, Rec)$}:
+\begin{itemize}
+	\item \textit{$Gen(S, m)$} este un algoritm ce primeste un secret \textit{S} si are ca date de iesire un set de componente
+	${s_1, s_2, \dots, s_m}$.
+	\item \textit{$Rec({s_i}_1, {s_i}_2, \dots, {s_i}_q)$} este un algoritm ce ia ca parametri o multime de componente si are ca iesire
+	\textit{S} daca multimea ${{s_i}_1, {s_i}_2, \dots, {s_i}_q}$ este \textit{permisa}. \cite{Olimid:2013}
+\end{itemize} 
+%todo: add some more text between itemizers
+Majoritatea schemelor au la baza mai multe etape precum:
+\begin{itemize}
+	\item \textit{Initializare}. Presupune initializarea variabilelor de mediu necesare.
+	\item \textit{Generare}. O terta autorizata (dealer) $\mathcal{D}$ foloseste algoritmul \textit{Gen} pentru a genera share-urile.
+	\item \textit{Distributie}. Componentele sunt trimise intr-un mod sigur participantilor, fara ca acestea sa fie vizibile unui atacator.
+	\item \textit{Reconstructie}. Dandu-se o multime de share-uri, se foloseste algoritmul \textit{Rec} pentru a recupera secretul $\mathcal{S}$
+\end{itemize}
 
 
 \subsection{Constructii existente}
 Primele scheme de partajare au fost dezvoltate independent de Adi Shamir si George Blakley in 1979. \cite{B:1979, S:1979}
-Denumite si scheme de treshold, acestea rezolvau cazul in care oricare grup de participanti cu cardinal  >= $k$  (dimensiunea thresholdului) puteau reconstitui secretul $\mathcal{S}$ din partile primite de la dealer. Daca schema este perfect sigura atunci oricare grup cu un numar de participanti < $k$ nu obtineau vreo informatie despre $\mathcal{S}$.
+Denumite si scheme de threshold, acestea rezolvau cazul in care oricare grup de participanti cu cardinal mai mare sau egal decat $k$  (dimensiunea thresholdului) pot reconstitui secretul $\mathcal{S}$ din partile primite de la dealer. Daca schema este perfect sigura atunci oricare grup cu un numar de participanti mai mic decat $k$ nu obtinea vreo informatie despre $\mathcal{S}$.
 
-Alte scheme de partajare bazandu-se pe grupuri speciale de acces (in cazul schemei lui Shamir, acestea trebuia sa aiba cardinalul >= $k$) au fost dezvoltate de Ito, Saito, si Nishizeki, realizand o generalizare a schemei lui Shamir. \cite{ITO:1989}
-Benaloh si Leichter au demonstrat ca schemele de partajare threshold nu pot garanta construirea decat unei fractiuni din multimea functiilor de partajare. Cei doi prezinta un exemplu trivial pentru care schema lui Shamir este insuficienta: consideram cazul in care vrem sa partajam un secret unor 4 participanti: $A, B, C, D$ astfel incat $A + B = \mathcal{S}$ si $C + D = \mathcal{S}$, iar restul de combinatii ale share-urilor sa nu poate reconstitui $\mathcal{S}$ unde cu $+$ notam operatia de reuniune a share-urilor dintre $2$ persoane. \cite{JJ:1990}.
+Denumim $P := P_1, P_2, \dots, P_n$ multimea de $n$ participanti intr-o schema si $y \leftarrow^R Y$ ca $y$ este un element ales uniform aleator din multimea $Y$.
 
+Alte scheme de partajare bazandu-se pe grupuri speciale de acces au fost dezvoltate de Ito, Saito, si Nishizeki, realizand o generalizare a schemei lui Shamir. \cite{ITO:1989}
+
+Benaloh si Leichter au demonstrat ca schemele de partajare threshold nu pot garanta decat construirea unei fractiuni din multimea functiilor de partajare.
+
+Cei doi prezinta un exemplu trivial pentru care schema lui Shamir este insuficienta: consideram cazul in care vrem sa partajam un secret unor 4 participanti: $P_1, P_2, P_3, P_4$ astfel incat $P_1 + P_2 = \mathcal{S}$ si $P_3 + P_4 = \mathcal{S}$, iar restul de combinatii ale share-urilor sa nu poate reconstitui $\mathcal{S}$ unde cu $+$ notam operatia de reuniune a componentelor primite de $2$ persoane. \cite{JJ:1990}.
+
+%TODO: maybe wrap this up in a definition
 Dezavantajul acestor scheme este dimensiunea share-urilor, facand adesea majoritatea constructiilor impracticabile. \cite{Survey:2011}
-De asemenea, s-au dezvoltat scheme pentru modele de calcul neconventional, cum ar fi cel cuantic. \cite{hillery:1999}
+De asemenea, s-au dezvoltat scheme pentru modele de calcul neconventional, cum ar fi cel cuantic. \cite{hillery:1999} %maybe expand this
 
-\subsection{Schema XOR de tipul "totul sau nimic"}
+\subsection{Schema unanima}
+
+Presupunand ca vrem sa impartim un fisier $\mathcal{S}$ la $n$ participanti fara ca $\mathcal{S}$ sa poate fi recuperat doar daca cei $n$ isi combina share-urile detinute. Metoda este echivalenta cu o schema $(n, n)$ majoritara. Un exemplu este schema introdusa de Karin, Greene si Hellman \cite{Karnin:83}
 
 
-Presupunand ca vrem sa impartim un fisier $\mathcal{S}$ la $N$ participanti fara ca $\mathcal{S}$ sa poate fi recuperat doar daca cei $n$ isi combina share-urile detinute. Pentru simplitate, vom considera ca $\mathcal{S}$ este un singur bit, metoda putand fi usor extinsa pentru un o lungime variabila.
-In prima faza se aleg $n - 1$ biti aleatori $b_1, b_2, \dots, b_{n - 1}$ intr-un mod criptografic sigur, cel de-al $n$-lea bit va fi $\mathcal{S} \oplus b_1 \oplus b_2 \oplus \dots \oplus b_{n - 1}$. La final se impart cei $n$ biti participantilor semnificand share-urile acestora.
+%---------------- Figure - all_or_nothing - START ------------------------
+\begin{figure*}[h!]
+
+\begin{tabular}{|p{\textwidth}|}
+\hline
+
+\\
+\hspace{.1in}
+\textbf{Initializare}: Fie $S \in Z_p$ unde $q > 1 $ si $q$ prim; $n$ numarul de participanti;
+\medskip
+
+\hspace{.1in}
+\textbf{Generare}: Se aleg $n - 1$ valori aleatoare $s_i \leftarrow^R Z_p, i \in 1,2,\dots,{n-1}$ \\
+		\hspace{.9in}  $s_n = S + \sum_{i=1}^{n-1} s_i \Mod q $;
+\medskip
+
+\hspace{.1in}
+\textbf{Distributie}: Dealerul $\mathcal{D}$
+	\begin{itemize}
+		\item trimite participantului $P_i$ componenta $s_i$, $i \in 1,2,\dots,n$;
+	\end{itemize}
+
+\hspace{.1in}
+\textbf{Reconstructie}: $S = \sum_{i=1}^{n} s_i \Mod q$;Pentru un 
+
+\\
+\hline
+\end{tabular}
+
+\label{fig:all_or_nothing}
+\end{figure*}
+
+%---------------- Figure - all_or_nothing- STOP ------------------------
+
+
 
 \subsection{Schema lui Shamir}
 %TODO complete description
 
-Schema lui Shamir ofera mai multa flexibilitate ca schema XOR prin faptul oricare k (sau mai multi) participanti din cei n pot recupera $\mathcal{S}$ ie nu mai este de tipul "totul sau nimic". Modalitatea de constructie a share-urilor este urmatoarea: \cite{S:1979}
-\begin{itemize}
-	\item Alegem un corp care sa permita interpolarea de polinoame. In cazul majoritatii protocoalelor criptografice, operatiile se efectueaza in $GF(256)$, utilizand un polinom ireductibil
-	\item Generam aleator uniform un polinom $f$, cu gradul $k - 1$, $f(x) = a_{k-1} * x ^ {k-1} + a_{k-2} * x ^ {k - 2} + .... + a_1 * x + \mathcal{S}$
-	\item $\mathcal{S}_i$ := $f(i)$
-\end{itemize}
+Schema lui Shamir ofera mai multa flexibilitate ca schema unanima prin faptul ca oricare $k$ (sau mai multi) participanti
+din cei $n$ pot recupera $\mathcal{S}$, insa mai putin de k nu obtin nicio informatie despre $\mathcal{S}$.
 
-Evident, orice submultime de valori $\mathcal{S}_i$ de marime egala cu $k$ este suficienta si necesara pentru a reconstrui polinomul $f$. Dupa interpolarea share-urilor detinute de cel putin $k$ dintre participanti, secretul $\mathcal{S}$ se va afla in $f(0)$. Pentru un atacator care detine chiar si $k-1$ valori $\mathcal{S}_i$, acesta nu invata nimic despre $\mathcal{S}$, spatiul de solutii posibile fiind identic fata de situatia in care nu obtine vreun share.
+Intuitiv, dandu-se $m$ puncte in plan $(x_i, y_i)$, $x_i \neq x_j \text{ } i,j = 1, 2, \dots, m or. i \neq j$, exista o curba polinomiala unica ce trece prin ele.  
+In schimb, pentru a defini o curba polinomiala de grad $m$ care contine $m - 1$ puncte date, exista o infinitate de solutii.
+Evident, orice submultime de valori $s_i$ de marime egala cu $k$ este suficienta si necesara pentru a reconstrui polinomul $f$. Dupa interpolarea share-urilor detinute de cel putin $k$ dintre participanti, secretul $\mathcal{S}$ se va afla in $f(0)$.
+
+Pentru un atacator care detine chiar si $k-1$ valori $\mathcal{S}_i$, acesta nu invata nimic despre $\mathcal{S}$, spatiul de solutii posibile fiind identic fata de situatia in care nu reuseste sa obtina vreo componenta.
+
+
+%---------------- Figure - shamir_scheme - START ------------------------
+\begin{figure*}[h!]
+
+\begin{tabular}{|p{\textwidth}|}
+\hline
+
+\\
+\hspace{.1in}
+\textbf{Initializare}: 
+	\begin{itemize}
+		\item Fie $S \in Z_q$ unde $q > 1 $ si $q$ prim;
+		\item $n$ numarul de participanti a.i $q > n$; $k$ 
+	\end{itemize}
+\medskip
+
+\hspace{.1in}
+\textbf{Generare}: Dealerul $\mathcal{D}$:
+	\begin{itemize}
+		\item alege $x_i \leftarrow^R Z_q \text{, }i = 1,2,\dots,n$;
+		\item alege $a_{i} \leftarrow^R Z_q \text{, }i = 1,2,\dots,{k - 1}$;
+		\item construieste polinomul $f(x) = a_{k - 1} * x ^ {k-1} + a_{k-2} * x ^ {k - 2} + .... + a_1 * x + \mathcal{S}$;
+		\item atribuie $s_i := f(x_i) \text{ } i = 1,2,\dots,n$;
+	\end{itemize}
+\medskip
+
+\hspace{.1in}
+\textbf{Distributie}: Dealerul $\mathcal{D}$:
+	\begin{itemize}
+		\item Trimite participantului $P_i$ componenta $s_i$, $i \in {1,n-1}$;
+	\end{itemize}
+
+\hspace{.1in}
+%TODO: aranjeaza cu "(sau mai mare)"
+\textbf{Reconstructie}: Orice multime de $k$ participanti distincti $P_1, P_2, \dots, P_k$:
+	\begin{itemize}
+		\item interpoleaza polinomul - pentru simplitate vom considera metoda lui Lagrange -
+			\hspace{.7in} $f(x)=\sum_{i=1}^{k} {s_i}\prod_{1 \leq j \leq k, j \neq i} \frac{x-x_j}{x_i-x_j}$;
+		\item secretul reconstruit $S = f(0)$;
+	\end{itemize}
+
+\\
+\hline
+\end{tabular}
+
+\label{fig:shamir_scheme}
+\end{figure*}
+
+%---------------- Figure - shamir_scheme- STOP ------------------------
 
 \subsection{Schema Ito, Saito, si Nishizeki}
 \label{Ito}
 
-In continuare vom descrie modalitatea de distribuire a share-urilor de la care au pornit Ito, Saito si Nishizeki pentru ca schema sa aiba o structura de acces $\mathcal{A} \subseteq 2^P$ unde $P$ este mulimea de participanti in cadrul procesului.
-Fie o multime de participanti $P = {P_1, P_2, ... P_n}$. 
+In continuare vom descrie modalitatea de distribuire a share-urilor de la care au pornit Ito, Saito si Nishizeki pentru ca schema sa aiba o structura de acces $\mathcal{A} \subseteq 2^P$. Acestia au pornit de la constructia unei scheme majoritare $(k, n)$ pentru a putea descrie elementele lui $\mathcal{A}$ ca fiind rezultatul unei reuniuni de multimi de share-uri cu un numar de elemente mai mare sau egal decat $k$.
+
 \begin{itemize}
 	\item Alegem doua numere intregi $k$ si $M$, $k \leq M$ si un $q = p^z$ unde $p$ este un numar prim iar $z$ numar intreg pozitiv. Fie $K = GF(q)$
 	\item Alegem $a_1, a_2, ...a_{k-1} \in K - {0}$ intr-un mod aleator
@@ -127,11 +241,48 @@ In mod evident, pentru ca modul de atribuire a share-urillor $Assign$ sa respect
 $A = { \underset{i}{{\bigcup}} } |Assign(i)| \geq k$
 
 
+
+%---------------- Figure - Ito_et_al- START ------------------------
+\begin{figure*}[h!]
+
+\begin{tabular}{|p{\textwidth}|}
+\hline
+
+\\
+\hspace{.1in}
+\textbf{Initializare}: Alegem un numar prim $q$ si $z$ \in $N$ Fie $S \in Z_p$ unde $q > 1 $ si $q$ prim; $n$ numarul de participanti;
+\medskip
+
+\hspace{.1in}
+\textbf{Generare}: Se aleg $n - 1$ valori aleatoare $s_i \leftarrow^R Z_p, i \in 1,2,\dots,{n-1}$ \\
+		\hspace{.9in}  $s_n = S + \sum_{i=1}^{n-1} s_i \Mod q $;
+\medskip
+
+\hspace{.1in}
+\textbf{Distributie}: Dealerul $\mathcal{D}$
+	\begin{itemize}
+		\item trimite participantului $P_i$ componenta $s_i$, $i \in 1,2,\dots,n$;
+	\end{itemize}
+
+\hspace{.1in}
+\textbf{Reconstructie}: $S = \sum_{i=1}^{n} s_i \Mod q$;Pentru un 
+
+\\
+\hline
+\end{tabular}
+
+\label{fig:ito_et_al}
+\end{figure*}
+
+%---------------- Figure - Ito_et_al - STOP ------------------------
+
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
+
+
 \section{Sisteme de stocare de lunga durata}
 
 %TODO: key management issues
@@ -224,9 +375,13 @@ Pentru reconstituirea unui fisier se interpoleaza share-urile din orice multime 
 
 \subsection{Erori gasite in articol}
 
-Spre deosebire de schema lui Shamir in care coeficientii sunt alesi intr-un mod aleator uniform, acestia reprezinta acum continut din fisierele originale.
 
-Intuitiv, determinismul implica de cele mai multe ori vulnerabilitati (aplicarea schemei de 2 ori pe date de intrare identice $\rightarrow$ acelasi date de iesire). Autorii motiveaza alegerea prin faptul ca multimea share-urilor si efortul computational depus pentru generarea coeficientilor se reduce la un factor de $k$ spre deosebire de schema Shamir.
+Spre deosebire de schema lui Shamir in care coeficientii sunt alesi intr-un mod aleator uniform, acestia
+reprezinta acum continut din fisierele originale.
+Intuitiv, determinismul implica de cele mai multe ori vulnerabilitati (aplicarea schemei de 2 ori pe date de intrare identice $\rightarrow$ acelasi date de iesire).
+Alegerea este motivata de faptul ca multimea share-urilor si efortul computational depus pentru generarea coeficientilor se reduce la un factor de $k$ spre deosebire de schema Shamir. Natura determinismului duce la cateva atacuri simple in momentul in care un atacator obtine informatiile retinute intr-un nod, indiferent de marimea treshold-ului $k$.
+
+
 \subsection{Verificarea rezultatelor}
 \subsection{Publicarea articolului}
 
