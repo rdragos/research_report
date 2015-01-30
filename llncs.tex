@@ -13,8 +13,10 @@
 \usepackage{wrapfig}
 \usepackage{cite}
 \usepackage{amsmath}
+\usepackage[usenames,dvipsnames]{xcolor}
 
 \newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
+\newcommand{\todo}[1]{{\color{red}{TODO #1}}}
 %
 \begin{document}
 \pagestyle{empty}
@@ -62,14 +64,17 @@ Criptografia moderna s-a desprins de cea clasica in jurul anilor '80, motivand i
 Criptografia moderna se gaseste pretutindeni in viata de zi cu zi de la ATM-uri, cartele telefonice la semnaturi digitale, protocoale de autentificare, licitatii electronice sau bani digitali, luand amploare o data cu aparitia sistemelor cu cheie publica. O definitie potrivita ar fi "studiul stiintific al tehnicililor pentru a securiza informatia digitala, tranzactiile si calculul distribuit.". \cite{Katz:2007}
 
 \subsection{Motivatie}
-TODO
+\todo{nu are leg\u{a}tur\u{a}: faptul ca sunt scheme cuantice nu are impact asupra structurii de acces; e ok sa men\c{t}ionezi, dar atunci faci asta \^{i}n sec\c{t}iunea anterioar\u{a}, c\^{a}nd po\c{t}i s\u{a} adaugi \c{s}i alte modalit\u{a}\c{t}i de definire: scheme bazate pe latici, scheme bazate pe perechi biliniare, scheme cuantice, etc.}
+%TODO: maybe wrap this up in a definition
+Dezavantajul schemelor generale de partajare este dimensiunea componentelor, exponentiala in functie de numarul de participanti. \cite{Survey:2011}
+De asemenea, s-au dezvoltat scheme pentru modele de calcul neconventional, cum ar fi cel cuantic. \cite{hillery:1999} %maybe expand this
 %Poate aici vine mai bine sub sectiunea cu securitatea teoretica
 
 \subsection{Structura}
 TODO
 
 %----------------------------------------------------------------
-%----------------------------------------------------------------
+%---------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -83,53 +88,56 @@ In cazul unor criptosisteme acestea nu pot fi compromise chiar daca adversarul d
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
-\section{Scheme de partajare}
+\section{Scheme de partajare}his cor
+responds to the traditional
+secret sharing scheme model when a scheme is not perfec
 \label{sec:encryption}
 %TODO: find translation for multi party computation
 
-O schema de partajare consta in distribuirea unui obiect, o informatie secreta $\mathcal{S}$ la mai multi participanti astfel incat oricare grup predefinit inainte (o structura de acces pe care o vom denumi $\mathcal{A}$) sa poate reconstitui secretul $\mathcal{S}$.
-Mai formal o schema de partajare este reprezentata de o pereche de algoritmi \textbf{$(Gen, Rec)$}:
+\todo{Diacritice!}
+
+O schema de partajare consta in distribuirea unui obiect - digital nu se distribuie obiecte, o informatie secreta $\mathcal{S}$ la mai multi participanti astfel incat oricare superset de participanti predefinit inainte (o structura de acces pe care o vom denumi $\mathcal{A}$) sa poat\u{a} reconstitui secretul $\mathcal{S}$.
+Formal, o schem\u{a} de partajare este reprezentat\u{a} de o pereche de algoritmi \textbf{$(Gen, Rec)$}:
 \begin{itemize}
-	\item \textit{$Gen(S, m)$} este un algoritm care primeste la intrare un secret \textit{S} si are ca date de iesire un set de componente
-	${s_1, s_2, \dots, s_m}$.
-	\item \textit{$Rec({s_i}_1, {s_i}_2, \dots, {s_i}_q)$} este un algoritm care ia ca parametri de intrare o multime de componente si are ca date iesire
-	\textit{S} daca multimea ${{s_i}_1, {s_i}_2, \dots, {s_i}_q}$ este \textit{autorizata}. \cite{Olimid:2013}
+	\item \textit{$Gen(S, m)$} este un algoritm care prime\c{s}te la intrare un secret \textit{S} \c{s}i \^{i}ntoarce un set de componente ${s_1, s_2, \dots, s_m}$.
+	\item \textit{$Rec({s_i}_1, {s_i}_2, \dots, {s_i}_q)$} este un algoritm care prime\c{s}te ca parametri de intrare o mul\c{t}ime de componente si \^{i}ntoarce \textit{S} dac\u{a} mul\c{t}imea ${s_i}_1, {s_i}_2, \dots, {s_i}_q \in \mathcal{A}$.
 \end{itemize} 
 %todo: add some more text between itemizers
-Majoritatea schemelor au la baza mai multe etape precum:
+Majoritatea schemelor constau \^{i}n mai multe etape precum:
 \begin{itemize}
 	\item \textit{Initializare}. Presupune initializarea variabilelor de mediu necesare.
-	\item \textit{Generare}. O terta autorizata (dealer) $\mathcal{D}$ foloseste algoritmul \textit{Gen} pentru a genera share-urile.
-	\item \textit{Distributie}. Componentele sunt trimise participantilor cu ajutorul unui mijloc de comunicare sigur, fara ca acestea sa fie vizibile unui atacator.
-	\item \textit{Reconstructie}. Dandu-se o multime de share-uri, se foloseste algoritmul \textit{Rec} pentru a recupera secretul $\mathcal{S}$
+	\item \textit{Generare}. O entitate autorizat\u{a} (numit\u{a} dealer) $\mathcal{D}$ folose\c{s}te algoritmul \textit{Gen} pentru a genera componentele.
+	\item \textit{Distributie}. Componentele sunt trimise participan\c{t}ilor cu ajutorul unui mijloc de comunicare sigur, f\u{a}r\u{a} ca acestea sa fie vizibile unui atacator.
+	\item \textit{Reconstructie}. D\^{a}ndu-se o mul\c{t}ime de componente, se folose\c{s}te algoritmul \textit{Rec} pentru a recupera secretul
+	$\mathcal{S}$.
 \end{itemize}
-Acestea se clasifica in functie de cantitatea de informatie secreta pe care o pot obtine persoanele care nu fac parte din $\mathcal{A}$:
+
+Acestea se clasific\u{a} in func\c{t}ie de cantitatea de informa\c{t}ie secret\u{a} pe care o pot ob\c{t}ine persoanele care nu fac parte din $\mathcal{A}$:
 \begin{itemize}
-	\item \textit{Sisteme perfecte de partajare}: componentele nu ofera nici o informatie teoretica despre $\mathcal{S}$
-	\item \textit{Sisteme computational-sigure de partajare}: se bazeaza pe faptul ca reconstituirea lui $\mathcal{S}$ se reduce la o problema \textit{NP-completa} in lipsa unor informatii oferite doar grupului de acces $\mathcal{A}$
-\end{itemize} %cite somehow AA article
-In continuare vom prezenta cateva sisteme perfecte de partajare pentru a forma fundatiile unor arhitecturi pentru stocarea fisierelor, disponibile pe o durata indelungata.
+	\item \textit{Sisteme perfecte de partajare}: componentele nu ofera nici o informatie teoretica despre $\mathcal{S}$ indiferent de resursele computa\c{t}ionale.
+	\item \textit{Sisteme statistic sigure}: o frac\c{t}iune de informa\c{t}ie este dezvaluita despre $\mathcal{S}$ independent de puterea computionala a adversarului.
+	\item \textit{Sisteme computa\c{t}ional-sigure de partajare}: se bazeaz\u{a} pe faptul ca reconstituirea lui $\mathcal{S}$ se reduce la o problema \textit{dificil\u{a}}\cite{boneh:1998-decision} in lipsa unor informa\c{t}ii oferite doar grupului de acces $\mathcal{A}$.
+%cite somehow AA article \todo{nu toate problemele sunt demonstrate ca fiind NP complete, se crede ca sunt probleme dificile}. ups, forgot about that:)
+\end{itemize} 
 
+In continuare vom prezenta cateva sisteme perfecte de partajare pentru a forma fundatiile utilizate de arhitecturi pentru stocarea fisierelor, disponibile pe o durata indelungata.
 
-\subsection{Constructii existente}
-Primele scheme de partajare au fost dezvoltate independent de Adi Shamir si George Blakley in 1979 \cite{B:1979, S:1979}.
-Denumite si scheme majoritare $(k, n)$, acestea rezolvau cazul in care oricare grup de participanti cu un cardinal mai mare sau egal decat $k$  (dimensiunea thresholdului) poate reconstitui secretul $\mathcal{S}$ din componentele primite de la dealer. Daca schema este perfect \textit{sigura} atunci oricare grup cu un numar de participanti mai mic decat $k$ nu obtine vreo informatie despre $\mathcal{S}$.
+\subsection{Istoric}
 
-Notam $P := P_1, P_2, \dots, P_n$ multimea formata din cei $n$ participanti intr-o schema si $y \leftarrow^R Y$ ca $y$ este un element ales uniform aleator din multimea $Y$.
+Primele scheme de partajare au fost dezvoltate independent de Shamir si Blakley in 1979 \cite{B:1979, S:1979}.
 
-Alte scheme de partajare bazandu-se pe grupuri speciale de acces au fost dezvoltate de Ito, Saito, si Nishizeki, realizand o generalizare a schemei lui Shamir. \cite{ITO:1989}
+Denumite si scheme majoritare $(k, n)$, acestea rezolvau cazul in care oricare grup de participanti cu un cardinal mai mare sau egal decat $k$  (marimea pragului) poate reconstitui secretul $\mathcal{S}$ din componentele primite de la dealer. Daca schema este perfect \textit{sigura} atunci oricare grup cu un numar de participanti mai mic decat $k$ nu obtine vreo informatie despre $\mathcal{S}$.
 
-Benaloh si Leichter au demonstrat ca schemele de partajare threshold nu pot garanta decat construirea unei fractiuni din multimea functiilor de partajare\cite{JJ:1990}.
+Notam $P = \{P_1, \dots, P_n\}$ multimea formata din cei $n$ participanti intr-o schema si $y \leftarrow^R Y$ ca $y$ este un element ales uniform aleator din multimea $Y$.
 
-Autorii prezinta un exemplu trivial pentru care schema lui Shamir este insuficienta. Consideram cazul in care vrem sa partajam un secret unor 4 participanti: $P_1, P_2, P_3, P_4$ astfel incat $P_1 + P_2 = \mathcal{S}$ si $P_3 + P_4 = \mathcal{S}$, unde cu $+$ notam operatia de reuniune a componentelor primite de $2$ persoane. Vrem ca celelalte combinatii de share-uri detinute sa nu poate reconstitui $\mathcal{S}$.
+Alte scheme de partajare baz\^{a}ndu-se pe structuri de acces generale au fost dezvoltate de Ito, Saito, si Nishizeki, realizand o generalizare a schemei lui Shamir. \cite{ITO:1989}
+Benaloh si Leichter au demonstrat ca schemele de partajare de tip prag nu pot fi folosite pe structuri general monotone (familie de submultimi ale lui $P$) si obtin o constructie mai eficienta ca Ito et. al \cite{ITO:1989} din punct de vedere al numarului de componentel distribuite participantilor. \cite{JJ:1990}
 
-%TODO: maybe wrap this up in a definition
-Dezavantajul acestor scheme este dimensiunea share-urilor, facand adesea majoritatea constructiilor impracticabile. \cite{Survey:2011}
-De asemenea, s-au dezvoltat scheme pentru modele de calcul neconventional, cum ar fi cel cuantic. \cite{hillery:1999} %maybe expand this
+Autorii prezinta un exemplu trivial pentru care schema Shamir este insuficienta. Consideram cazul in care vrem sa partajam un secret unor \^{i}ntre 4 participanti: $P_1, P_2, P_3, P_4$ astfel incat $\{P_1,P_2\}$ \c{s}i $\{P_3,P_4\}$ s\u{a} fie singurele mul\c{t}imi autorizate pentru reconstruc\c{t}ia secretului $S$ (i.e. $\mathcal{A} = \{ \{P_1,P_2\}, \{P_3,P_4\} \}$).
 
 \subsection{Schema unanima}
 
-Presupunand ca vrem sa impartim un fisier $\mathcal{S}$ la $n$ participanti fara ca $\mathcal{S}$ sa poate fi recuperat doar daca cei $n$ isi combina share-urile detinute. Metoda este echivalenta cu o schema $(n, n)$ majoritara. Un exemplu este schema introdusa de Karin, Greene si Hellman \cite{Karnin:83}
+Presupun\^{a}nd ca vrem sa imp\u{a}r\c{t}im un secret $\mathcal{S}$ la $n$ participan\c{t}i astfel \^{i}nc\^{a}t $\mathcal{S}$ sa poat\u{a} fi recuperat doar daca cei $n$ participan\c{t}i combina componentele pe care le de\c{t}in. Metoda este echivalent\u{a} cu o schem\u{a} $(n, n)$ majoritar\u{a}. Un exemplu este schema introdusa de Karin, Greene si Hellman \cite{Karnin:83} (Fig.\label{fig:all_or_nothing})
 
 
 %---------------- Figure - all_or_nothing - START ------------------------
@@ -142,7 +150,7 @@ Presupunand ca vrem sa impartim un fisier $\mathcal{S}$ la $n$ participanti fara
 \hspace{.1in}
 \textbf{Initializare}: 
 	\begin{itemize}
-		\item Fie $S \in Z_p$ unde $q > 1 $ si $q$ prim
+		\item Fie $S \in Z_p$ unde $q > 1 $ si $q$ prim;
 		\item Fie $n$ numarul de participanti;
 	\end{itemize}
 \medskip
@@ -151,21 +159,21 @@ Presupunand ca vrem sa impartim un fisier $\mathcal{S}$ la $n$ participanti fara
 \textbf{Generare}: Dealerul $\mathcal{D}$:
 	\begin{itemize}
 		\setlength{\itemsep}{5pt}
-		\item Alege $n - 1$ valori aleatoare $s_i \leftarrow^R Z_p$, $i \in 1,2,\dots,{n-1}$
-		\item $s_n = S + \sum_{i=1}^{n-1} s_i \Mod q $;
+		\item Alege $n - 1$ valori aleatoare $s_i \leftarrow^R Z_p$, $i \in \{1,2,\dots,{n-1}\}$;
+		\item $s_n = S + \sum\limits_{i=1}^{n-1} s_i \Mod q $;
 	\end{itemize}
 \medskip
 
 \hspace{.1in}
 \textbf{Distributie}: Dealerul $\mathcal{D}$
 	\begin{itemize}
-		\item trimite participantului $P_i$ componenta $s_i$, $i \in 1,2,\dots,n$;
+		\item transmite \^{i}n mod sigur participantului $P_i$ componenta $s_i$, $i \in \{1,2,\dots,n\}$;
 	\end{itemize}
 
 \hspace{.1in}
 \textbf{Reconstructie}: Cei $n$ participanti:
 	\begin{itemize}
-		\item Calculeaza $S = \sum_{i=1}^{n} s_i \Mod q$;
+		\item Calculeaza $S = \sum\limits_{i=1}^{n} s_i \Mod q$.
 	\end{itemize}
 
 \\
@@ -179,18 +187,17 @@ Presupunand ca vrem sa impartim un fisier $\mathcal{S}$ la $n$ participanti fara
 
 
 
-\subsection{Schema lui Shamir}
+\subsection{Schema Shamir}
 %TODO complete description
 
-Schema lui Shamir ofera mai multa flexibilitate ca schema unanima prin faptul ca oricare $k$ (sau mai multi) participanti
-din cei $n$ pot recupera $\mathcal{S}$, insa mai putin de $k$ nu obtin nicio informatie despre $\mathcal{S}$.
+Schema Shamir ofera mai multa flexibilitate ca schema unanima prin faptul ca oricare $k$ (sau mai multi) participanti
+din cei $n$ pot recupera $\mathcal{S}$, insa mai putin de $k$ nu obtin nicio informatie despre $\mathcal{S}$. Schema Shamir este deci o schem\u{a} $(k,n)$ majoritar\u{a}.
 
-Intuitiv, avand $m$ puncte in plan $(x_i, y_i)$, $x_i \neq x_j \text{ } i,j = 1, 2, \dots, m \text{ } or. i \neq j$, exista o curba polinomiala unica ce trece prin ele.  
-In schimb, pentru a defini o curba polinomiala de grad $m$ care contine $m - 1$ puncte date, exista o infinitate de solutii.
-Evident, orice submultime de valori $s_i$ de marime egala cu $k$ este suficienta si necesara pentru a reconstrui polinomul $f$. Dupa interpolarea share-urilor detinute de cel putin $k$ dintre participanti, secretul $\mathcal{S}$ se va afla in $f(0)$.
+Intuitiv, avand $k$ puncte in plan $(x_i, y_i)$, $x_i \neq x_j \text{ } i,j \in \{1,2,\dots,k\}$ $\forall i \neq j$, exista o curba polinomiala unica care trece prin ele.  
+In schimb, pentru a defini o curba polinomiala de grad $k$ care contine $k - 1$ puncte date, exista o infinitate de solutii.
+Evident, orice submultime de valori $s_i$ de marime egala cu $k$ este suficienta si necesara pentru a reconstrui polinomul $f$. Dupa interpolarea share-urilor detinute de cel putin $k$ dintre participanti, secretul $\mathcal{S}$ se va afla in $f(0)$. (Fig. \ref{fig:shamir_scheme}) 
 
-Pentru un atacator care detine chiar si $k-1$ valori $\mathcal{S}_i$, acesta nu invata nimic despre $\mathcal{S}$, spatiul de solutii posibile fiind identic fata de situatia in care nu reuseste sa obtina vreo componenta.
-
+Pentru un atacator care detine chiar si $k-1$ valori $\mathcal{S}_i$, acesta nu determin\u{a} nimic despre $\mathcal{S}$, spa\c{t}iul de solu\c{t}ii posibile fiind identic fata de situatia in care nu reuseste sa ob\c{t}ina vreo component\u{a}.
 
 %---------------- Figure - shamir_scheme - START ------------------------
 \begin{figure*}[h!]
@@ -203,8 +210,8 @@ Pentru un atacator care detine chiar si $k-1$ valori $\mathcal{S}_i$, acesta nu 
 \textbf{Initializare}: 
 	\begin{itemize}
 		\item Fie $S \in Z_q$ unde $q > 1 $ si $q$ prim;
-		\item Fie $n$ numarul de participanti a.i $q > n$;
-		\item Fie $k$ dimensiunea majoritatii.
+		\item Fie $n$ num\u{a}rul de participan\c{t}i a.i $q > n$;
+		\item Fie $k$ num\u{a}rul minim de componente puse in comun pentru a determina pe $\mathcal{S}$;
 	\end{itemize}
 \medskip
 
@@ -212,26 +219,26 @@ Pentru un atacator care detine chiar si $k-1$ valori $\mathcal{S}_i$, acesta nu 
 \textbf{Generare}: Dealerul $\mathcal{D}$:
 	\begin{itemize}
 		\item Alege $n$ valori distincte $x_i \leftarrow^R Z_q \text{, }i = 1,2,\dots,n$;
-		\item Alege $a_{i} \leftarrow^R Z_q \text{, }i = 1,2,\dots,{k - 1}$, $a_{k-1} \neq 0$;
-		\item Construieste polinomul $f(x) = a_{k - 1} * x ^ {k-1} + a_{k-2} * x ^ {k - 2} + .... + a_1 * x + \mathcal{S}$;
-		\item Atribuie $s_i := f(x_i) \text{ } i = 1,2,\dots,n$;
+		\item Alege $a_{i} \leftarrow^R Z_q \text{, }i \in \{1,2,\dots,{k - 1}$\}, $a_{k-1} \neq 0$;
+		\item Construie\c{s}te polinomul $f(x) = a_{k - 1}x ^ {k-1} + a_{k-2}x ^ {k - 2} + \dots + a_1x + \mathcal{S}$;
+		\item Calculeaz\u{a} $s_i = f(x_i) \text{ } i \in \{1,2,\dots,n\}$;
 	\end{itemize}
 \medskip
 
 \hspace{.1in}
 \textbf{Distributie}: Dealerul $\mathcal{D}$:
 	\begin{itemize}
-		\item Trimite participantului $P_i$ componenta $s_i$, $i \in {1,n-1}$;
+		\item Transmite participantului $P_i$ componenta $s_i$, $i \in \{1,\dots,n-1\}$;
 	\end{itemize}
 
 \hspace{.1in}
 %TODO: aranjeaza cu "(sau mai mare)"
-\textbf{Reconstructie}: Orice multime de $k$ participanti distincti $P_1, P_2, \dots, P_k$:
+\textbf{Reconstruc\c{t}ie}: Orice mul\c{t}ime cu dimensiunea $k$ (sau mai mare) de participan\c{t}i distinc\c{t}i $P_1, P_2, \dots, P_k$:
 	\begin{itemize}
 		\setlength{\itemsep}{5pt}
-		\item interpoleaza punctele $s_i$ - pentru simplitate vom considera metoda lui Lagrange - pentru a obtine polinomul $f$:
+		\item Interpoleaz\u{a} punctele $s_i$ pentru a ob\c{t}ine polinomul $f$:
 		\begin{equation} f(x)=\sum_{i=1}^{k} {s_i}\prod_{1 \leq j \leq k, j \neq i} \frac{x-x_j}{x_i-x_j} \end{equation}
-		\item afla secretul reconstruit $S = f(0)$;
+		\item Afl\u{a} secretul reconstruit $S = f(0)$.
 	\end{itemize}
 
 \\
@@ -247,9 +254,11 @@ Pentru un atacator care detine chiar si $k-1$ valori $\mathcal{S}_i$, acesta nu 
 \subsection{Schema Ito, Saito, si Nishizeki}
 \label{Ito}
 
-In continuare vom descrie modalitatea de distribuire a share-urilor de la care au pornit Ito, Saito si Nishizeki pentru ca schema sa aiba o structura de acces $\mathcal{A} \subseteq 2^P$. Autorii au pornit de la constructia unei scheme majoritare $(k, n)$ pentru a putea descrie elementele din $\mathcal{A}$ ca fiind rezultatul unei reuniuni de multimi de share-uri cu un numar de elemente mai mare sau egal decat $k$. Explicatii mai detaliate despre constructia aceasta se afla in Fig. \ref{fig:ito_et_al}.
+In continuare vom descrie modalitatea de distribuire a componentelor de la care au pornit Ito, Saito si Nishizeki pentru ca schema sa aiba o structura de acces $\mathcal{A} \subseteq 2^P$ (submul\c{t}ime a supersetului de participan\c{t}i) a.i $\forall A \in \mathcal{A}, A \subseteq A' \Rightarrow A' \in \mathcal{A}$).
+Avand constructia unei scheme majoritare $(k, n)$ autorii au reusit sa descrie elementele din $\mathcal{A}$ folosind rezultatul unei reuniuni de multimi de componente cu un numar de elemente mai mare sau egal decat $k$. Definim $x : Pr$, $x$ are proprietatea $Pr$. Fig. \ref{fig:ito_et_al} detaliaz\u{a} construc\c{t}ia.
 
-Dezvantajul acestei structuri este numarul de componente per structura $\mathcal{A}$. Pentru mai multe informatii despre functia $Assign$, cititorul interesat poate citi in \cite{ITO:1989}.
+Dezvantajul acestei structuri este num\u{a}rul de componente necesar pentru o structura de acces oarecare $\mathcal{A}$. Un mod simplu de construire al func\c{t}iei $Assign$ este Pentru mai multe informatii despre functia $Assign$, cititorul interesat poate citi in \cite{ITO:1989}.
+\todo{prezentarea trebuie s\u{a} fie de sine st\u{a}t\u{a}toare, trebuie m\u{a}car s\u{a} explici \^{i}n cuvinte ce \^{i}nseamn\u{a}}
 
 
 
@@ -263,10 +272,10 @@ Dezvantajul acestei structuri este numarul de componente per structura $\mathcal
 \hspace{.1in}
 \textbf{Initializare}: 
 	\begin{itemize}
-		\item Fie $q$ un numar prim $q$, $q > 1$ si $z \in \mathbb{N}$ nenul. Luam corpul $\mathcal{C} = GF(p^z)$;
-		\item Fie $S \in \mathcal{C}$ secretul;
+		\item Fie $q$ un numar prim $q$, $q > 1$, $z \in \mathbb{N}$ nenul \c{s}i $\mathcal{C} = GF(p^z)$;
+		\item Fie $S \in \mathcal{C}$ secretul; 
 		\item Fie structura de acces $\mathcal{A}$;
-		\item Fie $n$ numarul de participanti
+		\item Fie $n$ numarul de participanti;
 	\end{itemize}
 
 \medskip
@@ -276,14 +285,15 @@ Dezvantajul acestei structuri este numarul de componente per structura $\mathcal
 	\begin{itemize}
 		\setlength{\itemsep}{5pt}
 		\item Alege $n$ valori distincte $x_i \leftarrow^R Z_q \text{, }i = 1,2,\dots,n$;
-		\item Alege $a_{i} \leftarrow^R \mathcal{C} - {0} \text{, }i = 1,2,\dots,{k - 1}$, $a_{k-1} \neq 0$;
-		\item Construieste polinomul $f(x) = a_{k - 1} * x ^ {k-1} + a_{k-2} * x ^ {k - 2} + .... + a_1 * x + \mathcal{S}$;
-		\item Atribuie $s_i := f(x_i) \text{ } i = 1,2,\dots,n$; Notam aceasta multime cu $Shares$;
+		\item Alege $a_{i} \leftarrow^R \mathcal{C} \setminus \{0\} \text{, }i \in \{1,2,\dots,{k - 1}\}$, $a_{k-1} \neq 0$;
+		\item Construieste polinomul $f(x) = a_{k - 1}x ^ {k-1} + a_{k-2}x ^ {k - 2} + .... + a_1x + \mathcal{S}$;
+		\item Atribuie $s_i = f(x_i) \text{ } i \in \{1,2,\dots,n\}$; Fie $Shares = \{ s_1, \dots, s_n \}$;
 		\item Alege $D_i \subseteq Shares \text{ } 1 \leq i \leq n$;
 		\item Alege functia $Assign: P \rightarrow 2^Q$:
 			\begin{itemize}
 				\item $Assign(P_i) = D_i \text{ } 1 \leq i \leq n$
-				\item $\mathcal{A} = \{ \ Q \subseteq Shares: |\underset{i \in Q}{{\bigcup}} Assign(i)| \geq k \}$;
+				\item $\mathcal{A} = \bigg \{ \ Q \subseteq Shares: \bigg| \underset{P_i \in Q}{{\bigcup}} Assign(P_i) \bigg| \geq k \bigg \}$;
+				% : <=> having property
 			\end{itemize}
 	\end{itemize}
 \medskip
@@ -291,13 +301,13 @@ Dezvantajul acestei structuri este numarul de componente per structura $\mathcal
 \hspace{.1in}
 \textbf{Distributie}: Dealerul $\mathcal{D}$
 	\begin{itemize}
-		\item Trimite participantului $P_i$ componenta $Assign(P_i)$, $i \in 1,2,\dots,n$;
+		\item Transmite participantului $P_i$ componenta $Assign(P_i)$, $i \in 1,2,\dots,n$;
 	\end{itemize}
 
 \hspace{.1in}
 \textbf{Reconstructie}: Participantii din structura de acces $\mathcal{A}$:
 	\begin{itemize}
-		\item Procedeaza identic ca in schema lui Shamir;
+		\item Procedeaza identic ca in schema lui Shamir.
 	\end{itemize}
 
 
@@ -316,6 +326,7 @@ Dezvantajul acestei structuri este numarul de componente per structura $\mathcal
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
+
 
 
 \section{Sisteme de stocare de lunga durata}
@@ -383,7 +394,69 @@ Solutia pe care o ofera PASIS este reconstruirea share-urilor insa aceasta putea
 %maybe inserting some shard figure here
 POTSHARDS poate fi gandit ca o aplicatie pe partea de client care comunica cu o multime de noduri (arhive) independente . In prima faza, POTSHARDS partajeaza obiectele in fragmente la care adauga meta-date. Autorii le numesc shard-uri. Shard-urile sunt trimise apoi arhivelor independente, fiecare avand domeniul propriu de securitate. Pentru a reconstitui cu succes obiectele, meta-datele shard-urile contin detalii despre structura pointerilor aproximativi, indicand regiunea in care se afla urmatorul shard.
 
-Pentru un atacator, detinerea unui shard nu il ajuta foarte mult, pentru a detecta urmatorul shard, un atac brut force consta in cereri multiple in zona indicata de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este sa stocheze datele intr-un mod cat mai "imprastiat".\cite{SGMV:2009} 
+Pentru un atacator, detinerea unui shard nu il ajuta foarte mult, pentru a detecta urmatorul shard, un atac brut force consta in cereri multiple in zona indicata de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este sa stocheze datele intr-un mod cat mai "imprastiat".\cite{SGMV:2009}
+
+\section{Alouneh et al.}
+
+
+Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema lui Shamir cu cateva modificari. Aceste schimbari se vor arata esentiale mai tarziu in pastrarea securitatii.
+
+\subsection{Arhitectura sistemului}
+%TODO inserting figures with algoritms
+In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majoritatii sistemelor de operare - orice este un fisier), acesta este preluat de o aplicatie de control pe partea de client care il imparte in blocuri de biti de lungime $k$. Bitii reprezinta coeficientii unui polinom $f$, componenta cu indicele $i$ va fi reprezentata de valoarea lui $f(i)$ $i = 1,2,\dots, n$. Mentionam ca toate operatiile se vor efectua in $GF(256)$ modulo un polinom ireductibil (in implementarea sistemului, autorii folosesc $x^8 + x^5 + x^3 + x + 1$). Procedeul este descris in detaliu in fig \ref{fig:alouneh-distribution}
+
+
+%---------------- Figure - alouneh-distribution - START ------------------------
+\begin{figure*}[h!]
+
+\begin{tabular}{|p{\textwidth}|}
+\hline
+
+\\
+\hspace{.1in}
+\textbf{Date de intrare}: Un fisier binar $\mathcal{S}$
+\medskip
+
+\hspace{.1in}
+\textbf{Date de iesire}: $n$ fisiere binare distribuite la noduri din retea
+\medskip
+
+\hspace{.1in}
+\textbf{Procesarea componentelor}: Aplicatia existenta pe parte de client: 
+	\begin{itemize}
+		\item Daca $\mathcal{S}$ nu are o lungime divizibila cu $k$ atunci alipeste la $\mathcal{S}$ 
+			biti pana cand $len(\mathcal{S}) \Mod k = 0$
+		\item Imparte $\mathcal{S}$ in blocuri de lungime $k$
+		\item Repeta pentru fiecare bloc $B_t$ de lungime $k$, 
+		\begin{itemize}
+			\item Construieste polinomul $f(x) = B_{t_{k - 1}}x ^ {k-1} + B_{t_{k - 2}}x ^ {k - 2} + .... + B_{t_1}x + \mathcal{S}$
+			\item Calculeaza $f(i)$ pentru $1 \leq i \leq n$	
+		\end{itemize}
+	\end{itemize}
+
+\hspace{.1in}
+\textbf{Distributie}: Aplicatia la nivel de client distribuie componenta $f(i)$ nodului din retea cu indicele $i$:
+	\begin{itemize}
+		\item Calculeaza $S = \sum_{i=1}^{n} s_i \Mod q$;
+	\end{itemize}
+
+\\
+\hline
+\end{tabular}
+\caption{Schema unanima \cite{Karnin:83}}
+\label{fig:alouneh_distribution}
+\end{figure*}
+
+%---------------- Figure - alouneh_distribution - STOP ------------------------
+
+
+
+
+Pentru reconstituirea unui fisier se interpoleaza share-urile din orice structura de acces $\mathcal{A}$ de dimensiune minim $k$ prin metoda lui Lagrange, asemanator schemei lui Shamir:
+
+\begin{equation}
+	f(x)=\sum_{i \in A} f(i) \prod_{j \in A, j \neq i} \frac{x-j}{i-j}
+\end{equation}
 
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -394,20 +467,6 @@ Pentru un atacator, detinerea unui shard nu il ajuta foarte mult, pentru a detec
 Impreuna cu mentorul am analizat un articol aparut intr-un jurnal de clasa C unde am indentificat erori majore ale sale si am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite greseli pe care le vom evidentia in urmatoarele sectiuni. \cite{AAMK:2013}
 
 \label{sec:results}
-\subsection{Arhitectura sistemului}
-
-Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema lui Shamir cu cateva modificari. Aceste schimbari se vor arata esentiale mai tarziu in pastrarea securitatii.
-
-%TODO inserting figures with algoritms
-In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majoritatii sistemelor de operare - orice este un fisier), este preluat de o aplicatie de control care il imparte in blocuri de biti de lungime $k$. Bitii reprezinta coeficientii unui polinom $f$, share-ul cu index $i$ va fi reprezentat de valoarea lui $f(i) i = 1, 2, \dots, n$. Mentionam ca toate operatiile se vor efectua in $GF(256)$ modulo un polinom ireductibil.
-Autorii folosesc $x^8 + x^5 + x^3 + x + 1$.
-
-Pentru reconstituirea unui fisier se interpoleaza share-urile din orice multime $A$ de dimensiune minim $k$ prin metoda lui Lagrange, asemanator schemei lui Shamir:
-
-\begin{equation}
-	f(x)=\sum_{i \in A} f(i) \prod_{j \in A, j \neq i} \frac{x-j}{i-j}
-\end{equation}
-
 \subsection{Erori gasite in articol}
 
 
