@@ -130,7 +130,7 @@ Denumite si scheme majoritare $(k, n)$, acestea rezolvau cazul in care oricare g
 
 Notam $P = \{P_1, \dots, P_n\}$ multimea formata din cei $n$ participanti intr-o schema si $y \leftarrow^R Y$ ca $y$ este un element ales uniform aleator din multimea $Y$.
 
-Alte scheme de partajare baz\^{a}ndu-se pe structuri de acces generale au fost dezvoltate de Ito, Saito, si Nishizeki, realizand o generalizare a schemei lui Shamir. \cite{ITO:1989}
+Alte scheme de partajare baz\^{a}ndu-se pe structuri de acces generale au fost dezvoltate de Ito, Saito, si Nishizeki, realizand o generalizare a schemei Shamir. \cite{ITO:1989}
 Benaloh si Leichter au demonstrat ca schemele de partajare de tip prag nu pot fi folosite pe structuri general monotone (familie de submultimi ale lui $P$) si obtin o constructie mai eficienta ca Ito et. al \cite{ITO:1989} din punct de vedere al numarului de componentel distribuite participantilor. \cite{JJ:1990}
 
 Autorii prezinta un exemplu trivial pentru care schema Shamir este insuficienta. Consideram cazul in care vrem sa partajam un secret unor \^{i}ntre 4 participanti: $P_1, P_2, P_3, P_4$ astfel incat $\{P_1,P_2\}$ \c{s}i $\{P_3,P_4\}$ s\u{a} fie singurele mul\c{t}imi autorizate pentru reconstruc\c{t}ia secretului $S$ (i.e. $\mathcal{A} = \{ \{P_1,P_2\}, \{P_3,P_4\} \}$).
@@ -245,7 +245,7 @@ Pentru un atacator care detine chiar si $k-1$ valori $\mathcal{S}_i$, acesta nu 
 \hline
 \end{tabular}
 
-\caption{Schema lui Shamir \cite{S:1979}}
+\caption{Schema Shamir \cite{S:1979}}
 \label{fig:shamir_scheme}
 \end{figure*}
 
@@ -307,7 +307,7 @@ Dezvantajul acestei structuri este num\u{a}rul de componente necesar pentru o st
 \hspace{.1in}
 \textbf{Reconstructie}: Participantii din structura de acces $\mathcal{A}$:
 	\begin{itemize}
-		\item Procedeaza identic ca in schema lui Shamir.
+		\item Procedeaza identic ca in schema Shamir.
 	\end{itemize}
 
 
@@ -337,14 +337,14 @@ Un sistem de stocare necesar nevoilor noastre trebuie sa satisfaca cel putin urm
 \begin{itemize}
 	\item Disponibilitatea: Informatia trebuie sa ramana accesibila tot timpul, in ciuda erorilor de tip hardware.
 	\item Integritatea: Abilitatea sistemului de a raspunde cererilor intr-un mod care garanteaza corectitudinea lor.
-	\item Confidentialitatea: O persoana care nu face parte din grupul de acces sa nu obtina permisiunea de a afla informatii de orice fel despre datele existente in sistem
+	\item Confidentialitatea: O persoana care nu face parte din grupul de acces sa nu obtina permisiunea de a afla informatii de orice fel despre datele existente in sistem.
 \end{itemize}
 
 \subsection{Criptare VS scheme de partajare}
 
 
 Una dintre solutiile existente pentru a construi acest sistem ar putea fi criptarea datelor folosind o cheie inainte de inserarea lor in spatiul de stocare. In momentul in care un user autorizat doreste sa efectueze o citire a unor date, intrebuinteaza cheia potrivita pentru a le decripta.
-In practica exista algoritmi de criptare eficienti precum AES insa aceastia nu garanteaza confidentialitatea datelor in cazul in care avem de a face cu un adversar fara o limita computationala. Un dezavantaj al criptarii este adminstrarea cheilor, standardele de securitatea schimbandu-se in fiecare an.
+In practica exista algoritmi de criptare eficienti precum AES ins\u{a} acea\c{s}tia nu garanteaz\u{a} confiden\c{t}ialitatea datelor \^{i}n cazul \^{i}n care avem de a face cu un adversar fara o limita computationala. Un dezavantaj al criptarii este adminstrarea cheilor, standardele de securitatea schimbandu-se in fiecare an.
 De fiecare data cand cheile sunt inlocuite atunci este necesara recriptarea datelor de pe fiecare baza de date. Cu cat disponibilitatea este mai mare - numarul de noduri duplicate creste- recriptarea lor devine o operatie costisitoare. 
 
 Majoritatea tehnicilor de criptarea se bazeaza pe dificultatea factorizarii unui numar sau cea a calcularii logaritmului discret insa o data cu posibila dezvoltare a calculatoarelor cuantice aceste probleme nu vor mai fi atat de dificile. \cite{Shor:1994}
@@ -399,11 +399,11 @@ Pentru un atacator, detinerea unui shard nu il ajuta foarte mult, pentru a detec
 \section{Alouneh et al.}
 
 
-Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema lui Shamir cu cateva modificari. Aceste schimbari se vor arata esentiale mai tarziu in pastrarea securitatii.
+Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema Shamir cu cateva modificari. Aceste schimbari se vor arata esentiale mai tarziu in pastrarea securitatii.
 
 \subsection{Arhitectura sistemului}
 %TODO inserting figures with algoritms
-In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majoritatii sistemelor de operare - orice este un fisier), acesta este preluat de o aplicatie de control pe partea de client care il imparte in blocuri de biti de lungime $k$. Bitii reprezinta coeficientii unui polinom $f$, componenta cu indicele $i$ va fi reprezentata de valoarea lui $f(i)$ $i = 1,2,\dots, n$. Mentionam ca toate operatiile se vor efectua in $GF(256)$ modulo un polinom ireductibil (in implementarea sistemului, autorii folosesc $x^8 + x^5 + x^3 + x + 1$). Procedeul este descris in detaliu in fig \ref{fig:alouneh-distribution}
+In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majoritatii sistemelor de operare - orice este un fisier), acesta este preluat de o aplicatie de control pe partea de client care il imparte in blocuri de biti de lungime $k$. Bitii reprezinta coeficientii unui polinom $f$, componenta cu indicele $i$ va fi reprezentata de valoarea lui $f(i)$ $i = \{1,2,\dots, n\}$. Mentionam ca toate operatiile se vor efectua in $GF(256)$ modulo un polinom ireductibil (in implementarea sistemului, autorii folosesc $x^8 + x^5 + x^3 + x + 1$). Procedeul este descris in detaliu in Fig \ref{fig:alouneh_distribution}.
 
 
 %---------------- Figure - alouneh-distribution - START ------------------------
@@ -414,50 +414,69 @@ In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majorita
 
 \\
 \hspace{.1in}
-\textbf{Date de intrare}: Un fisier binar $\mathcal{S}$
+\textbf{Date de intrare}: Un fisier binar $\mathcal{S}$;
 \medskip
 
 \hspace{.1in}
-\textbf{Date de iesire}: $n$ fisiere binare distribuite la noduri din retea
+\textbf{Date de iesire}: $n$ fisiere binare distribuite la noduri din retea;
 \medskip
 
 \hspace{.1in}
-\textbf{Procesarea componentelor}: Aplicatia existenta pe parte de client: 
+\textbf{Procesarea componentelor}: Aplicatia existenta pe partea clientului: 
 	\begin{itemize}
 		\item Daca $\mathcal{S}$ nu are o lungime divizibila cu $k$ atunci alipeste la $\mathcal{S}$ 
-			biti pana cand $len(\mathcal{S}) \Mod k = 0$
-		\item Imparte $\mathcal{S}$ in blocuri de lungime $k$
-		\item Repeta pentru fiecare bloc $B_t$ de lungime $k$, 
+			biti pana cand $len(\mathcal{S}) \Mod k = 0$;
+		\item Imparte $\mathcal{S}$ in blocuri de lungime $k$;
+		\item Repeta pentru fiecare bloc $B_t$ de lungime $k$:
 		\begin{itemize}
-			\item Construieste polinomul $f(x) = B_{t_{k - 1}}x ^ {k-1} + B_{t_{k - 2}}x ^ {k - 2} + .... + B_{t_1}x + \mathcal{S}$
-			\item Calculeaza $f(i)$ pentru $1 \leq i \leq n$	
+			\item Construieste polinomul $f(x) = B_{t_{k - 1}}x ^ {k-1} + B_{t_{k - 2}}x ^ {k - 2} + .... + B_{t_1}x + \mathcal{S}$;
+			\item Calculeaza $f(i)$ pentru $1 \leq i \leq n$;
 		\end{itemize}
 	\end{itemize}
 
 \hspace{.1in}
-\textbf{Distributie}: Aplicatia la nivel de client distribuie componenta $f(i)$ nodului din retea cu indicele $i$:
+\textbf{Distributie}: Aplicatia la nivel de client:
 	\begin{itemize}
-		\item Calculeaza $S = \sum_{i=1}^{n} s_i \Mod q$;
+		\item Distribuie componenta $f(i)$ nodului din retea cu indicele $i$:
+		\item Calculeaza $S = \sum\limits_{i=1}^{n} s_i \Mod q$.
 	\end{itemize}
 
 \\
 \hline
 \end{tabular}
-\caption{Schema unanima \cite{Karnin:83}}
+\caption{Schema Alouneh et al. \cite{AAMK:2013}}
 \label{fig:alouneh_distribution}
 \end{figure*}
 
 %---------------- Figure - alouneh_distribution - STOP ------------------------
 
+Vom exemplifica modul de calcul in $GF(256) \Mod {g(x)} $ unde $g(x) = x ^ 8 + x ^ 4 + x ^ 3 + 1$. Luam polinomul $f(x) = 10 + 15x$ care corespunde unui fisier format din octetii (in aceasta ordine) $10$ $15$.
+	\begin{equation} \label{f-01}
+	\begin{split}
+		f(01) \Mod{g(x)} & = 10 + 15 \Mod{g(x)} \\
+		& = (x ^ 4) + (x ^ 4 + x ^ 2 + 1) \Mod{g(x)} \\
+		& = x ^ 2 + 1 = 0000\textit{ }00101 \Mod{g(x)} \\
+		& =  05
+	\end{split}
+	\end{equation}
 
-
-
-Pentru reconstituirea unui fisier se interpoleaza share-urile din orice structura de acces $\mathcal{A}$ de dimensiune minim $k$ prin metoda lui Lagrange, asemanator schemei lui Shamir:
+	\begin{equation} \label{f-02}
+	\begin{split}
+	 f(02) \Mod{g(x)} \\
+	 &= 10 + 15 * 02 \Mod{g(x)} \\
+	 & = (x ^ 4) + (x ^ 5 + x ^ 3 + x) \Mod{g(x)} \\
+	 & = 0011\textit{ }1010 \Mod{g(x)} \\
+	 & = 3A
+	 \end{split}
+	 \end{equation}
+Pentru reconstituirea unui fisier se interpoleaza share-urile din orice structura de acces $\mathcal{A}$ de dimensiune minim $k$ prin metoda lui Lagrange, asemanator schemei Shamir:
 
 \begin{equation}
 	f(x)=\sum_{i \in A} f(i) \prod_{j \in A, j \neq i} \frac{x-j}{i-j}
 \end{equation}
 
+
+%TODO: add reconstruction and pictures with different architectures, maybe some examples.
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -470,7 +489,7 @@ Impreuna cu mentorul am analizat un articol aparut intr-un jurnal de clasa C und
 \subsection{Erori gasite in articol}
 
 
-Spre deosebire de schema lui Shamir in care coeficientii sunt alesi intr-un mod aleator uniform, acestia
+Spre deosebire de schema Shamir in care coeficientii sunt alesi intr-un mod aleator uniform, acestia
 reprezinta acum continut din fisierele originale.
 Intuitiv, determinismul implica de cele mai multe ori vulnerabilitati (aplicarea schemei de 2 ori pe date de intrare identice $\rightarrow$ acelasi date de iesire).
 Alegerea este motivata de faptul ca multimea share-urilor si efortul computational depus pentru generarea coeficientilor se reduce la un factor de $k$ spre deosebire de schema Shamir. Natura determinismului duce la cateva atacuri simple in momentul in care un atacator obtine informatiile retinute intr-un nod, indiferent de marimea treshold-ului $k$.
