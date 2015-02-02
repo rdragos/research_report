@@ -116,7 +116,7 @@ Acestea se clasific\u{a} in func\c{t}ie de cantitatea de informa\c{t}ie secret\u
 \begin{itemize}
 	\item \textit{Sisteme perfecte de partajare}: componentele nu ofera nici o informatie teoretica despre $\mathcal{S}$ indiferent de resursele computa\c{t}ionale.
 	\item \textit{Sisteme statistic sigure}: o frac\c{t}iune de informa\c{t}ie este dezvaluita despre $\mathcal{S}$ independent de puterea computionala a adversarului.
-	\item \textit{Sisteme computa\c{t}ional-sigure de partajare}: se bazeaz\u{a} pe faptul ca reconstituirea lui $\mathcal{S}$ se reduce la o problema \textit{dificil\u{a}}\cite{boneh:1998-decision} in lipsa unor informa\c{t}ii oferite doar grupului de acces $\mathcal{A}$.
+	\item \textit{Sisteme computa\c{t}ional-sigure de partajare}: se bazeaz\u{a} pe faptul ca reconstituirea lui $\mathcal{S}$ se reduce la o problema \textit{dificil\u{a}}\cite{boneh:1998decision} in lipsa unor informa\c{t}ii oferite doar grupului de acces $\mathcal{A}$.
 %cite somehow AA article \todo{nu toate problemele sunt demonstrate ca fiind NP complete, se crede ca sunt probleme dificile}. ups, forgot about that:)
 \end{itemize} 
 
@@ -195,7 +195,7 @@ din cei $n$ pot recupera $\mathcal{S}$, insa mai putin de $k$ nu obtin nicio inf
 
 Intuitiv, avand $k$ puncte in plan $(x_i, y_i)$, $x_i \neq x_j \text{ } i,j \in \{1,2,\dots,k\}$ $\forall i \neq j$, exista o curba polinomiala unica care trece prin ele.  
 In schimb, pentru a defini o curba polinomiala de grad $k$ care contine $k - 1$ puncte date, exista o infinitate de solutii.
-Evident, orice submultime de valori $s_i$ de marime egala cu $k$ este suficienta si necesara pentru a reconstrui polinomul $f$. Dupa interpolarea share-urilor detinute de cel putin $k$ dintre participanti, secretul $\mathcal{S}$ se va afla in $f(0)$. (Fig. \ref{fig:shamir_scheme}) 
+Evident, orice submultime de valori $s_i$ de marime egala cu $k$ este suficienta si necesara pentru a reconstrui polinomul $f$. Dupa interpolarea componentelor detinute de cel putin $k$ dintre participanti, secretul $\mathcal{S}$ se va afla in $f(0)$. (Fig. \ref{fig:shamir_scheme}) 
 
 Pentru un atacator care detine chiar si $k-1$ valori $\mathcal{S}_i$, acesta nu determin\u{a} nimic despre $\mathcal{S}$, spa\c{t}iul de solu\c{t}ii posibile fiind identic fata de situatia in care nu reuseste sa ob\c{t}ina vreo component\u{a}.
 
@@ -357,6 +357,7 @@ O alternativa la solutia cu criptare care asigura confidentialitatea dar si redu
 %Maybe some pictures with PASIS, just in case not enough pages
 
 \subsection{PASIS}
+\label{sec:desc_pasis}
 In 2000, PASIS este oferit ca o solutie pentru un sistem descentralizat care ofera beneficii precum securitate, redundanta de date si auto-intretinere.
 Structurile descentralizate impart informatia la mai multe noduri folosind scheme de redundanta precum RAID pentru a asigura performanta, scalabilitatea sistemului dar si integritatea datelor. \cite{Patterson:1988}
 
@@ -374,10 +375,13 @@ In articol se mentioneaza si compromisurile de timp/spatiu folosite de PASIS. In
 %TODO find a better translation for "fault tolerant"
 
 \subsection{GridSharing} 
-In 2005 Subbiah si Blough propun o noua abordare pentru a construi un sistem de stocare sigur si tolerant la erori numit GridSharing.
-Arhitectura este construita pe baza unei scheme de partajare XOR si o multitudine de servere ce folosesc mecanisme de replicare permitandu-i schimbarea parametrilor pentru diferite metrici de evaluare a performantelor. \cite{SB:2005}
+In 2005 Subbiah si Blough propun o noua abordare pentru a construi un sistem de stocare securizat si tolerant la erori numit GridSharing.
+Schema Shamir nu ofera siguranta in ceea ce priveste detectarea sau actualizarea unor componente incorecte introduse de un atacator. Metoda cea mai des folosita este determinarea unei componente valide si prin compararea de semnaturi %poate mai bine hashuri decat semnaturi?
+cu celelalte pentru a verifica corectitudinea lor. Aceasta este realizata prin scheme de verificare non-interactive precum cea a lui Feldman impreuna cu schema Shamir \cite{Feldman:1987}
 
-Articolul identifica 3 tipuri de defectiuni ale serverelor cu ajutorul carora sunt stocate datele:
+Arhitectura este construita pe baza unei scheme de partajare XOR si o multime de servere (noduri) ce folosesc mecanisme de replicare pe care sunt stocate componentele rezultate in urma partajarii. Serverele sunt parametrizate permitand schimbarea parametrilor pentru diferite metrici de evaluare a performantelor. \cite{SB:2005}
+
+Articolul identifica 3 tipuri de defectiuni ale serverelor care pot vcarora sunt stocate datele:
 \begin{itemize}
 	\item Caderi: un server este \textit{cazut} daca nu mai raspunde vreunui mesaj din retea si s-a oprit din a mai efectua vreo operatie 
 	\item Bizantine: atunci cand serverul respecta intotdeauna protocoalele initiale. Se considera ca share-urile salvate local au fost compromise
@@ -386,6 +390,7 @@ Articolul identifica 3 tipuri de defectiuni ale serverelor cu ajutorul carora su
 Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribuite. Cel de-al 3-lea model a fost introdus pentru a defini atacatorul care foloseste vulnerabilitatile cu intentia doar de a invata din date. Arhitectura GridSharing consta in N servere unde cel mult $c$ servere pot cade(? srsly) $b$ server bizantine si $l$ leakage only. Cele $N$ pot fi aranjate intr-un grid cu $r$ linii si $N/r$ coloane. Caracteristicile modelului bizantin si leakage-only permit ca share-urile de pe cel mult $l + b$ linii sa permita dezvaluirea lor unui adeversar.  
 
 \subsection{POTSHARDS} 
+\label{sec:desc_potshards}
 In 2007 este propus un nou sistem care combina caracteristicile PASIS si GridSharing adaugand posiblitatea de a k migrarea datelor la noduri noi.
 De asemenea este introdusa o tehnica noua de gasire a share-urilor folosind pointeri aproximativi. Pentru a asigura confidentialitatea, autorii adopta o schema de partajare XOR te tipul totul sau nimic, la fel ca in GridSharing.
 POTSHARDS readreseaza(?) problema in care o persoana neautorizata care incearca sa afle informatii vulnerabile sa nu scape nedetectata. Schemele existente precum PASIS si GridSharing nu indeplineau aceasta cerinta daca un atacator determina locatia share-urilor distribuite.
@@ -397,13 +402,13 @@ POTSHARDS poate fi gandit ca o aplicatie pe partea de client care comunica cu o 
 Pentru un atacator, detinerea unui shard nu il ajuta foarte mult, pentru a detecta urmatorul shard, un atac brut force consta in cereri multiple in zona indicata de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este sa stocheze datele intr-un mod cat mai "imprastiat".\cite{SGMV:2009}
 
 \section{Alouneh et al.}
+\label{desc_alouneh}
 
-
-Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema Shamir cu cateva modificari. Aceste schimbari se vor arata esentiale mai tarziu in pastrarea securitatii.
+Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema Shamir cu cateva modificari. Aceste schimbari se vor arata cruciale mai tarziu in mentinerea securitatii.
 
 \subsection{Arhitectura sistemului}
 %TODO inserting figures with algoritms
-In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majoritatii sistemelor de operare - orice este un fisier), acesta este preluat de o aplicatie de control pe partea de client care il imparte in blocuri de biti de lungime $k$. Bitii reprezinta coeficientii unui polinom $f$, componenta cu indicele $i$ va fi reprezentata de valoarea lui $f(i)$ $i = \{1,2,\dots, n\}$. Mentionam ca toate operatiile se vor efectua in $GF(256)$ modulo un polinom ireductibil (in implementarea sistemului, autorii folosesc $x^8 + x^5 + x^3 + x + 1$). Procedeul este descris in detaliu in Fig \ref{fig:alouneh_distribution}.
+In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majoritatii sistemelor de operare - orice este un fisier), acesta este preluat de o aplicatie de control pe partea de client care imparte in blocuri de octeti de lungime $k$. Pentru fiecare bloc, octetii devin coeficientii unui polinom $f$ componenta cu indicele $i$ va fi reprezentata de valoarea lui $f(i)$ $i = \{1,2,\dots, n\}$. Mentionam ca toate operatiile se vor efectua in $GF(256)$ modulo un polinom ireductibil (in implementarea sistemului, autorii folosesc $x^8 + x^5 + x^3 + x + 1$). Procedeul este descris in detaliu in Fig \ref{fig:alouneh_distribution}.
 
 
 %---------------- Figure - alouneh-distribution - START ------------------------
@@ -424,12 +429,14 @@ In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majorita
 \hspace{.1in}
 \textbf{Procesarea componentelor}: Aplicatia existenta pe partea clientului: 
 	\begin{itemize}
-		\item Daca $\mathcal{S}$ nu are o lungime divizibila cu $k$ atunci alipeste la $\mathcal{S}$ 
-			biti pana cand $len(\mathcal{S}) \Mod k = 0$;
+		\item Daca $\mathcal{S}$ nu are o lungime divizibila cu $k$:
+			\begin{itemize}
+			\item concateneaza la sfarsitul lui $\mathcal{S}$ octeti pana cand $len(\mathcal{S}) \Mod k = 0$;
+			\end{itemize}
 		\item Imparte $\mathcal{S}$ in blocuri de lungime $k$;
 		\item Repeta pentru fiecare bloc $B_t$ de lungime $k$:
 		\begin{itemize}
-			\item Construieste polinomul $f(x) = B_{t_{k - 1}}x ^ {k-1} + B_{t_{k - 2}}x ^ {k - 2} + .... + B_{t_1}x + \mathcal{S}$;
+			\item Construieste polinomul $f(x) = B_{t_{k - 1}}x ^ {k-1} + B_{t_{k - 2}}x ^ {k - 2} + .... + B_{t_1}x + B_{t_0}$;
 			\item Calculeaza $f(i)$ pentru $1 \leq i \leq n$;
 		\end{itemize}
 	\end{itemize}
@@ -444,38 +451,86 @@ In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majorita
 \\
 \hline
 \end{tabular}
-\caption{Schema Alouneh et al. \cite{AAMK:2013}}
+\caption{Schema Alouneh et al. - Generare \ref{AAMK:2013}}
 \label{fig:alouneh_distribution}
 \end{figure*}
 
 %---------------- Figure - alouneh_distribution - STOP ------------------------
 
+\begin{example}
 Vom exemplifica modul de calcul in $GF(256) \Mod {g(x)} $ unde $g(x) = x ^ 8 + x ^ 4 + x ^ 3 + 1$. Luam polinomul $f(x) = 10 + 15x$ care corespunde unui fisier format din octetii (in aceasta ordine) $10$ $15$.
-	\begin{equation} \label{f-01}
+	\begin{equation} \label{eq:f_01}
 	\begin{split}
 		f(01) \Mod{g(x)} & = 10 + 15 \Mod{g(x)} \\
 		& = (x ^ 4) + (x ^ 4 + x ^ 2 + 1) \Mod{g(x)} \\
-		& = x ^ 2 + 1 = 0000\textit{ }00101 \Mod{g(x)} \\
-		& =  05
+		& = x ^ 2 + 1 = 000000101_2 \\
+		& =  05_{16}
 	\end{split}
 	\end{equation}
 
-	\begin{equation} \label{f-02}
+	\begin{equation} \label{eq:f_02}
 	\begin{split}
-	 f(02) \Mod{g(x)} \\
-	 &= 10 + 15 * 02 \Mod{g(x)} \\
+	 f(02) \Mod{g(x)} & = 10 + 15\cdot02 \Mod{g(x)} \\
 	 & = (x ^ 4) + (x ^ 5 + x ^ 3 + x) \Mod{g(x)} \\
-	 & = 0011\textit{ }1010 \Mod{g(x)} \\
-	 & = 3A
+	 & = 00111010_2 \\
+	 & = 3A_{16}
 	 \end{split}
 	 \end{equation}
-Pentru reconstituirea unui fisier se interpoleaza share-urile din orice structura de acces $\mathcal{A}$ de dimensiune minim $k$ prin metoda lui Lagrange, asemanator schemei Shamir:
-
+\end{example}
+Pentru reconstituirea unui fisier (\ref{fig:alouneh_reconstruction}) fse interpoleaza din orice multime de componente $\mathcal{A}$ cu dimensiune minim $k$ prin metoda lui Lagrange, asemanator schemei Shamir:
 \begin{equation}
+	\label{eq:lagrange_poly}
 	f(x)=\sum_{i \in A} f(i) \prod_{j \in A, j \neq i} \frac{x-j}{i-j}
 \end{equation}
 
+\begin{example}
+Vom exemplifica interpolarea \ref{eq:lagrange_poly} pe componentele calculate in  \ref{eq:f_01} si \ref{eq:f_02} pentru a reconstitui polinomul:
+	\begin{equation}
+	\begin{split}
+		f(x) & = 05(x - 02)(01 - 02)^{-1} + 3A(x - 01)(02 - 01)^{-1} \\
+		& = 05(x - 02)03^{-1} + 3A(x - 01)03^{-1} \\
+		& = F6(05 + 3A)x + F6(05\cdot02 + 3A \cdot 01) \\
+		& = F6\cdot 3F\cdot x + F6\cdot30 = 15x + 10
+	\end{split}
+	\end{equation}
+\end{example}
 
+Noutatea arhitecturii consta in diminuarea redundantei componentelor la un factor de $k$, spre deosebire de sistemele descrise in \ref{sec:desc_pasis} sau in \ref{sec:desc_potshards}. Reducerea spatiului ocupat este datorat inlocuirii coeficientilor cu octetii din fisierul ce va fi partajat. Confidentialitatea este indusa automat de schema lui Shamir.
+
+%---------------- Figure - alouneh-reconstruction- START ------------------------
+\begin{figure*}[h!]
+
+\begin{tabular}{|p{\textwidth}|}
+\hline
+
+\\
+\hspace{.1in}
+\textbf{Date de intrare}: Cel putin $k$ componente provenite din noduri (distincte);
+\medskip
+
+\hspace{.1in}
+\textbf{Date de iesire}: Fisierul binar original $\mathcal{S}$;
+\medskip
+
+\hspace{.1in}
+\textbf{Reconstructie}: Aplicatia existenta pe partea clientului: 
+	\begin{itemize}
+		\item Repeta pentru fiecare bloc al lui $\mathcal{S}$:
+		\begin{itemize}
+			\item Calculeaza prin interpolare coeficientii lui $f(x)=B_{t_{k - 1}}x ^ {k-1} + B_{t_{k - 2}}x ^ {k - 2} + .... + B_{t_1} + B_{t_0}$
+			\item Reconstituie blocul $B_t$
+		\end{itemize}
+		\item Inlatura padding%(in romana?)
+	\end{itemize}
+
+\\
+\hline
+\end{tabular}
+\caption{Schema Alouneh et al. - Reconstructie \cite{AAMK:2013}}
+\label{fig:alouneh_reconstruction}
+\end{figure*}
+
+%---------------- Figure - alouneh_reconstruction- STOP ------------------------
 %TODO: add reconstruction and pictures with different architectures, maybe some examples.
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -491,8 +546,10 @@ Impreuna cu mentorul am analizat un articol aparut intr-un jurnal de clasa C und
 
 Spre deosebire de schema Shamir in care coeficientii sunt alesi intr-un mod aleator uniform, acestia
 reprezinta acum continut din fisierele originale.
+Alegerea este motivata de faptul ca multimea share-urilor si efortul computational depus pentru generarea coeficientilor se reduce la un factor de $k$ spre deosebire de schema Shamir. 
+Natura determinismului duce la cateva atacuri simple in momentul in care un atacator obtine informatiile retinute intr-un nod, indiferent de marimea treshold-ului $k$.
 Intuitiv, determinismul implica de cele mai multe ori vulnerabilitati (aplicarea schemei de 2 ori pe date de intrare identice $\rightarrow$ acelasi date de iesire).
-Alegerea este motivata de faptul ca multimea share-urilor si efortul computational depus pentru generarea coeficientilor se reduce la un factor de $k$ spre deosebire de schema Shamir. Natura determinismului duce la cateva atacuri simple in momentul in care un atacator obtine informatiile retinute intr-un nod, indiferent de marimea treshold-ului $k$.
+
 
 
 \subsection{Verificarea rezultatelor}
