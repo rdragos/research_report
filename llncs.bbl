@@ -6,15 +6,27 @@ Katz, J., Lindell, Y.:
   and Network Security Series).
 \newblock Chapman \& Hall/CRC (2007)
 
+\bibitem{Survey:2011}
+Beimel, A.:
+\newblock Secret-sharing schemes: a survey.
+\newblock In: Coding and cryptology.
+\newblock Springer (2011)  11--46
+
+\bibitem{hillery:1999}
+Hillery, M., Bu{\v{z}}ek, V., Berthiaume, A.:
+\newblock Quantum secret sharing.
+\newblock Physical Review A \textbf{59}(3) (1999)  1829
+
 \bibitem{L:1997}
 Csirmaz, L.:
 \newblock The size of a share must be large.
 \newblock Journal of cryptology \textbf{10.4} (1997)  223--231
 
-\bibitem{Olimid:2013}
-Olimid, R.F.:
-\newblock Secret Sharing-based Group Key Establishment.
-\newblock PhD thesis, University of Bucharest, Romania (2013)
+\bibitem{boneh:1998decision}
+Boneh, D.:
+\newblock The decision diffie-hellman problem.
+\newblock In: Algorithmic number theory.
+\newblock Springer (1998)  48--63
 
 \bibitem{B:1979}
 Blakley, G.:
@@ -38,17 +50,6 @@ Benaloh, J., Leichter, J.:
 \newblock Generalized secret sharing and monotone functions.
 \newblock In: Proceedings on Advances in Cryptology. CRYPTO '88, New York, NY,
   USA, Springer-Verlag New York, Inc. (1990)  27--35
-
-\bibitem{Survey:2011}
-Beimel, A.:
-\newblock Secret-sharing schemes: a survey.
-\newblock In: Coding and cryptology.
-\newblock Springer (2011)  11--46
-
-\bibitem{hillery:1999}
-Hillery, M., Bu{\v{z}}ek, V., Berthiaume, A.:
-\newblock Quantum secret sharing.
-\newblock Physical Review A \textbf{59}(3) (1999)  1829
 
 \bibitem{Karnin:83}
 Karnin, E.D., Member, S., Greene, J.W., Member, S., Hellman, M.E.:
@@ -83,6 +84,13 @@ Subbiah, A., Blough, D.M.:
 Patterson, D.A., Gibson, G., Katz, R.H.:
 \newblock A case for redundant arrays of inexpensive disks (raid).
 \newblock SIGMOD Rec. \textbf{17}(3) (June 1988)  109--116
+
+\bibitem{Feldman:1987}
+Feldman, P.:
+\newblock A practical scheme for non-interactive verifiable secret sharing.
+\newblock In: Proceedings of the 28th Annual Symposium on Foundations of
+  Computer Science. SFCS '87, Washington, DC, USA, IEEE Computer Society (1987)
+   427--438
 
 \bibitem{AAMK:2013}
 Alouneh, S., Abed, S., Mohd, B.J., Kharbutli, M.:

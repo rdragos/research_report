@@ -150,7 +150,7 @@ Presupun\^{a}nd ca vrem sa imp\u{a}r\c{t}im un secret $\mathcal{S}$ la $n$ parti
 \hspace{.1in}
 \textbf{Initializare}: 
 	\begin{itemize}
-		\item Fie $S \in Z_p$ unde $q > 1 $ si $q$ prim;
+		\item Fie $S \in Z_q$ unde $q > 1 $ si $q$ prim;
 		\item Fie $n$ numarul de participanti;
 	\end{itemize}
 \medskip
@@ -375,19 +375,43 @@ In articol se mentioneaza si compromisurile de timp/spatiu folosite de PASIS. In
 %TODO find a better translation for "fault tolerant"
 
 \subsection{GridSharing} 
-In 2005 Subbiah si Blough propun o noua abordare pentru a construi un sistem de stocare securizat si tolerant la erori numit GridSharing.
+In 2005 Subbiah si Blough propun o noua abordare pentru a construi un sistem de stocare securizat si tolerant la erori numit GridSharing. \cite{SB:2005}
+
 Schema Shamir nu ofera siguranta in ceea ce priveste detectarea sau actualizarea unor componente incorecte introduse de un atacator. Metoda cea mai des folosita este determinarea unei componente valide si prin compararea de semnaturi %poate mai bine hashuri decat semnaturi?
 cu celelalte pentru a verifica corectitudinea lor. Aceasta este realizata prin scheme de verificare non-interactive precum cea a lui Feldman impreuna cu schema Shamir \cite{Feldman:1987}
 
-Arhitectura este construita pe baza unei scheme de partajare XOR si o multime de servere (noduri) ce folosesc mecanisme de replicare pe care sunt stocate componentele rezultate in urma partajarii. Serverele sunt parametrizate permitand schimbarea parametrilor pentru diferite metrici de evaluare a performantelor. \cite{SB:2005}
+Autorii folosesc un sistem care inlocuieste schemele de verificare cu o scheme de partajare unanima XOR (consideram cazul $q = 2$ in Fig. \ref{fig:all_or_nothing}) pentru a pastra securitatea constructiei.
+In cazul detectarii componentelor incorecte, este adoptata o strategie de tipul \todo{replicate-and-voting}.
+Componentele sunt \todo{replicate} pe un numar mare de servere astfel incat determinarea validitatii va fi stabilita daca exista un prag de servere ce le contin.
 
-Articolul identifica 3 tipuri de defectiuni ale serverelor care pot vcarora sunt stocate datele:
+Articolul identifica 3 tipuri de defectiuni care pot apare pe serverele unde sunt stocate datele:
 \begin{itemize}
-	\item Caderi: un server este \textit{cazut} daca nu mai raspunde vreunui mesaj din retea si s-a oprit din a mai efectua vreo operatie 
-	\item Bizantine: atunci cand serverul respecta intotdeauna protocoalele initiale. Se considera ca share-urile salvate local au fost compromise
-	\item Leakage-only(scapare?): serverul executa protocoalele corect dar e posibil ca un adversar sa fi obtinut share-urile stocate
+	\item Abandonari: un server este \textit{abandonat} daca nu mai raspunde vreunui mesaj din retea si s-a oprit din a mai efectua vreo operatie.
+	\item Bizantine: atunci cand serverul respecta intotdeauna protocoalele initiale dar componentele salvate local au fost compromise.
+	\item Scurgeri de informatii: serverul executa protocoalele corect dar e posibil ca un adversar sa fi obtinut componentele stocate.
 \end{itemize}
-Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribuite. Cel de-al 3-lea model a fost introdus pentru a defini atacatorul care foloseste vulnerabilitatile cu intentia doar de a invata din date. Arhitectura GridSharing consta in N servere unde cel mult $c$ servere pot cade(? srsly) $b$ server bizantine si $l$ leakage only. Cele $N$ pot fi aranjate intr-un grid cu $r$ linii si $N/r$ coloane. Caracteristicile modelului bizantin si leakage-only permit ca share-urile de pe cel mult $l + b$ linii sa permita dezvaluirea lor unui adeversar.  
+Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribuite. Cel de-al 3-lea model a fost introdus pentru a defini atacatorul care foloseste vulnerabilitatile cu intentia de a \textit{invata} din informatii.
+
+Arhitectura GridSharing consta in $N$ servere unde cel mult $c$ servere pot fi abandonate, $b$ servere bizantine si $l$ cu scurgeri de informatii. Cele $N$ pot fi aranjate intr-un grid cu $r$ linii si $N/r$ coloane (consideram pentru simplitate ca $N \Mod r = 0$. Caracteristicile modelului bizantin si cel specific scurgerilor de informatii permit dezvaluirea componentelor unui adversar de pe cel mult $l + b$ servere.
+
+\begin{example}
+	Consideram ca impartim un secret $\mathcal{S}$ la $3$ linii (participanti) astfel incat sistemul sa permita $2$ componente de tip $b$, $1$ componenta de tip $l$ si $15$ servere. In cazul acesta vom folosi o schema majoritara XOR $\big( {4 \choose 3}, {4 \choose 3}\big) = (3,3)$.
+
+	Vom avea $3$ componente, $(s_1, s_2, s_3)$ ai $s_1 \oplus s_2 \oplus s_3 = \mathcal{S}$.
+	Distribuirea se face in felul urmator:
+	\begin{itemize}
+		\item Serverele situate pe prima linie primesc $s_1$
+		\item Serverele situate pe a doua linie primesc $s_2$
+		\item Serverele situate pe a treia linie primesc $s_3$
+	\end{itemize}
+\end{example}
+
+\begin{figure}
+	\includegraphics[width=12cm]{img/GridSharing.png}    % The printed column width is 8.4 cm.
+	\caption{GridSharing cu $3$ linii, $15$ servere dintre care $2$ bizantine, $1$ cu scurgeri de informatii}
+	\label{fig:grid_sharing}
+	\bigskip
+\end{figure}
 
 \subsection{POTSHARDS} 
 \label{sec:desc_potshards}
@@ -445,13 +469,12 @@ In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majorita
 \textbf{Distributie}: Aplicatia la nivel de client:
 	\begin{itemize}
 		\item Distribuie componenta $f(i)$ nodului din retea cu indicele $i$:
-		\item Calculeaza $S = \sum\limits_{i=1}^{n} s_i \Mod q$.
 	\end{itemize}
 
 \\
 \hline
 \end{tabular}
-\caption{Schema Alouneh et al. - Generare \ref{AAMK:2013}}
+\caption{Schema Alouneh et al. - Generare}
 \label{fig:alouneh_distribution}
 \end{figure*}
 
@@ -526,7 +549,7 @@ Noutatea arhitecturii consta in diminuarea redundantei componentelor la un facto
 \\
 \hline
 \end{tabular}
-\caption{Schema Alouneh et al. - Reconstructie \cite{AAMK:2013}}
+\caption{Schema Alouneh et al. - Reconstructie}
 \label{fig:alouneh_reconstruction}
 \end{figure*}
 
