@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.30)  3 FEB 2015 03:05
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.11.30)  3 FEB 2015 12:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**llncs
+**llncs.tex
 (./llncs.tex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 78 languages loaded.
@@ -383,22 +383,22 @@ LaTeX Warning: Reference `wiki:enigma' on page 1 undefined on input line 62.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Overfull \hbox (2.79999pt too wide) in paragraph at lines 146--182
+Overfull \hbox (2.79999pt too wide) in paragraph at lines 143--179
 [][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 222.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 219.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 222.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 219.
 
-Overfull \hbox (2.79999pt too wide) in paragraph at lines 205--247
+Overfull \hbox (2.79999pt too wide) in paragraph at lines 202--244
 [][] 
  []
 
@@ -406,7 +406,7 @@ Overfull \hbox (2.79999pt too wide) in paragraph at lines 205--247
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [3]
-Overfull \hbox (2.79999pt too wide) in paragraph at lines 268--317
+Overfull \hbox (2.79999pt too wide) in paragraph at lines 265--314
 [][] 
  []
 
@@ -417,21 +417,21 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 398.
+(amsmath)                 on input line 395.
 
 <img/GridSharing.png, id=45, 647.41875pt x 387.4475pt>
 File: img/GridSharing.png Graphic file (type png)
 
 <use img/GridSharing.png>
-Package pdftex.def Info: img/GridSharing.png used on input line 410.
+Package pdftex.def Info: img/GridSharing.png used on input line 407.
 (pdftex.def)             Requested size: 341.43306pt x 204.32933pt.
  [8] [9 <./img/GridSharing.png>]
-Overfull \hbox (2.79999pt too wide) in paragraph at lines 441--477
+Overfull \hbox (2.79999pt too wide) in paragraph at lines 438--474
 [][] 
  []
 
 [10]
-Overfull \hbox (2.79999pt too wide) in paragraph at lines 526--552
+Overfull \hbox (2.79999pt too wide) in paragraph at lines 523--549
 [][] 
  []
 
@@ -444,13 +444,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3710 strings out of 493304
- 47043 string characters out of 6139870
- 135413 words of memory out of 5000000
- 7091 multiletter control sequences out of 15000+600000
+ 3712 strings out of 493304
+ 47064 string characters out of 6139870
+ 136417 words of memory out of 5000000
+ 7093 multiletter control sequences out of 15000+600000
  10780 words of font info for 42 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,17n,35p,675b,350s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,17n,35p,679b,352s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
@@ -473,7 +473,7 @@ lic/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmtt9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols
 /msbm10.pfb>
-Output written on llncs.pdf (12 pages, 298599 bytes).
+Output written on llncs.pdf (12 pages, 298880 bytes).
 PDF statistics:
  138 PDF objects out of 1000 (max. 8388607)
  98 compressed objects within 1 object stream

@@ -6,45 +6,45 @@ Database file #1: llncs.bib
 A bad cross reference---entry "SB:2005"
 refers to entry "2005", which doesn't exist
 Warning--I didn't find a database entry for "2005"
-You've used 17 entries,
+You've used 18 entries,
             2087 wiz_defined-function locations,
-            626 strings with 6521 characters,
-and the built_in function-call counts, 5561 in all, are:
-= -- 595
-> -- 150
-< -- 15
-+ -- 58
-- -- 41
-* -- 367
-:= -- 713
-add.period$ -- 22
-call.type$ -- 17
-change.case$ -- 16
+            634 strings with 6737 characters,
+and the built_in function-call counts, 5841 in all, are:
+= -- 626
+> -- 154
+< -- 16
++ -- 60
+- -- 42
+* -- 382
+:= -- 748
+add.period$ -- 23
+call.type$ -- 18
+change.case$ -- 17
 chr.to.int$ -- 0
-cite$ -- 17
-duplicate$ -- 314
-empty$ -- 528
-format.name$ -- 41
-if$ -- 1382
+cite$ -- 18
+duplicate$ -- 331
+empty$ -- 555
+format.name$ -- 42
+if$ -- 1451
 int.to.chr$ -- 0
-int.to.str$ -- 17
-missing$ -- 18
-newline$ -- 90
-num.names$ -- 17
-pop$ -- 51
+int.to.str$ -- 18
+missing$ -- 19
+newline$ -- 95
+num.names$ -- 18
+pop$ -- 54
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 222
+skip$ -- 234
 stack$ -- 0
-substring$ -- 396
-swap$ -- 175
-text.length$ -- 15
+substring$ -- 420
+swap$ -- 184
+text.length$ -- 16
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 57
-width$ -- 19
-write$ -- 207
+while$ -- 61
+width$ -- 20
+write$ -- 218
 (There was 1 error message)

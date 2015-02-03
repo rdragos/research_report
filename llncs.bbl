@@ -22,6 +22,12 @@ Csirmaz, L.:
 \newblock The size of a share must be large.
 \newblock Journal of cryptology \textbf{10.4} (1997)  223--231
 
+\bibitem{Martin:2008}
+Martin, K.M.:
+\newblock Challenging the adversary model in secret sharing schemes.
+\newblock Coding and Cryptography II, Proceedings of the Royal Flemish Academy
+  of Belgium for Science and the Arts (2008)  45--63
+
 \bibitem{boneh:1998decision}
 Boneh, D.:
 \newblock The decision diffie-hellman problem.
