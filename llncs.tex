@@ -348,54 +348,60 @@ Majoritatea tehnicilor de criptarea se bazeaza pe dificultatea factorizarii unui
 
 \section{Sisteme de stocare de lunga durata bazate pe scheme de partajare}
 
-O alternativa la solutia cu criptare care asigura confidentialitatea dar si redundanta necesara este intrebuintarea sistemelor de stocare bazate pe scheme de partajare. \cite{W:2000,SB:2005,SGMV:2009}
+O alternativ\u{a} la solu\c{t}ia cu criptare care asigur\u{a} confiden\c{t}ialitatea dar \c{s}i redundan\c{t}a necesar\u{a} este intrebuin\c{t}area sistemelor de stocare bazate pe scheme de partajare. \cite{W:2000,SB:2005,SGMV:2009}
 
 %Poate cateva detalii despre RAID
 %Maybe some pictures with PASIS, just in case not enough pages
 
 \subsection{PASIS}
 \label{sec:desc_pasis}
-In 2000, PASIS este oferit ca o solutie pentru un sistem descentralizat care ofera beneficii precum securitate, redundanta de date si auto-intretinere.
-Structurile descentralizate impart informatia la mai multe noduri folosind scheme de redundanta precum RAID pentru a asigura performanta, scalabilitatea sistemului dar si integritatea datelor. \cite{Patterson:1988}
+PASIS este o solu\c{t}ie pentru un \todo{sistem descentralizat} care ofer\u{a} beneficii precum securitate, redundan\c{t}a de date si auto-intre\c{t}inere.
+Structurile descentralizate \^{i}mpart informa\^{t}ia la mai multe noduri folosind scheme de redundan\c{t}a precum RAID pentru a asigura performan\c{t}a, scalabilitatea sistemului dar \c{s}i integritatea datelor. \cite{Patterson:1988}
 
-PASIS foloseste schemele de partajare pentru a distribui informatia nodurilor de stocare dintr-o retea. Aceasta presupune folosirea unor agenti pe partea clientului pentru a scrie sau sterge date din noduri. Share-urile obtinute dintr-un fisier sau orice obiecte, sunt puse in retea cu ajutorul agentilor. Pe langa continutul brut al share-urilor se adauga si overhead pentru a retine adresa nodului din retea la care a fost trimisa dar si noul nume cu care este salvata remote.
+PASIS folose\c{s}te schemele de partajare pentru a distribui informa\c{t}ia nodurilor de stocare dintr-o re\c{t}ea. Aceasta introduce agen\c{t}i pe partea clientului pentru a scrie sau \c{s}terge date din noduri dar \c{s}i agen\c{t}i pentru mentenan\c{t}\u{a}. Componentele obt\c{i}nute dintr-un fisier sunt puse in re\c{t}ea cu ajutorul agen\c{t}ilor\ref{fig:pasis}. Pe l\^{a}ng\u{a} con\c{t}inutul brut al componentelor se adaug\u{a} metadate pentru a re\c{t}ine adresa nodului din re\c{t}ea la care au fost trimise dar \c{s}i noua denumire cu care este salvat\u{a} in re\c{t}ea.
 
-Considerand o schema de partajare $p-m-n$ unde oricare din cei $m$ participanti pot reconstitui fisierul, dar mai putin de $p$ nu obtin vreo informatie dintr-un total de $n$ participanti. Atunci cand un candidat initiaza o cerere pentru a citi un fisier atunci agentul PASIS aflat local face urmatoarele: 
+Consider\u{a}nd o schem\u{a} de partajare majoritar\u{a} $p-m-n$ unde oricare din cei $m$ participan\c{t}i pot reconstitui fisierul, dar mai pu\c{t}in de $p$ nu ob\c{t}in nicio informa\c{t}ie dintr-un total de $n$ componente. Atunci c\^{a}nd un participant ini\c{t}iaza o cerere pentru a citi un fisier, agentul PASIS aflat local procedeaz\u{a} dupa cum urmeaz\u{a}:
 \begin{itemize}
-	\item Cauta numele celor n share-uri care alcatuiesc fisierul intr-un serviciu care listeaza toate datele
-	\item Trimite cereri de a citi fisierul la cel putin m din cele n noduri
-	\item In caz ca acesta nu primeste cel putin m raspunsuri continua pasul anterior incercand query-uri la alte noduri
-	\item Reconstituie fisierul obtinut din cele m share-uri
+	\item Caut\u{a} numele celor $n$ componente care alc\u{a}tuiesc fi\c{s}ierul \^{i}ntr-un serviciu care listeaz\u{a} toate datele.
+	\item Ini\c{t}iaza cereri de citire la cel pu\c{t}in $m$ din cele $n$ noduri.
+	\item \^{I}n caz ca acesta nu prime\c{s}te cel pu\c{t}in $m$ r\u{a}spunsuri se intoarce la pasul anterior \^{i}ncerc\^{a}nd interog\u{a}ri la noduri diferite.
+	\item Reconstituie fi\c{s}ierul ob\c{t}inut din cele $m$ componente.
 \end{itemize}
-Operatia de scriere este similara cu cea de citire, aceasta oprindu-se atunci cand pe cel putin $n - m + 1$ noduri s-au scris cu succes share-uri.
-In articol se mentioneaza si compromisurile de timp/spatiu folosite de PASIS. In schimb, autorii specifica solutii impracticabile pentru auto mentenanta sistemului, considerand ca se poate face prin monitorizare periodica a starii sistemului.
-%TODO find a better translation for "fault tolerant"
+Opera\c{t}ia de scriere este similar\u{a} cu cea de citire, aceasta oprindu-se atunci cand pe cel pu\c{t}in $n - m + 1$ noduri s-au scris cu succes componente.
+In articol se men\c{t}ioneaza \c{s}i compromisurile de timp/spatiu folosite de PASIS. Autorii specific\u{a} solu\c{t}ii pentru auto mentenan\c{t}a sistemului cu ajutorul resurselor umane prin monitorizarea periodic\u{a} st\u{a}rii sistemului folosind log-uri sau ajustarea parametrilor din cadrul schemei de partajare.
+
+\begin{figure}
+	\includegraphics[width=11cm]{img/PASIS.png}
+	\caption{Arhitectura PASIS cu $4$ noduri \c{s}i $2$ clien\c{t}i}
+	\label{fig:pasis}
+	\bigskip
+\end{figure}
 
 \subsection{GridSharing} 
-In 2005 Subbiah si Blough propun o noua abordare pentru a construi un sistem de stocare securizat si tolerant la erori numit GridSharing. \cite{SB:2005}
+\^{I}n 2005 Subbiah \c{s}i Blough propun o nou\u{a} abordare pentru a construi un sistem de stocare securizat \c{s}i tolerant la erori numit GridSharing. \cite{SB:2005}
 
-Schema Shamir nu ofera siguranta in ceea ce priveste detectarea sau actualizarea unor componente incorecte introduse de un atacator. Metoda cea mai des folosita este determinarea unei componente valide si prin compararea de semnaturi %poate mai bine hashuri decat semnaturi?
-cu celelalte pentru a verifica corectitudinea lor. Aceasta este realizata prin scheme de verificare non-interactive precum cea a lui Feldman impreuna cu schema Shamir \cite{Feldman:1987}
+Schema Shamir nu ofer\u{a} siguran\c{t}\u{a} \^{i}n ceea ce prive\c{s}te detectarea sau actualizarea unor componente incorecte introduse de un atacator. Metoda cea mai des folosit\u{a} este determinarea validit\u{a}\c{t}ii componentelor prin compararea de semn\u{a}turi %poate mai bine hashuri decat semnaturi?
+Aceasta este realizat\u{a} prin scheme de verificare non-interactive precum cea a lui Feldman \^{i}mpreun\u{a} cu schema Shamir \cite{Feldman:1987}
 
-Autorii folosesc un sistem care inlocuieste schemele de verificare cu o scheme de partajare unanima XOR (consideram cazul $q = 2$ in Fig. \ref{fig:all_or_nothing}) pentru a pastra securitatea constructiei.
-In cazul detectarii componentelor incorecte, este adoptata o strategie de tipul \todo{replicate-and-voting}.
-Componentele sunt \todo{replicate} pe un numar mare de servere astfel incat determinarea validitatii va fi stabilita daca exista un prag de servere ce le contin.
+Autorii folosesc un sistem care \^{i}nlocuie\c{s}te schemele de verificare cu o schem\u{a} de partajare unanim\u{a} XOR (consider\u{a}m cazul $q = 2$ \^{i}n Fig. \ref{fig:all_or_nothing}) pentru a p\u{a}stra securitatea construc\c{t}iei.
+In cazul detect\u{a}rii componentelor incorecte, este adoptat\u{a} o strategie de tipul \todo{replicate-and-voting}.
+Componentele sunt \todo{replicate} pe un num\u{a}r mare de servere astfel \^{i}nc\^{a}t determinarea validit\u{a}\c{t}ii va fi stabilit\u{a} \^{i}n func\c{t}ie de num\u{a}rul de servere ce le con\c{t}in.
 
-Articolul identifica 3 tipuri de defectiuni care pot apare pe serverele unde sunt stocate datele:
+Articolul identific\u{a} 3 tipuri de defec\c{t}iuni care pot apare pe serverele unde sunt stocate datele:
 \begin{itemize}
-	\item Abandonari: un server este \textit{abandonat} daca nu mai raspunde vreunui mesaj din retea si s-a oprit din a mai efectua vreo operatie.
-	\item Bizantine: atunci cand serverul respecta intotdeauna protocoalele initiale dar componentele salvate local au fost compromise.
-	\item Scurgeri de informatii: serverul executa protocoalele corect dar e posibil ca un adversar sa fi obtinut componentele stocate.
+	\item Abandon\u{a}ri: un server este \textit{abandonat} dac\u{a} nu mai raspunde vreunui mesaj din retea \c{s}i s-a oprit din a mai efectua vreo opera\c{t}ie.
+	\item Bizantine: atunci c\^{a}nd serverul respect\u{a} \^{i}ntotdeauna protocoalele ini\c{t}iale dar componentele salvate local au fost compromise.
+	\item Scurgeri de informa\c{t}ii: serverul execut\u{a} protocoalele corect dar e posibil ca un adversar s\u{a} fi ob\c{t}inut componentele stocate.
 \end{itemize}
-Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribuite. Cel de-al 3-lea model a fost introdus pentru a defini atacatorul care foloseste vulnerabilitatile cu intentia de a \textit{invata} din informatii.
+Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribuite. Cel de-al 3-lea model a fost introdus pentru a defini atacatorul care folose\c{s}te vulnerabilit\u{a}\c{t}ile cu inten\c{t}ia de a \textit{\^{i}nva\c{t}a} din informa\c{t}ii.
 
-Arhitectura GridSharing consta in $N$ servere unde cel mult $c$ servere pot fi abandonate, $b$ servere bizantine si $l$ cu scurgeri de informatii. Cele $N$ pot fi aranjate intr-un grid cu $r$ linii si $N/r$ coloane (consideram pentru simplitate ca $N \Mod r = 0$. Caracteristicile modelului bizantin si cel specific scurgerilor de informatii permit dezvaluirea componentelor unui adversar de pe cel mult $l + b$ servere.
+Arhitectura GridSharing const\u{a} in $N$ servere unde cel mult $c$ servere pot fi abandonate, $b$ servere bizantine \c{s}i $l$ cu scurgeri de informa\c{t}ii. Cele $N$ pot fi aranjate \^{i}ntr-un grid cu $r$ linii \c{s}i $N/r$ coloane (consider\u{a}m pentru simplitate c\u{a} $N \Mod r = 0$. Caracteristicile modelului bizantin \c{s}i cel specific scurgerilor de informa\c{t}ii permit dezv\u{a}luirea componentelor unui adversar de pe cel mult $l + b$ servere.
 
 \begin{example}
-	Consideram ca impartim un secret $\mathcal{S}$ la $3$ linii (participanti) astfel incat sistemul sa permita $2$ componente de tip $b$, $1$ componenta de tip $l$ si $15$ servere. In cazul acesta vom folosi o schema majoritara XOR $\big( {4 \choose 3}, {4 \choose 3}\big) = (3,3)$.
+	Consider\u{a}m ca \^{i}mpar\c{t}im un secret $\mathcal{S}$ la $3$ linii (participan\c{t}i) astfel \^{i}nc\^{a}t sistemul s\u{a} permit\u{a} $2$ componente de tip $b$, $1$ component\u{a} de tip $l$ \c{s}i $15$ servere. \^{I}n cazul acesta vom folosi o schem\u{a} majoritar\u{a} XOR $\big( {4 \choose 3}, {4 \choose 3}\big) = (3,3)$.
 
-	Vom avea $3$ componente, $(s_1, s_2, s_3)$ ai $s_1 \oplus s_2 \oplus s_3 = \mathcal{S}$.
-	Distribuirea se face in felul urmator:
+	Vom avea $3$ componente, $(s_1, s_2, s_3)$ a.\^{i} $s_1 \oplus s_2 \oplus s_3 = \mathcal{S}$.
+	Distribuirea se face in felul urm\u{a}tor:
 	\begin{itemize}
 		\item Serverele situate pe prima linie primesc $s_1$
 		\item Serverele situate pe a doua linie primesc $s_2$
@@ -405,22 +411,45 @@ Arhitectura GridSharing consta in $N$ servere unde cel mult $c$ servere pot fi a
 
 \begin{figure}
 	\includegraphics[width=12cm]{img/GridSharing.png}    % The printed column width is 8.4 cm.
-	\caption{GridSharing cu $3$ linii, $15$ servere dintre care $2$ bizantine, $1$ cu scurgeri de informatii}
+	\caption{GridSharing cu $3$ linii, $15$ servere dintre care $2$ bizantine, $1$ cu scurgeri de informa\c{t}ii}
 	\label{fig:grid_sharing}
 	\bigskip
 \end{figure}
 
 \subsection{POTSHARDS} 
 \label{sec:desc_potshards}
-In 2007 este propus un nou sistem care combina caracteristicile PASIS si GridSharing adaugand posiblitatea de a k migrarea datelor la noduri noi.
-De asemenea este introdusa o tehnica noua de gasire a share-urilor folosind pointeri aproximativi. Pentru a asigura confidentialitatea, autorii adopta o schema de partajare XOR te tipul totul sau nimic, la fel ca in GridSharing.
-POTSHARDS readreseaza(?) problema in care o persoana neautorizata care incearca sa afle informatii vulnerabile sa nu scape nedetectata. Schemele existente precum PASIS si GridSharing nu indeplineau aceasta cerinta daca un atacator determina locatia share-urilor distribuite.
+\^{I}n $2007$ este propus un nou sistem care combin\u{a} caracteristicile PASIS \c{s}i GridSharing ad\u{a}ug\^{a}nd posiblitatea de migrarea a datelor la noduri noi.
+De asemenea este introdus\u{a} o tehnic\u{a} nou\u{a} de g\u{a}sire a componentelor folosind pointeri aproximativi. Pentru a asigura confiden\c{t}ialitatea, autorii adopt\u{a} o schem\u{a} de partajare XOR unanim\u{a}, la fel ca \^{i}n GridSharing.
+POTSHARDS \todo{readreseaz\u{a}} problema \^{i}n care o persoan\u{a} neautorizat\u{a} \^{i}ncearca s\u{a} afle informa\c{t}ii vulnerabile f\u{a}r\u{a} ca aceasta sa fie nedetectat\u{a}. Schemele existente precum PASIS \c{s}i GridSharing nu indeplineau aceast\u{a} cerin\c{t}a dac\u{a} un atacator determin\u{a} loca\c{t}ia componentelor distribuite ini\c{t}ial.
 
-Solutia pe care o ofera PASIS este reconstruirea share-urilor insa aceasta putea sa aiba repercursiuni negative, precum dezvaluirea unor date secrete,
-%maybe inserting some shard figure here
-POTSHARDS poate fi gandit ca o aplicatie pe partea de client care comunica cu o multime de noduri (arhive) independente . In prima faza, POTSHARDS partajeaza obiectele in fragmente la care adauga meta-date. Autorii le numesc shard-uri. Shard-urile sunt trimise apoi arhivelor independente, fiecare avand domeniul propriu de securitate. Pentru a reconstitui cu succes obiectele, meta-datele shard-urile contin detalii despre structura pointerilor aproximativi, indicand regiunea in care se afla urmatorul shard.
+Solu\c{t}ia pe care o ofer\u{a} aceast\u{a} arhitectur\u{a} este reconstruirea componentelor \^{i}ntr-un mod securizat si folosirea semn\u{a}turilor algebrice pentru a asigura un grad ridicat de p\u{a}strare a integrita\c{t}ii fi\c{s}ierelor.\cite{STM:2006}
+POTSHARDS poate fi g\^{a}ndit ca o aplica\c{t}ie pe partea clientului care comunic\u{a} cu o mul\c{t}ime de noduri (arhive) independente.
 
-Pentru un atacator, detinerea unui shard nu il ajuta foarte mult, pentru a detecta urmatorul shard, un atac brut force consta in cereri multiple in zona indicata de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este sa stocheze datele intr-un mod cat mai "imprastiat".\cite{SGMV:2009}
+Ca prim pas, POTSHARDS preproceseaz\u{a} fi\c{s}ierul \^{i}ntr-un obiect, partajeaz\u{a} obiectul \^{i}n fragmente la care adaug\u{a} meta-date, numite \textit{shards} (Fig. \ref{fig:data-potshard}) \cite{SGMV:2009}. Acestea sunt trimise apoi arhivelor independente, fiecare av\^{a}nd propriul domeniu de securitate, localizate in \textit{regiuni}. Pentru a reconstitui cu succes informa\c{t}ia ini\c{t}iala, meta-datele shard-urilor con\c{t}in detalii despre structura pointerilor aproximativi, indic\^{a}nd regiunea \^{i}n care se afl\u{a} urm\u{a}torul shard.
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=7cm, height=4cm]{img/Shards.png}    % The printed column width is 8.4 cm.
+	\caption{Entit\u{a}\c{t}i de date in POTSHARDS. $NR$ e num\u{a}rul de shard-uri produse de un fragment.
+		$SplitXOR$ reprezint\u{a} o component\u{a} rezultat\u{a} \^{i}n urma partajarii unanime XOR. Analog $SplitShamir$.}
+	\label{fig:data-potshard}
+	\bigskip
+	\end{center}
+\end{figure}
+
+Procesul de fragmentare a datelor este prezentat in Fig. \ref{fig:potshards-layers}.
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=12cm]{img/POTSHARDS.png}    % The printed column width is 8.4 cm.
+	\caption{Distribuirea unui obiect in POTSHARDS}
+	\label{fig:potshards-layers}
+	\bigskip
+	\end{center}
+\end{figure}
+
+Pentru ca reconstituirea unui fi\c{s}ier sa fie fezabil\u{a} unui utilizator, acestuia \^{i}i este \^{i}ntoars\u{a} o list\u{a} cu loca\c{t}iile exacte shard-urilor corespunz\u{a}toare.
+Ob\c{t}inerea unui shard de c\u{a}tre un atacator, nu este folositoare, pentru a detecta urm\u{a}torul shard, un atac brut force const\u{a} \^{i}n cereri multiple \^{i}n zona indicat\u{a} de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este s\u{a} stocheze datele \^{i}ntr-un mod cat mai uniform distribuit \todo{spread}.\cite{SGMV:2009}
 
 \section{Alouneh et al.}
 \label{desc_alouneh}
