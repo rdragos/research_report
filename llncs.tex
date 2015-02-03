@@ -97,7 +97,7 @@ O schema de partajare consta in distribuirea unei informa\c{t}ii secrete $\mathc
 Formal, o schem\u{a} de partajare este reprezentat\u{a} de o pereche de algoritmi \textbf{$(Gen, Rec)$}:
 \begin{itemize}
 	\item \textit{$Gen(S, m)$} este un algoritm care prime\c{s}te la intrare un secret \textit{S} \c{s}i un num\u{a}r \^{i}ntreg $m$ \c{s}i \^{i}ntoarce un set de componente ${s_1, s_2, \dots, s_m}$.
-	\item \textit{$Rec({s_i}_1, {s_i}_2, \dots, {s_i}_q)$} este un algoritm care prime\c{s}te ca parametri de intrare o mul\c{t}ime de componente si \^{i}ntoarce \textit{S} dac\u{a} mul\c{t}imea ${s_i}_1, {s_i}_2, \dots, {s_i}_q \in \mathcal{A}$.
+	\item \textit{$Rec({s_i}_1, {s_i}_2, \dots, {s_i}_q)$} este un algoritm care prime\c{s}te ca parametri de intrare o mul\c{t}ime de componente \c{s}i \^{i}ntoarce \textit{S} dac\u{a} mul\c{t}imea ${s_i}_1, {s_i}_2, \dots, {s_i}_q \in \mathcal{A}$.
 \end{itemize} 
 %todo: add some more text between itemizers
 Majoritatea schemelor constau \^{i}n mai multe etape precum:
@@ -121,14 +121,14 @@ Acestea se clasific\u{a} in func\c{t}ie de cantitatea de informa\c{t}ie secret\u
 
 \subsection{Istoric}
 
-Primele scheme de partajare au fost dezvoltate independent de Shamir si Blakley in 1979 \cite{B:1979, S:1979}.
+Primele scheme de partajare au fost dezvoltate independent de Shamir \c{s}i Blakley in 1979 \cite{B:1979, S:1979}.
 
 Denumite \c{s}i scheme majoritare $(k, n)$, acestea rezolvau cazul in care oricare grup de participanti cu un num\u{a}r mai mare sau egal dec\^{a}t $k$  (m\u{a}rimea pragului) poate reconstitui secretul $\mathcal{S}$ din componentele primite de la dealer. Dac\u{a} schema este perfect \textit{sigur\u{a}} atunci oricare grup cu un num\u{a}r de participan\c{t}i mai mic decat $k$ nu ob\c{t}ine vreo informa\c{t}ie despre $\mathcal{S}$.
 
 Not\u{a}m $P = \{P_1, \dots, P_n\}$ mul\c{t}imea format\u{a} din cei $n$ participan\c{t}i \^{i}ntr-o schem\u{a} \c{s}i $y \leftarrow^R Y$ ca $y$ este un element ales uniform aleator din mul\c{t}imea $Y$.
 
-Alte scheme de partajare baz\^{a}ndu-se pe structuri de acces generale au fost dezvoltate de Ito, Saito, si Nishizeki, realiz\^{a}nd o generalizare a schemei Shamir. \cite{ITO:1989}
-Benaloh si Leichter au demonstrat ca schemele de partajare de tip prag nu pot fi folosite pe structuri general monotone (familie de submul\c{t}imi ale lui $P$) si ob\c{t}in o construc\c{t}ie mai eficient\u{a} ca Ito et. al \cite{ITO:1989} din punct de vedere al num\u{a}rului de componente distribuite participan\c{t}ilor. \cite{JJ:1990}
+Alte scheme de partajare baz\^{a}ndu-se pe structuri de acces generale au fost dezvoltate de Ito, Saito \c{s}i Nishizeki, realiz\^{a}nd o generalizare a schemei Shamir. \cite{ITO:1989}
+Benaloh \c{s}i Leichter au demonstrat ca schemele de partajare de tip prag nu pot fi folosite pe structuri general monotone (familie de submul\c{t}imi ale lui $P$) \c{s}i ob\c{t}in o construc\c{t}ie mai eficient\u{a} ca Ito et. al \cite{ITO:1989} din punct de vedere al num\u{a}rului de componente distribuite participan\c{t}ilor. \cite{JJ:1990}
 
 Autorii prezint\u{a} un exemplu trivial pentru care schema Shamir este insuficient\u{a}. Consider\u{a}m cazul in care vrem sa partajam un secret \^{i}ntre 4 participan\c{t}i: $P_1, P_2, P_3, P_4$ astfel \^{i}nc\^{a}t $\{P_1,P_2\}$ \c{s}i $\{P_3,P_4\}$ s\u{a} fie singurele mul\c{t}imi autorizate pentru reconstruc\c{t}ia secretului $S$ (i.e. $\mathcal{A} = \{ \{P_1,P_2\}, \{P_3,P_4\} \}$).
 
@@ -147,7 +147,7 @@ Presupun\^{a}nd ca vrem sa imp\u{a}r\c{t}im un secret $\mathcal{S}$ la $n$ parti
 \hspace{.1in}
 \textbf{Ini\c{t}ializare}: 
 	\begin{itemize}
-		\item Fie $S \in Z_q$ unde $q > 1 $ si $q$ prim;
+		\item Fie $S \in Z_q$ unde $q > 1 $ \c{s}i $q$ prim;
 		\item Fie $n$ num\u{a}rul de participan\c{t}i;
 	\end{itemize}
 \medskip
@@ -206,7 +206,7 @@ Pentru un atacator care de\c{t}ine chiar \c{s}i $k-1$ valori $\mathcal{S}_i$, ac
 \hspace{.1in}
 \textbf{Ini\c{t}ializare}: 
 	\begin{itemize}
-		\item Fie $S \in Z_q$ unde $q > 1 $ si $q$ prim;
+		\item Fie $S \in Z_q$ unde $q > 1 $ \c{s}i $q$ prim;
 		\item Fie $n$ num\u{a}rul de participan\c{t}i a.i $q > n$;
 		\item Fie $k$ num\u{a}rul minim de componente puse in comun pentru a determina pe $\mathcal{S}$;
 	\end{itemize}
@@ -248,10 +248,10 @@ Pentru un atacator care de\c{t}ine chiar \c{s}i $k-1$ valori $\mathcal{S}_i$, ac
 
 %---------------- Figure - shamir_scheme- STOP ------------------------
 
-\subsection{Schema Ito, Saito, si Nishizeki}
+\subsection{Schema Ito, Saito \c{s}i Nishizeki}
 \label{Ito}
 
-In continuare vom descrie modalitatea de distribuire a componentelor de la care au pornit Ito, Saito si Nishizeki pentru ca schema sa aiba o structur\u{a} de acces $\mathcal{A} \subseteq 2^P$ (submul\c{t}ime a supersetului de participan\c{t}i) a.i $\forall A \in \mathcal{A}, A \subseteq A' \Rightarrow A' \in \mathcal{A}$).
+In continuare vom descrie modalitatea de distribuire a componentelor de la care au pornit Ito, Saito \c{s}i Nishizeki pentru ca schema sa aiba o structur\u{a} de acces $\mathcal{A} \subseteq 2^P$ (submul\c{t}ime a supersetului de participan\c{t}i) a.i $\forall A \in \mathcal{A}, A \subseteq A' \Rightarrow A' \in \mathcal{A}$).
 Av\^{a}nd construc\c{t}ia unei scheme majoritare $(k, n)$ autorii au reu\c{s}it s\u{a} descrie elementele din $\mathcal{A}$ folosind rezultatul unei reuniuni de mul\c{t}imi de componente cu un num\u{a}r de elemente mai mare sau egal decat $k$. Definim $x : Pr$, $x$ are proprietatea $Pr$. Fig. \ref{fig:ito_et_al} detaliaz\u{a} construc\c{t}ia.
 
 Dezvantajul acestei structuri este num\u{a}rul de componente necesar pentru o structur\u{a} de acces oarecare $\mathcal{A}$. Un mod simplu de construire al func\c{t}iei $Assign$ este Pentru mai multe informatii despre functia $Assign$, cititorul interesat poate citi in \cite{ITO:1989}.
