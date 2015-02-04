@@ -14,10 +14,13 @@
 \usepackage{cite}
 \usepackage{amsmath}
 \usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[parfill]{parskip} 
 
 \newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
 \newcommand{\todo}[1]{{\color{red}{TODO #1}}}
 \renewcommand\refname{Referin\c{t}e}
+\setcounter{secnumdepth}{4}
+
 %
 \begin{document}
 \pagestyle{empty}
@@ -362,7 +365,7 @@ Structurile descentralizate \^{i}mpart informa\^{t}ia la mai multe noduri folosi
 
 PASIS folose\c{s}te schemele de partajare pentru a distribui informa\c{t}ia nodurilor de stocare dintr-o re\c{t}ea. Aceasta introduce agen\c{t}i pe partea clientului pentru a scrie sau \c{s}terge date din noduri dar \c{s}i agen\c{t}i pentru mentenan\c{t}\u{a}. Componentele obt\c{i}nute dintr-un fisier sunt puse in re\c{t}ea cu ajutorul agen\c{t}ilor\ref{fig:pasis}. Pe l\^{a}ng\u{a} con\c{t}inutul brut al componentelor se adaug\u{a} metadate pentru a re\c{t}ine adresa nodului din re\c{t}ea la care au fost trimise dar \c{s}i noua denumire cu care este salvat\u{a} in re\c{t}ea.
 
-Consider\u{a}nd o schem\u{a} de partajare majoritar\u{a} $p-m-n$ unde oricare din cei $m$ participan\c{t}i pot reconstitui fisierul, dar mai pu\c{t}in de $p$ nu ob\c{t}in nicio informa\c{t}ie dintr-un total de $n$ componente. Atunci c\^{a}nd un participant ini\c{t}iaza o cerere pentru a citi un fisier, agentul PASIS aflat local procedeaz\u{a} dupa cum urmeaz\u{a}:
+Consider\u{a}nd o schem\u{a} de partajare majoritar\u{a} $p-m-n$ unde oricare din cei $m$ participan\c{t}i pot reconstitui fisierul, dar mai pu\c{t}in de $p$ nu ob\c{t}in nicio informa\c{t}ie dintr-un total de $n$ componente. Atunci c\^{a}nd un participant ini\c{t}iaz\u{a} o cerere pentru a citi un fisier, agentul PASIS aflat local procedeaz\u{a} dupa cum urmeaz\u{a}:
 \begin{itemize}
 	\item Caut\u{a} numele celor $n$ componente care alc\u{a}tuiesc fi\c{s}ierul \^{i}ntr-un serviciu care listeaz\u{a} toate datele.
 	\item Ini\c{t}iaza cereri de citire la cel pu\c{t}in $m$ din cele $n$ noduri.
@@ -454,7 +457,7 @@ Pentru ca reconstituirea unui fi\c{s}ier sa fie fezabil\u{a} unui utilizator, ac
 Ob\c{t}inerea unui shard de c\u{a}tre un atacator, nu este folositoare, pentru a detecta urm\u{a}torul shard, un atac brut force const\u{a} \^{i}n cereri multiple \^{i}n zona indicat\u{a} de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este s\u{a} stocheze datele \^{i}ntr-un mod cat mai uniform distribuit \todo{spread}.\cite{SGMV:2009}
 
 \section{Alouneh et al.}
-\label{desc_alouneh}
+\label{sec:desc_alouneh}
 
 Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema Shamir cu cateva modificari. Aceste schimbari se vor arata cruciale mai tarziu in mentinerea securitatii.
 
@@ -589,21 +592,101 @@ Noutatea arhitecturii consta in diminuarea redundantei componentelor la un facto
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 \section{Rezultate obtinute}
-Impreuna cu mentorul am analizat un articol aparut intr-un jurnal de clasa C unde am indentificat erori majore ale sale si am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite greseli pe care le vom evidentia in urmatoarele sectiuni. \cite{AAMK:2013}
+Impreuna cu mentorul am analizat un articol aparut intr-un jurnal de clasa C, prezentat in (\ref{sec:desc_alouneh}) unde am indentificat erori majore ale sale si am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite greseli pe care le vom evidentia in urmatoarele sectiuni. \cite{AAMK:2013}
 
 \label{sec:results}
 \subsection{Erori gasite in articol}
 
+Spre deosebire de schema Shamir, unde coeficientii sunt alesi intr-un mod aleator uniform, acestia sunt extrasi din continutul fisierelor originale.
+Alegerea este motivata de faptul ca multimea componentelor si efortul computational depus pentru generarea coeficientilor se reduce la un factor de $k$ spre deosebire de schema Shamir.
 
-Spre deosebire de schema Shamir in care coeficientii sunt alesi intr-un mod aleator uniform, acestia
-reprezinta acum continut din fisierele originale.
-Alegerea este motivata de faptul ca multimea share-urilor si efortul computational depus pentru generarea coeficientilor se reduce la un factor de $k$ spre deosebire de schema Shamir. 
-Natura determinismului duce la cateva atacuri simple in momentul in care un atacator obtine informatiile retinute intr-un nod, indiferent de marimea treshold-ului $k$.
-Intuitiv, determinismul implica de cele mai multe ori vulnerabilitati (aplicarea schemei de 2 ori pe date de intrare identice $\rightarrow$ acelasi date de iesire).
+Natura determinismului duce la cateva atacuri simple in momentul in care un atacator obtine informatiile stocate intr-un nod, indiferent de marimea pragului folosit in metoda de partajare. Datorita acestuia, am aratat 2 atacuri simple in cazul in care componentele sunt calculate in ordine:
+\begin{itemize}
+	\item Detectarea tipului unui fisier
+	\item Detectarea tipului de continut unui fisier
+\end{itemize}
 
+Am indicat ca un atac bazat pe felul in care se realizeaza completarea fisierului $\mathcal{S}$ inainte de partajarea sa poate fi fezabil, in conditiile in care s-a demonstrat ca aceasta alegere este esentiala in pastrarea securitatii \cite{Vaudenay:2002}.
+
+\subsubsection{Detectarea tipului de fisiere}\hspace*{\fill} \\
+
+In sistemele de operare, la inceputul fiecarui fisier se afla o secventa de octe\c{t}i (semnatura sau antet) pentru a determina tipul acestuia. In tabelul (\ref{table:sign}) gasim 4 din cele mai uzuale antete.
+
+Considerand cazul in care dorim sa partajam un fi\c{s}ier \textit{pdf} cu ajutorul sistemului descris in \ref{sec:desc_alouneh} folosind $k \leq 4$. Polinomul corespunzator $f(x)$ va fi intotdeauna acela\c{s}i. Presupn\^{a}nd ca numerotarea nodului $i$ este aceeasi, putem determina cu usurinta daca este stocat un fisier \textit{pdf} fara a lua in vedere continutul fisierului.
+
+Cu alte cuvinte, daca un adversar obtine controlul unui singur nod, bazandu-se doar pe valoarea primei componente poate detecta tipul unui fisier.
+
+In plus, pastrand aceeasi presupunere, anume ca nodurile isi pastreaza acelasi indice $i$ iar adversarul obtine valorile $i$ si $k$ atunci acesta poate detecta cu o probabilite ridicata tipul fisierului folosindu-se de prima componenta. Ne asumam posibilitatea datorita faptului ca valoarea lui $k$ este publica iar $i$ poate sa fie descoperita la distribuire (Fig. \ref{fig:alouneh_distribution}).
+
+Pentru a exemplifica, un adversar poate distinge cu probabilitate ridicata intre fisierele \textit{doc, gif, pdf, png, rar, wav} si \textit{zip}. In tabelul (\ref{table:shares}) avem generate componentele pentru $k = 2$ si $n = 5$.
+Daca un adversar descopera ca valoarea primului nod este $14$ atunci acesta afla ca pentru prima componenta corespunde un fisier \textit{gif}. Daca obtine accesul nodului $4$ si citeste valoarea $205$ atunci stie ca fisierul este de tipul \textit{rar}. Daca citeste valoarea $27$ de pe primul nod atunci stie ca poate fi un \textit{wav} sau \textit{zip}. Cu toate acestea poate sa distinga cele 2 fisiere daca dezvaluie o singura valoare de pe celelalte noduri ($2 3 4 5$) pentru ca valorile sunt distincte.
+
+%-----------------------------------------------------
+\begin{table}
+\begin{center}
+\caption{Semnaturi de fisiere}\label{tb:margins}
+\label{table:sign}
+\begin{tabular}{ccccc}
+Tip de fi\c{s}ier &  \multicolumn{4}{c}{Primii 4 octe\c{t}i}\\ \hline 
+doc &  D0 & CF & 11 & E0\\
+gif & 47 & 49 & 46 & 38 \\
+pdf & 25 & 50 & 44 & 46 \\
+png & 89 & 50 & 4E & 47 \\
+rar & 52 & 61 & 72 & 21 \\
+wav & 52 & 49 & 46 & 46 \\
+zip & 50 & 4B & 03 & 04\\  \hline
+\end{tabular}
+\end{center}
+\bigskip
+\end{table}
+
+%-----------------------------------------------------
+\bigskip
+\begin{table}
+\begin{center}
+\caption{Componentele primului bloc ($k=2$)}\label{tb:margins}
+\label{table:shares}
+\begin{tabular}{cccccccc}
+Tip fisier & Nod 1 & Nod 2 & Nod 3 & Nod 4 & Nod 5 \\
+  & ($i=1$) & ($i=2$) & ($i=3$) & ($i=4$) & ($i=5$) \\
+\hline
+doc & 31 & 85 & 154 & 193 & 14 \\
+gif & 14 & 213 & 156 & 120 & 49 \\
+pdf & 117 & 133 & 213 & 126 & 46 \\
+png & 217 & 41 & 121 & 210 & 130 \\ 
+rar & 51 & 144 & 241 & 205 & 172  \\
+wav & 27 & 192 & 137 & 109 & 36 \\
+zip & 27 & 198 & 141 & 103 & 44 \\ \hline
+\end{tabular}
+\end{center}
+\bigskip
+\end{table}
+
+%-----------------------------------------------------
+
+\subsubsection{Detectarea tipului de con\c{t}inut}\hspace*{\fill} \\
+
+Multe documente urmeaza un anumit model precum contracte, chitante, bonuri fiscale sau curriculum vitae. Deoarece majoritatea continutului ramane neschimbat, exista o probabilitate destul de mare ca multe componente sa aiba aceeasi valoare. O data ce un adversar reuseste sa determine compontentele unui nod, poate determina prin analogie tipul de continut al fisierului original.
+
+Fisierele cele mai vulnerabile sunt cele care contin o secventa de octeti periodica (imagini cu un pattern repetitiv) sau cele care multi octeti nuli(valoarea componentelor va fi $0$).
 
 
 \subsection{Verificarea rezultatelor}
+Pentru a arata aplicabilitatea rezultatelor in practica, am implementat propunerea descrisa in sectiunea {\ref{sec:desc_alouneh}} si am testat pe cateva cazuri.
+
+In cadrul implementarii am folosit limbajul Python3.0 in cadrul sistemului de operare ArchLinux.
+
+Python este un limbaj de programare cu tipuri dinamice, disponibil sub licenta open-source \cite{Python:2015}. Pentru a realiza comunicarea intre procese am folosit Cerealizer iar distributia componentelor a fost vizual generata cu ajutorul pachetului Matplotlib \cite{Hunter:2007, PyCerealizer:2015}. De asemenea am folosit sistemul de versionare Git iar codul e gazduit de GitHub \cite{Github:2015, CodeGit:2015}.
+
+Avand in vedere ca articolul original nu mentioneaza o metoda de padding, am considerat o metoda standard pentru a completa octetii ultimului bloc: alipim la sfarsitul lui $\mathcal{S}$ octetii $80$ $00$ $00$ $\dots$ $00$ $00$ pana cand lungimea ultimului bloc ajunge la $k$ octeti.
+
+Mentionam aceasta metoda doar pentru completitudine, aceasta neafectand rezultatele, considerand doar secventele de octeti de la inceputul fisierului sau antentul s\u{a}u.
+
+\subsubsection{Detectarea}\hspace*{\fill} \\
+
+dsaijdksadas
+daskdsa
+
 \subsection{Publicarea articolului}
 
 %
