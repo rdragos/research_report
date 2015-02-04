@@ -457,13 +457,13 @@ Pentru ca reconstituirea unui fi\c{s}ier sa fie fezabil\u{a} unui utilizator, ac
 Ob\c{t}inerea unui shard de c\u{a}tre un atacator, nu este folositoare, pentru a detecta urm\u{a}torul shard, un atac brut force const\u{a} \^{i}n cereri multiple \^{i}n zona indicat\u{a} de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este s\u{a} stocheze datele \^{i}ntr-un mod cat mai uniform distribuit \todo{spread}.\cite{SGMV:2009}
 
 \section{Alouneh et al.}
+\todo{Alt nume poate?}
 \label{sec:desc_alouneh}
-
-Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema Shamir cu cateva modificari. Aceste schimbari se vor arata cruciale mai tarziu in mentinerea securitatii.
+Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema Shamir cu c\^{a}teva modific\u{a}ri. Aceste schimb\^{a}ri se vor ar\u{a}ta cruciale mai t\^{a}rziu \^{i}n men\c{t}inerea securit\u{a}\c{t}ii.
 
 \subsection{Arhitectura sistemului}
-%TODO inserting figures with algoritms
-In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majoritatii sistemelor de operare - orice este un fisier), acesta este preluat de o aplicatie de control pe partea de client care imparte in blocuri de octeti de lungime $k$. Pentru fiecare bloc, octetii devin coeficientii unui polinom $f$ componenta cu indicele $i$ va fi reprezentata de valoarea lui $f(i)$ $i = \{1,2,\dots, n\}$. Mentionam ca toate operatiile se vor efectua in $GF(256)$ modulo un polinom ireductibil (in implementarea sistemului, autorii folosesc $x^8 + x^5 + x^3 + x + 1$). Procedeul este descris in detaliu in Fig \ref{fig:alouneh_distribution}.
+
+\^{I}n cazul \^{i}n care dorim sa stoc\u{a}m un fi\c{s}ier \^{i}n sistem (abord\^{a}nd filozofia majorit\u{a}\c{t}ii sistemelor de operare - orice este un fi\c{s}ier), acesta este preluat de o aplica\c{t}ie de control pe partea de client care \^{i}mparte \^{i}n blocuri de octe\c{t}i de lungime $k$. Pentru fiecare bloc, octe\c{t}ii devin coeficien\c{t}ii unui polinom $f$, componenta cu indicele $i$ va fi reprezentat\u{a} de valoarea lui $f(i)$ $i = \{1,2,\dots, n\}$. Men\c{t}ion\u{a}m c\u{a} toate opera\c{t}iile se vor efectua in $GF(256)$ modulo un polinom ireductibil (\^{i}n implementarea sistemului, autorii folosesc $x^8 + x^5 + x^3 + x + 1$). Procedeul este descris in detaliu in Fig \ref{fig:alouneh_distribution}.
 
 
 %---------------- Figure - alouneh-distribution - START ------------------------
@@ -474,45 +474,45 @@ In cazul in care vrem sa stocam un fisier in sistem (abordand filozofia majorita
 
 \\
 \hspace{.1in}
-\textbf{Date de intrare}: Un fisier binar $\mathcal{S}$;
+\textbf{Date de intrare}: Un fi\c{s}ier binar $\mathcal{S}$;
 \medskip
 
 \hspace{.1in}
-\textbf{Date de iesire}: $n$ fisiere binare distribuite la noduri din retea;
+\textbf{Date de ie\c{s}ire}: $n$ fi\c{s}iere binare distribuite la noduri din re\c{t}ea;
 \medskip
 
 \hspace{.1in}
-\textbf{Procesarea componentelor}: Aplicatia existenta pe partea clientului: 
+\textbf{Procesarea componentelor}: Aplica\c{t}ia existent\u{a} pe partea clientului: 
 	\begin{itemize}
-		\item Daca $\mathcal{S}$ nu are o lungime divizibila cu $k$:
+		\item Dac\u{a} $\mathcal{S}$ nu are o lungime divizibil\u{a} cu $k$:
 			\begin{itemize}
-			\item concateneaza la sfarsitul lui $\mathcal{S}$ octeti pana cand $len(\mathcal{S}) \Mod k = 0$;
+			\item Concateneaz\u{a} la sf\^{a}rsitul lui $\mathcal{S}$ octe\c{t}i p\^{a}n\u{a} c\^{a}nd $len(\mathcal{S}) \Mod k = 0$;
 			\end{itemize}
-		\item Imparte $\mathcal{S}$ in blocuri de lungime $k$;
-		\item Repeta pentru fiecare bloc $B_t$ de lungime $k$:
+		\item \^{I}mparte $\mathcal{S}$ \^{i}n blocuri de lungime $k$;
+		\item Repet\u{a} pentru fiecare bloc $B_t$ de lungime $k$:
 		\begin{itemize}
-			\item Construieste polinomul $f(x) = B_{t_{k - 1}}x ^ {k-1} + B_{t_{k - 2}}x ^ {k - 2} + .... + B_{t_1}x + B_{t_0}$;
-			\item Calculeaza $f(i)$ pentru $1 \leq i \leq n$;
+			\item Construie\c{s}te polinomul $f(x) = B_{t_{k - 1}}x ^ {k-1} + B_{t_{k - 2}}x ^ {k - 2} + .... + B_{t_1}x + B_{t_0}$;
+			\item Calculeaz\u{a} $f(i)$ pentru $1 \leq i \leq n$;
 		\end{itemize}
 	\end{itemize}
 
 \hspace{.1in}
-\textbf{Distributie}: Aplicatia la nivel de client:
+\textbf{Distribu\c{t}ie}: Aplica\c{t}ia la nivelul clientului:
 	\begin{itemize}
-		\item Distribuie componenta $f(i)$ nodului din retea cu indicele $i$:
+		\item Distribuie componenta $f(i)$ nodului din re\c{t}ea cu indicele $i$:
 	\end{itemize}
 
 \\
 \hline
 \end{tabular}
-\caption{Schema Alouneh et al. - Generare}
+\caption{Schema Alouneh et al. - Generare \cite{AAMK:2013}}
 \label{fig:alouneh_distribution}
 \end{figure*}
 
 %---------------- Figure - alouneh_distribution - STOP ------------------------
 
 \begin{example}
-Vom exemplifica modul de calcul in $GF(256) \Mod {g(x)} $ unde $g(x) = x ^ 8 + x ^ 4 + x ^ 3 + 1$. Luam polinomul $f(x) = 10 + 15x$ care corespunde unui fisier format din octetii (in aceasta ordine) $10$ $15$.
+Vom exemplifica modul de calcul \^{i}n $GF(256) \Mod {g(x)} $ unde $g(x) = x ^ 8 + x ^ 4 + x ^ 3 + 1$. Lu\u{a}m polinomul $f(x) = 10 + 15x$ care corespunde unui fi\c{s}ier format din octe\c{t}ii (\^{i}n aceast\u{a} ordine) $10$ $15$.
 	\begin{equation} \label{eq:f_01}
 	\begin{split}
 		f(01) \Mod{g(x)} & = 10 + 15 \Mod{g(x)} \\
@@ -531,7 +531,7 @@ Vom exemplifica modul de calcul in $GF(256) \Mod {g(x)} $ unde $g(x) = x ^ 8 + x
 	 \end{split}
 	 \end{equation}
 \end{example}
-Pentru reconstituirea unui fisier (\ref{fig:alouneh_reconstruction}) fse interpoleaza din orice multime de componente $\mathcal{A}$ cu dimensiune minim $k$ prin metoda lui Lagrange, asemanator schemei Shamir:
+Pentru reconstituirea unui fi\c{s}ier (\ref{fig:alouneh_reconstruction}) se interpoleaz\u{a} din orice mul\c{t}ime de componente $\mathcal{A}$ cu dimensiune minim $k$ prin metoda lui Lagrange, asem\u{a}n\u{a}tor schemei Shamir:
 \begin{equation}
 	\label{eq:lagrange_poly}
 	f(x)=\sum_{i \in A} f(i) \prod_{j \in A, j \neq i} \frac{x-j}{i-j}
@@ -549,7 +549,7 @@ Vom exemplifica interpolarea \ref{eq:lagrange_poly} pe componentele calculate in
 	\end{equation}
 \end{example}
 
-Noutatea arhitecturii consta in diminuarea redundantei componentelor la un factor de $k$, spre deosebire de sistemele descrise in \ref{sec:desc_pasis} sau in \ref{sec:desc_potshards}. Reducerea spatiului ocupat este datorat inlocuirii coeficientilor cu octetii din fisierul ce va fi partajat. Confidentialitatea este indusa automat de schema lui Shamir.
+Noutatea arhitecturii const\u{a} in diminuarea redundan\c{t}ei componentelor la un factor de $k$, spre deosebire de sistemele descrise in \ref{sec:desc_pasis} sau in \ref{sec:desc_potshards}. Reducerea spa\c{t}iului ocupat este datorat \^{i}nlocuirii coeficien\c{t}ilor cu octe\c{t}ii din fi\c{s}ierul ce va fi partajat. Confiden\c{t}ialitatea este indus\u{a} \^{i}n mod automat de schema lui Shamir.
 
 %---------------- Figure - alouneh-reconstruction- START ------------------------
 \begin{figure*}[h!]
@@ -559,28 +559,28 @@ Noutatea arhitecturii consta in diminuarea redundantei componentelor la un facto
 
 \\
 \hspace{.1in}
-\textbf{Date de intrare}: Cel putin $k$ componente provenite din noduri (distincte);
+\textbf{Date de intrare}: Cel pu\c{t}in $k$ componente provenite din noduri (distincte);
 \medskip
 
 \hspace{.1in}
-\textbf{Date de iesire}: Fisierul binar original $\mathcal{S}$;
+\textbf{Date de ie\c{s}ire}: Fi\c{s}ierul binar original $\mathcal{S}$;
 \medskip
 
 \hspace{.1in}
-\textbf{Reconstructie}: Aplicatia existenta pe partea clientului: 
+\textbf{Reconstruc\c{t}ie}: Aplica\c{t}ia existenta pe partea clientului: 
 	\begin{itemize}
-		\item Repeta pentru fiecare bloc al lui $\mathcal{S}$:
+		\item Repet\u{a} pentru fiecare bloc al lui $\mathcal{S}$:
 		\begin{itemize}
-			\item Calculeaza prin interpolare coeficientii lui $f(x)=B_{t_{k - 1}}x ^ {k-1} + B_{t_{k - 2}}x ^ {k - 2} + .... + B_{t_1} + B_{t_0}$
+			\item Calculeaz\u{a} prin interpolare coeficien\c{t}ii lui $f(x)=B_{t_{k - 1}}x ^ {k-1} + B_{t_{k - 2}}x ^ {k - 2} + .... + B_{t_1} + B_{t_0}$
 			\item Reconstituie blocul $B_t$
 		\end{itemize}
-		\item Inlatura padding%(in romana?)
+		\item \c{S}terge octe\c{t}ii de la sf\^{a}r\c{s}itul fi\c{s}ierului ad\u{a}uga\c{t}i la generare. 
 	\end{itemize}
 
 \\
 \hline
 \end{tabular}
-\caption{Schema Alouneh et al. - Reconstructie}
+\caption{Schema Alouneh et al. - Reconstruc\c{t}ie \cite{AAMK:2013}}
 \label{fig:alouneh_reconstruction}
 \end{figure*}
 
@@ -608,7 +608,8 @@ Natura determinismului duce la cateva atacuri simple in momentul in care un atac
 
 Am indicat ca un atac bazat pe felul in care se realizeaza completarea fisierului $\mathcal{S}$ inainte de partajarea sa poate fi fezabil, in conditiile in care s-a demonstrat ca aceasta alegere este esentiala in pastrarea securitatii \cite{Vaudenay:2002}.
 
-\subsubsection{Detectarea tipului de fisiere}\hspace*{\fill} \\
+\subsubsection{Detectarea tipului de fisier}\hspace*{\fill} \\
+\label{subsec:file_type_detection}
 
 In sistemele de operare, la inceputul fiecarui fisier se afla o secventa de octe\c{t}i (semnatura sau antet) pentru a determina tipul acestuia. In tabelul (\ref{table:sign}) gasim 4 din cele mai uzuale antete.
 
@@ -665,8 +666,9 @@ zip & 27 & 198 & 141 & 103 & 44 \\ \hline
 %-----------------------------------------------------
 
 \subsubsection{Detectarea tipului de con\c{t}inut}\hspace*{\fill} \\
+\label{subsec:file_content_detection}
 
-Multe documente urmeaza un anumit model precum contracte, chitante, bonuri fiscale sau curriculum vitae. Deoarece majoritatea continutului ramane neschimbat, exista o probabilitate destul de mare ca multe componente sa aiba aceeasi valoare. O data ce un adversar reuseste sa determine compontentele unui nod, poate determina prin analogie tipul de continut al fisierului original.
+Multe documente urmeaza un anumit tipar precum contracte, chitante, bonuri fiscale sau curriculum vitae. Deoarece majoritatea continutului ramane neschimbat, exista o probabilitate destul de mare ca multe componente sa aiba aceeasi valoare. O data ce un adversar reuseste sa determine compontentele unui nod, poate determina prin analogie tipul de continut al fisierului original.
 
 Fisierele cele mai vulnerabile sunt cele care contin o secventa de octeti periodica (imagini cu un pattern repetitiv) sau cele care multi octeti nuli(valoarea componentelor va fi $0$).
 
@@ -682,10 +684,83 @@ Avand in vedere ca articolul original nu mentioneaza o metoda de padding, am con
 
 Mentionam aceasta metoda doar pentru completitudine, aceasta neafectand rezultatele, considerand doar secventele de octeti de la inceputul fisierului sau antentul s\u{a}u.
 
-\subsubsection{Detectarea}\hspace*{\fill} \\
+\subsubsection{Detectarea tipului de fi\c{s}ier}\hspace*{\fill} \\
 
-dsaijdksadas
-daskdsa
+Extindem analiza facuta in sec\c{t}iunea {\ref{subsec:file_type_detection}} asupra tipurilor din tabelul {\ref{table:sign}} pentru $k = 2$ si crestem valoarea indicelui $i$ pana cand 2 componente devin egale. Fie $f_l$ polinomul de gradul $1$ asociat primului bloc al fisierului aflat pe linia $l$. Analog $f_c$ polinomul de gradul $1$ asociat primului bloc al fisierului aflat pe coloana $c$.
+
+In tabelul {\ref{table:k2}} calculam valoarea maxima a nodului $i$ pentru care $f_l(i) \neq f_c(i)$. Valoarea $-1$ indica lipsa de coliziuni ale lui $f_c(x)$, $f_l(x)$ pentru $i$, $i = {1,2,\dots,255}$ ($\not\exists 1 \leq i \leq 255$ a.\^{i}. $f_l(i) = f_c(i)$)).
+
+Deoarece pe diagonala principala toata componentele sunt identice pentru $k <= 4$ poate fi ignorata. In tabelul {\ref{table:k2}} observam valoarea $0$ pentru perechea $(wav, zip)$ pentru ca $f_wav(1) = f_zip(1) = 27$ (tabel \ref{table:sign}).
+
+In tabelele {\ref{table:k3}, \ref{table:k4}} sunt considerate rezultatele pentru $k = 3$ si $k = 4$. Pentru $k \geq 5$ este nevoie de un antet cu mai mult de $4$ octeti.
+
+
+%-----------------------------------------------------
+\begin{table}[b]
+\bigskip
+\begin{center}
+\caption{Indicele maxim $i$ a.\^{i} componentele primului bloc sa fie distincte($k=2$)}\label{tb:margins}
+\label{table:k2}
+\begin{tabular}{cccccccc}
+Tip Fi\c{s}ier & doc & gif & pdf & png & rar & wav & zip \\\hline
+  doc & - & 169 & 194 & 209 & 170 & 206 & 110\\
+  gif & 169 & - & 133 & 137 & 75 & -1 & 133\\
+  pdf & 194 & 133 & - & -1 & 115 & 151 & 133\\
+  png & 209 & 137 & -1 & - & 229 & 147 & 195\\
+  rar & 170 & 75 & 115 & 229 & - & -1 & 42\\
+  wav & 206 & -1 & 151 & 147 & -1 & - & 0\\
+  zip & 110 & 133 & 133 & 195 & 42 & 0 & -\\ \hline
+\end{tabular}
+\end{center}
+\bigskip
+\end{table}
+
+
+
+
+%-----------------------------------------------------
+
+\begin{table}
+\begin{center}
+\caption{Indicele maxim $i$ a.\^{i} componentele primului bloc sa fie distincte($k=3$)}\label{tb:margins}
+\label{table:k3}
+\begin{tabular}{cccccccc}
+Tip Fi\c{s}ier & doc & gif & pdf & png & rar & wav & zip \\\hline
+  doc & - & 63 & -1 & -1 & -1 & -1 & -1\\
+  gif & 63 & - & -1 & -1 & -1 & -1 & -1\\
+  pdf & -1 & -1 & - & 164 & -1 & 119 & -1\\
+  png & -1 & -1 & 164 & - & 143 & 122 & 129\\
+  rar & -1 & -1 & -1 & 143 & - & 143 & -1\\
+  wav & -1 & -1 & 119 & 122 & 143 & - & 172\\
+  zip & -1 & -1 & -1 & 129 & -1 & 172 & -\\ \hline
+\end{tabular}
+\end{center}
+\bigskip
+\end{table}
+
+%-----------------------------------------------------
+\begin{table}
+\begin{center}
+\caption{Indicele maxim $i$ a.\^{i} componentele primului bloc sa fie distincte($k=4$)}\label{tb:margins}
+\label{table:k4}
+\begin{tabular}{cccccccc}
+Tip Fi\c{s}ier & doc & gif & pdf & png & rar & wav & zip \\\hline
+  doc & - & -1 & 38 & 95 & 1 & 95 & 98\\
+  gif & -1 & - & -1 & -1 & 167 & -1 & -1\\
+  pdf & 38 & -1 & - & 12 & 11 & 119 & 70\\
+  png & 95 & -1 & 12 & - & 243 & 95 & 148\\
+  rar & 1 & 167 & 11 & 243 & - & -1 & 94\\
+  wav & 95 & -1 & 119 & 95 & -1 & - & -1\\
+  zip & 98 & -1 & 70 & 148 & 94 & -1 & -\\ \hline
+\end{tabular}
+\end{center}
+\bigskip
+\end{table}
+
+
+
+
+%-----------------------------------------------------
 
 \subsection{Publicarea articolului}
 
