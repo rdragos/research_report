@@ -353,7 +353,7 @@ In practica exista algoritmi de criptare eficienti precum AES ins\u{a} acea\c{s}
 De fiecare data cand cheile sunt inlocuite atunci este necesara recriptarea datelor de pe fiecare baza de date. Cu cat disponibilitatea este mai mare - numarul de noduri duplicate creste- recriptarea lor devine o operatie costisitoare. 
 
 Majoritatea tehnicilor de criptarea se bazeaza pe dificultatea factorizarii unui numar sau cea a calcularii logaritmului discret insa o data cu posibila dezvoltare a calculatoarelor cuantice aceste probleme nu vor mai fi atat de dificile \cite{Shor:1994}.
-----------------------------------------------------------------
+%----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -422,27 +422,30 @@ Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribu
 
 Arhitectura GridSharing const\u{a} in $N$ servere unde cel mult $c$ servere pot fi abandonate, $b$ servere bizantine \c{s}i $l$ cu scurgeri de informa\c{t}ii. Cele $N$ pot fi aranjate \^{i}ntr-un grid cu $r$ linii \c{s}i $N/r$ coloane (consider\u{a}m pentru simplitate c\u{a} $N \Mod r = 0$). Caracteristicile modelului bizantin \c{s}i cel specific scurgerilor de informa\c{t}ii permit dezv\u{a}luirea componentelor unui adversar de pe cel mult $l + b$ servere.
 
-\todo{Sa te astepti la intrebari, de tipul: de ce aceste praguri pentru securitate / replicare?}
-
-\todo{De ce \^{i}n exemplu rezista la atac? $l+b = 3$, daca adversarul ia control asupra 1 server de pe fiecare linie castiga, adica determina secretul}
-
-\todo{ce inseamna ${4 \choose 3}$}?
-
 \begin{example}
-	Consider\u{a}m ca \^{i}mpar\c{t}im un secret $\mathcal{S}$ la $3$ linii (participan\c{t}i) astfel \^{i}nc\^{a}t sistemul s\u{a} permit\u{a} $2$ componente de tip $b$, $1$ component\u{a} de tip $l$ \c{s}i $15$ servere. \^{I}n cazul acesta vom folosi o schem\u{a} majoritar\u{a} XOR $\big( {4 \choose 3}, {4 \choose 3}\big) = (3,3)$.
 
-	Vom avea $3$ componente, $(s_1, s_2, s_3)$ a.\^{i} $s_1 \oplus s_2 \oplus s_3 = \mathcal{S}$.
+	Not\u{a}m ${x \choose y}$ fiind combin\u{a}ri de $x$ elemente grupate c\^{a}te $y$.
+	Consider\u{a}m ca \^{i}mpar\c{t}im un secret $\mathcal{S}$ la $4$ linii (participan\c{t}i) astfel \^{i}nc\^{a}t sistemul s\u{a} permit\u{a} $2$ componente de tip $b$, $1$ component\u{a} de tip $l$ \c{s}i $20$ servere. \^{I}n cazul acesta vom folosi o schem\u{a} majoritar\u{a} XOR $\big( {4 \choose 3}, {4 \choose 3}\big) = (4,4)$.
+
+	Vom avea $4$ componente, $(s_1, s_2, s_3, s_4)$ a.\^{i}. $s_1 \oplus s_2 \oplus s_3 \oplus s_4 = \mathcal{S}$.
 	Distribuirea se face in felul urm\u{a}tor:
 	\begin{itemize}
+		% avem asa: p1, p2, p3, p4; s1, s2, s3
+		% (p1 p2 p3, p1 p2 p4, p1 p3 p4, p2 p3 p4)
+		% p1 | s4
+		% p2 | s3
+		% p3 | s2
+		% p4 | s1
 		\item Serverele situate pe prima linie primesc $s_1$
-		\item Serverele situate pe a doua linie primesc $s_2$
-		\item Serverele situate pe a treia linie primesc $s_3$
+		\item Serverele situate pe a $2$-a linie primesc $s_2$
+		\item Serverele situate pe a $3$-a linie primesc $s_3$
+		\item Serverele situate pe a $4$-a linie primesc $s_4$
 	\end{itemize}
 \end{example}
 
-\begin{figure}
+\begin{figure}[H]
 	\includegraphics[width=12cm]{img/GridSharing.png}    % The printed column width is 8.4 cm.
-	\caption{GridSharing cu $3$ linii, $15$ servere dintre care $2$ bizantine, $1$ cu scurgeri de informa\c{t}ii \todo{citare}}
+	\caption{GridSharing cu $4$ linii, $20$ servere dintre care $2$ bizantine, $1$ cu scurgeri de informa\c{t}ii \cite{SB:2005}.}
 	\label{fig:grid_sharing}
 	\bigskip
 \end{figure}
@@ -911,7 +914,7 @@ Consider\u{a}m un alt scenariu \^{i}n care partaj\u{a}m o imagine pentru care in
 
 \subsection{Publicarea articolului}
 
-Av\^{a}nd rezultatele de mai sus, \^{i}mpreun\u{a} cu mentorul, am scris un articol cuprinz\^{a}nd rezultatele de mai sus \c{s}i l-am trimis la Journal of Control Engineering and Applied Informatics \cite{Ceai:2015}, un jurnal indexat ISI \c{s}i cotat C.
+Av\^{a}nd rezultatele de mai sus, \^{i}mpreun\u{a} cu mentorul, am scris un articol cuprinz\^{a}nd rezultatele descrise \c{s}i l-am trimis la Journal of Control Engineering and Applied Informatics \cite{Ceai:2015}, un jurnal indexat ISI \c{s}i cotat C.
 %
 % ---- Bibliography ----
 %
