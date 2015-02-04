@@ -488,7 +488,7 @@ Ob\c{t}inerea unui shard de c\u{a}tre un atacator nu este folositoare, pentru a 
 \section{Alouneh et al.}
 \todo{Alt nume poate?}
 \label{sec:desc_alouneh}
-Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema Shamir cu c\^{a}teva modific\u{a}ri. Aceste schimb\^{a}ri se vor ar\u{a}ta cruciale mai t\^{a}rziu \^{i}n men\c{t}inerea securit\u{a}\c{t}ii.
+Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind schema Shamir cu c\^{a}teva modific\u{a}ri. Aceste schimb\u{a}ri se vor ar\u{a}ta esen\c{t}iale mai t\^{a}rziu \^{i}n men\c{t}inerea securit\u{a}\c{t}ii.
 
 \subsection{Arhitectura sistemului}
 
@@ -541,7 +541,7 @@ Autorii propun un sistem pentru stocarea datelor un timp indelungat folosind sch
 %---------------- Figure - alouneh_distribution - STOP ------------------------
 
 \begin{example}
-Vom exemplifica modul de calcul \^{i}n $GF(256) \Mod {g(x)} $ unde $g(x) = x ^ 8 + x ^ 4 + x ^ 3 + 1$. Lu\u{a}m polinomul $f(x) = 10 + 15x$ care corespunde unui fi\c{s}ier format din octe\c{t}ii (\^{i}n aceast\u{a} ordine) $10$ $15$.
+Vom exemplifica modul de calcul \^{i}n $GF(256) \Mod {g(x)} $ unde $g(x) = x ^ 8 + x ^ 4 + x ^ 3 + 1$. Lu\u{a}m polinomul $f(x) = 10 + 15x$ corespunz\^{a}tor unui fi\c{s}ier format din octe\c{t}ii (\^{i}n aceast\u{a} ordine) $10$ $15$.
 	\begin{equation} \label{eq:f_01}
 	\begin{split}
 		f(01) \Mod{g(x)} & = 10 + 15 \Mod{g(x)} \\
@@ -567,7 +567,7 @@ Pentru reconstituirea unui fi\c{s}ier (\ref{fig:alouneh_reconstruction}) se inte
 \end{equation}
 
 \begin{example}
-Vom exemplifica interpolarea \ref{eq:lagrange_poly} pe componentele calculate in  \ref{eq:f_01} si \ref{eq:f_02} pentru a reconstitui polinomul:
+Vom exemplifica interpolarea \ref{eq:lagrange_poly} pe componentele calculate in  \ref{eq:f_01} \c{s}i \ref{eq:f_02} pentru a reconstitui polinomul:
 	\begin{equation}
 	\begin{split}
 		f(x) & = 05(x - 02)(01 - 02)^{-1} + 3A(x - 01)(02 - 01)^{-1} \\
@@ -578,7 +578,7 @@ Vom exemplifica interpolarea \ref{eq:lagrange_poly} pe componentele calculate in
 	\end{equation}
 \end{example}
 
-Noutatea arhitecturii const\u{a} in diminuarea redundan\c{t}ei componentelor la un factor de $k$, spre deosebire de sistemele descrise in \ref{sec:desc_pasis} sau in \ref{sec:desc_potshards}. Reducerea spa\c{t}iului ocupat este datorat \^{i}nlocuirii coeficien\c{t}ilor cu octe\c{t}ii din fi\c{s}ierul ce va fi partajat. Confiden\c{t}ialitatea este indus\u{a} \^{i}n mod automat de schema lui Shamir.
+Noutatea arhitecturii const\u{a} in diminuarea redundan\c{t}ei componentelor la un factor de $k$, spre deosebire de sistemele descrise in \ref{sec:desc_pasis} sau \^{i}n \ref{sec:desc_potshards}. Reducerea spa\c{t}iului ocupat este datorat \^{i}nlocuirii coeficien\c{t}ilor cu octe\c{t}ii din fi\c{s}ierul ce va fi partajat. Confiden\c{t}ialitatea este indus\u{a} \^{i}n mod automat de schema lui Shamir.
 
 %---------------- Figure - alouneh-reconstruction- START ------------------------
 \begin{figure*}[h!]
@@ -614,12 +614,12 @@ Noutatea arhitecturii const\u{a} in diminuarea redundan\c{t}ei componentelor la 
 \end{figure*}
 
 %---------------- Figure - alouneh_reconstruction- STOP ------------------------
-%TODO: add reconstruction and pictures with different architectures, maybe some examples.
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
+
 \section{Rezultate obtinute}
 Impreuna cu mentorul am analizat un articol aparut intr-un jurnal de clasa C, prezentat in (\ref{sec:desc_alouneh}) unde am indentificat erori majore ale sale si am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite greseli pe care le vom evidentia in urmatoarele sectiuni. \cite{AAMK:2013}
 
