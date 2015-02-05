@@ -374,36 +374,39 @@ Majoritatea tehnicilor de criptarea se bazeaza pe dificultatea factorizarii unui
 
 O alternativ\u{a} la solu\c{t}ia cu criptare care asigur\u{a} at\^{a}t confiden\c{t}ialitate c\^{a}t \c{s}i redundan\c{t}a necesar\u{a} este intrebuin\c{t}area sistemelor de stocare de lung\u{a} durat\u{a} bazate pe scheme de partajare \cite{W:2000,SB:2005,SGMV:2009}.
 
-%Poate cateva detalii despre RAID
-%Maybe some pictures with PASIS, just in case not enough pages
-
 \subsection{PASIS}
 \label{sec:desc_pasis}
-PASIS este o solu\c{t}ie pentru un sistem descentralizat care ofer\u{a} beneficii precum securitate, redundan\c{t}\u{a} a datelor si auto-\^{i}ntre\c{t}inere.
-Structurile descentralizate \^{i}mpart informa\c{t}ia la mai multe noduri folosind scheme de redundan\c{t}a precum RAID \todo{(R... A... I... D...) - mereu trebuie in paranteza denumirea completa, o singura data, cand se introduce o abreviere} pentru a asigura performan\c{t}a, scalabilitatea sistemului dar \c{s}i integritatea datelor \cite{Patterson:1988}.
-\todo{exact, cateva detalii despre RAID}
+PASIS este o solu\c{t}ie pentru un sistem descentralizat care ofer\u{a} beneficii precum securitate, redundan\c{t}\u{a} a datelor si auto-\^{i}ntre\c{t}inere \cite{W:2000}
+Structurile descentralizate \^{i}mpart informa\c{t}ia la mai multe noduri folosind scheme de redundan\c{t}a precum "Redundant Array of Independent Disks" (RAID) pentru a asigura performan\c{t}a, scalabilitatea sistemului dar \c{s}i integritatea datelor \cite{Patterson:1988}.
+RAID reprezint\u{a} o tehnologie ce combin\u{a} 2 concepte ortogonale precum data striping (aranjarea datelor pe discuri multiple \^{i}ntr-o manier\u{a} secven\c{t}ial\u{a} - Fig \ref{fig:raid_strip}) \c{s}i redundan\c{t}\u{a} pentru o disponibilitate ridicat\u{a} \cite{Chen:1994}.
 
-PASIS folose\c{s}te schemele de partajare pentru a distribui informa\c{t}ia nodurilor de stocare dintr-o re\c{t}ea. Aceasta introduce agen\c{t}i pe partea clientului pentru a scrie sau \c{s}terge date din noduri, dar \c{s}i agen\c{t}i pentru mentenan\c{t}\u{a}. Componentele obt\c{i}nute \todo{\^{i}n urma partaj\u{a}rii unui} fisier sunt \todo{nu puse, ci stocate} in re\c{t}ea cu ajutorul agen\c{t}ilor (Fig. \ref{fig:pasis}). Pe l\^{a}ng\u{a} con\c{t}inutul brut al componentelor se adaug\u{a} metadate pentru a re\c{t}ine adresa nodului din re\c{t}ea la care au fost \todo{stocate, nu trimise} dar \c{s}i noua denumire cu care este salvat\u{a} in re\c{t}ea.
+\begin{figure}
+	\label{fig:raid_strip}
+	\begin{center}
+	\includegraphics[width=0.6\textwidth]{img/raid0.png}
+	\caption{Procesul de striping aplicat unui bloc de date}
+	\end{center}
+	\bigskip
+\end{figure}
 
-Consider\^{a}nd o schem\u{a} de partajare majoritar\u{a} $p-m-n$ unde oricare din cei $m$ participan\c{t}i pot reconstitui fisierul, dar mai pu\c{t}in de $p$ nu ob\c{t}in nicio informa\c{t}ie dintr-un total de $n$ componente. 
-\todo{o schema de partajare majoritara are 2 parametrii, care sunt aici?! rescriere! aten\c{t}ie, s\u{a} folose\c{s}ti nota\c{t}iile de mai \^{i}nainte: n = nr de participan\c{t}i, etc.}
+PASIS folose\c{s}te schemele de partajare pentru a distribui informa\c{t}ia nodurilor de stocare dintr-o re\c{t}ea. Aceasta introduce agen\c{t}i pe partea clientului pentru a scrie sau \c{s}terge date din noduri, dar \c{s}i agen\c{t}i pentru mentenan\c{t}\u{a}. Componentele obt\c{i}nute \^{i}n urma partaj\u{a}rii unui fisier sunt stocate in re\c{t}ea cu ajutorul agen\c{t}ilor (Fig. \ref{fig:pasis}). Pe l\^{a}ng\u{a} con\c{t}inutul brut al componentelor se adaug\u{a} metadate pentru a re\c{t}ine adresa nodului din re\c{t}ea la care au fost stocate dar \c{s}i noua denumire cu care este salvat\u{a} in re\c{t}ea.
+
+Consider\^{a}nd o schem\u{a} de partajare majoritar\u{a} $(k, n)$ unde oricare din cei $k$ participan\c{t}i pot reconstitui fisierul, dar mai pu\c{t}in de $k$ nu ob\c{t}in nicio informa\c{t}ie dintr-un total de $n$ componente. 
 
 Atunci c\^{a}nd un participant ini\c{t}iaz\u{a} o cerere pentru a citi un fisier, agentul PASIS aflat local procedeaz\u{a} dupa cum urmeaz\u{a}:
 \begin{itemize}
 	\item Caut\u{a} numele celor $n$ componente care alc\u{a}tuiesc fi\c{s}ierul \^{i}ntr-un serviciu care listeaz\u{a} toate datele.
-	\item Ini\c{t}iaza cereri de citire la cel pu\c{t}in $m$ din cele $n$ noduri.
-	\item \^{I}n caz ca acesta nu prime\c{s}te cel pu\c{t}in $m$ r\u{a}spunsuri se intoarce la pasul anterior \^{i}ncerc\^{a}nd interog\u{a}ri la noduri diferite.
-	\item Reconstituie fi\c{s}ierul ob\c{t}inut din cele $m$ componente.
+	\item Ini\c{t}iaza cereri de citire la cel pu\c{t}in $k$ din cele $n$ noduri.
+	\item \^{I}n caz ca acesta nu prime\c{s}te cel pu\c{t}in $k$ r\u{a}spunsuri se \^{i}ntoarce la pasul anterior \^{i}ncerc\^{a}nd interog\u{a}ri la noduri diferite.
+	\item Reconstituie fi\c{s}ierul ob\c{t}inut din cele $k$ componente.
 \end{itemize}
-Opera\c{t}ia de scriere este similar\u{a} cu cea de citire, aceasta oprindu-se atunci c\^{a}nd \^{i}n cel pu\c{t}in $n - m + 1$ noduri s-au stocat cu succes componente.
-In articol se men\c{t}ioneaza \c{s}i compromisul de spa\c{t}iu-timp \todo{denumirea consacrat\u{a} \^{i}n romana este compromis spa\c{t}iu-timp, nu timp-spa\c{t}iu} folosite de PASIS \todo{: extinde pu\c{t}in ce \^{i}nseamn\u{a} asta}.
+Opera\c{t}ia de scriere este similar\u{a} cu cea de citire, aceasta oprindu-se atunci c\^{a}nd \^{i}n cel pu\c{t}in $n - k + 1$ noduri s-au stocat cu succes componente.
+\^{I}n articol se men\c{t}ioneaz\u{a} \c{s}i compromisul de spa\c{t}iu-timp folosit de PASIS \^{i}n func\c{t}ie de alegerea schemei de partajare. Spre exemplu, cererile de citire pot fi f\u{a}cute la acele $k$ noduri pentru care r\u{a}spunsurile recente au fost cele mai rapide.
 Autorii specific\u{a} solu\c{t}ii pentru auto mentenan\c{t}a sistemului cu ajutorul resurselor umane prin monitorizarea periodic\u{a} st\u{a}rii sistemului folosind log-uri sau ajustarea parametrilor din cadrul schemei de partajare.
-
-\todo{Imi place figura! Dar citeaza lucrarea - \c{s}i in caption \c{s}i in text - nu am vazut nicio citare la PASIS!}
 
 \begin{figure}
 	\includegraphics[width=11cm]{img/PASIS.png}
-	\caption{Arhitectura PASIS cu $4$ noduri \c{s}i $2$ clien\c{t}i \cite{}}
+	\caption{Arhitectura PASIS cu $4$ noduri \c{s}i $2$ clien\c{t}i \cite{W:2000}.}
 	\label{fig:pasis}
 	\bigskip
 \end{figure}
@@ -413,10 +416,51 @@ Autorii specific\u{a} solu\c{t}ii pentru auto mentenan\c{t}a sistemului cu ajuto
 
 \^{I}n 2005, Subbiah \c{s}i Blough propun o nou\u{a} abordare pentru a construi un sistem de stocare securizat \c{s}i tolerant la erori numit GridSharing \cite{SB:2005}.
 
-Schema Shamir nu ofer\u{a} siguran\c{t}\u{a} \^{i}n ceea ce prive\c{s}te detectarea sau actualizarea unor componente incorecte introduse de un atacator. Metoda cea mai des folosit\u{a} este determinarea validit\u{a}\c{t}ii componentelor prin utilizarea semn\u{a}turilor electronice.
+Schema Shamir nu ofer\u{a} siguran\c{t}\u{a} \^{i}n ceea ce prive\c{s}te detectarea sau actualizarea unor componente incorecte introduse de un atacator. Metoda cea mai des folosit\u{a} este determinarea validit\u{a}\c{t}ii componentelor prin utilizarea semn\u{a}turilor electronice. Aceasta este realizat\u{a} prin scheme de verificare non-interactive precum cea a lui Feldman construit\u{a} pe baza schemei Shamir \cite{Feldman:1987} (Fig. \ref{fig:feldman_scheme})
 
-Aceasta este realizat\u{a} prin scheme de verificare non-interactive precum cea a lui Feldman \^{i}mpreun\u{a} cu schema Shamir \cite{Feldman:1987}
-\todo{trebuie reformulat: (1) leaga-l de paragraful anterior; (2) Feldman e o schema de sine statatoare, doar ca este construita pe baza schemei Shamir; cum se folosesc amandoua?}
+%---------------- Figure - feldman_scheme - START ------------------------
+\begin{figure*}[h!]
+
+\begin{tabular}{|p{\textwidth}|}
+\hline
+
+\\
+\hspace{.1in}
+\textbf{Ini\c{t}ializare}: 
+	Folosind nota\c{t}iile din Fig. \ref{fig:shamir_scheme}, consider\u{a}m polinomul $f$ generat \^{i}n urma Schemei Shamir.
+	\begin{itemize}
+		\item Se alege un $g \in Z_q$ generator al lui $Z_q$;
+	\end{itemize}
+\medskip
+
+\hspace{.1in}
+\textbf{Generare}: Dealerul $\mathcal{D}$:
+	\begin{itemize}
+		\item Calculeaz\u{a} \textit{angajamentele}: $c_0 = g^S$, $c_j = g^{a_j}$, $j \in \{1,\dots,k\}$;
+	\end{itemize}
+\medskip
+
+\hspace{.1in}
+\textbf{Distribu\c{t}ie}: Dealerul $\mathcal{D}$:
+	\begin{itemize}
+		\item Distribuie \textit{angajamentele} $c_j$, $j \in \{0,\dots,k\}$ fiec\u{a}rui participant $i\in \{1,\dots,n\}$;
+	\end{itemize}
+
+\hspace{.1in}
+\\
+\hline
+\end{tabular}
+
+\caption{Schema Feldman \cite{Feldman:1987}}
+\label{fig:feldman_scheme}
+\end{figure*}
+%---------------- Figure - feldman_scheme- STOP ------------------------
+
+Pentru verificarea componentei $s_i = f(i)$, participantul $i$ probeaz\u{a} ecua\c{t}ia:
+
+\begin{equation}
+	g^{s_i} = c_0c_1^ic_2^{i^2} \dots c_t^{i^t} = \prod_{j=0}^k c_j^{i^j} = \prod_{j=0}^k g^{a_ji^j} = g^{\sum\limits_{j=0}^k a_ji^j} = g^{f(i)}
+\end{equation}
 
 Subbiah \c{s}i Blough folosesc un sistem care \^{i}nlocuie\c{s}te schemele de verificare cu o schem\u{a} de partajare unanim\u{a} XOR (consider\u{a}m cazul $q = 2$ \^{i}n Fig. \ref{fig:all_or_nothing}) pentru a p\u{a}stra securitatea construc\c{t}iei.
 \^{I}n cazul detect\u{a}rii componentelor incorecte, este adoptat\u{a} o strategie de tipul replicate-and-voting.
@@ -463,22 +507,20 @@ Arhitectura GridSharing const\u{a} in $N$ servere unde cel mult $c$ servere pot 
 
 \subsection{POTSHARDS} 
 \label{sec:desc_potshards}
-\^{I}n $2007$ este propus un nou sistem care combin\u{a} caracteristicile PASIS \c{s}i GridSharing ad\u{a}ug\^{a}nd posiblitatea de migrarea a datelor la noduri noi: Protection Over Time, Securely Harboring And Reliably Distributing Stuff (POTSHARDS) \cite{SGMV:2009}
+\^{I}n $2007$ este propus un nou sistem care combin\u{a} caracteristicile PASIS \c{s}i GridSharing ad\u{a}ug\^{a}nd posiblitatea de migrarea a datelor la noduri noi: Protection Over Time, Securely Harboring And Reliably Distributing Stuff (POTSHARDS) \cite{SGMV:2009}.
 
-De asemenea este introdus\u{a} o tehnic\u{a} nou\u{a} de g\u{a}sire a componentelor folosind pointeri aproximativi. Pentru a asigura confiden\c{t}ialitatea, autorii adopt\u{a} o schem\u{a} de partajare XOR unanim\u{a}, la fel ca \^{i}n GridSharing.
-POTSHARDS consider\u{a} problema \^{i}n care o persoan\u{a} neautorizat\u{a} \^{i}ncearca s\u{a} afle informa\c{t}ii vulnerabile f\u{a}r\u{a} ca aceasta sa fie nedetectat\u{a}. Schemele existente precum PASIS \c{s}i GridSharing nu indeplineau aceast\u{a} cerin\c{t}a dac\u{a} un atacator determin\u{a} loca\c{t}ia componentelor distribuite ini\c{t}ial.
-\todo{nu inteleg - reformulare, explica ce vrei sa zici!}
 
-Solu\c{t}ia pe care o ofer\u{a} aceast\u{a} arhitectur\u{a} este reconstruirea componentelor \^{i}ntr-un mod securizat si folosirea semn\u{a}turilor algebrice pentru a asigura un grad ridicat de p\u{a}strare a integrita\c{t}ii fi\c{s}ierelor \cite{STM:2006}.
-POTSHARDS poate fi g\^{a}ndit ca o aplica\c{t}ie pe partea clientului care comunic\u{a} cu o mul\c{t}ime de noduri (arhive) independente.
+POTSHARDS poate fi g\^{a}ndit ca o aplica\c{t}ie pe partea clientului care comunic\u{a} cu o mul\c{t}ime de noduri (arhive) independente, folosind reconstruc\c{t}ia componentelor \^{i}ntr-un mod securizat \c{s}i semn\u{a}turi algebrice pentru a asigura un grad ridicat de p\u{a}strare a integrita\c{t}ii fi\c{s}ierelor \cite{STM:2006}.
 
-Ca prim pas, POTSHARDS preproceseaz\u{a} fi\c{s}ierul \^{i}ntr-un obiect, partajeaz\u{a} obiectul \^{i}n fragmente la care adaug\u{a} meta-date, numite \textit{shards} (Fig. \ref{fig:data-potshard}) \cite{SGMV:2009}. Acestea sunt trimise apoi arhivelor independente, fiecare av\^{a}nd propriul domeniu de securitate, localizate in \textit{regiuni}. Pentru a reconstitui cu succes informa\c{t}ia ini\c{t}iala, meta-datele shard-urilor con\c{t}in detalii despre structura pointerilor aproximativi, indic\^{a}nd regiunea \^{i}n care se afl\u{a} urm\u{a}torul shard.
+Confiden\c{t}ialitatea este asigurat\u{a} prin adoptarea unei scheme de partajare XOR unanim\u{a}, la fel ca \^{i}n GridSharing.
+
+Ca prim pas, POTSHARDS preproceseaz\u{a} fi\c{s}ierul \^{i}ntr-un obiect, partajeaz\u{a} obiectul \^{i}n fragmente la care adaug\u{a} meta-date, numite \textit{shards} (Fig. \ref{fig:data-potshard}) \cite{SGMV:2009}. Acestea sunt trimise apoi arhivelor independente, fiecare av\^{a}nd propriul domeniu de securitate, localizate in \textit{regiuni}. Pentru a reconstitui cu succes informa\c{t}ia ini\c{t}ial\u{a}, meta-datele shard-urilor con\c{t}in detalii despre structura pointerilor aproximativi, indic\^{a}nd regiunea \^{i}n care se afl\u{a} urm\u{a}torul shard. Pointerii aproximativi sunt folositi pentru a reconstitui intreaga arhiva doar din shard-uri.
 
 \begin{figure}
 	\begin{center}
 	\includegraphics[width=7cm, height=4cm]{img/Shards.png}    % The printed column width is 8.4 cm.
 	\caption{Entit\u{a}\c{t}i de date in POTSHARDS. $Nr$ e num\u{a}rul de shard-uri produse de un fragment.
-		$SplitXOR$ reprezint\u{a} o component\u{a} rezultat\u{a} \^{i}n urma partajarii unanime XOR. Analog $SplitShamir$ reprezint\u{a} o component\u{a} rezultat\u{a} \^{i}n urma partajarii folosind schema Shamir. \todo{cite!}}
+		$SplitXOR$ reprezint\u{a} o component\u{a} rezultat\u{a} \^{i}n urma partajarii unanime XOR. Analog $SplitShamir$ reprezint\u{a} o component\u{a} rezultat\u{a} \^{i}n urma part\u{a}jarii folosind schema Shamir. \cite{SGMV:2009}}
 	\label{fig:data-potshard}
 	\bigskip
 	\end{center}
@@ -496,7 +538,7 @@ Procesul de fragmentare a datelor este prezentat in Fig. \ref{fig:potshards-laye
 \end{figure}
 
 Pentru ca reconstituirea unui fi\c{s}ier sa fie fezabil\u{a} unui utilizator, acestuia \^{i}i este \^{i}ntoars\u{a} o list\u{a} cu loca\c{t}iile exacte shard-urilor corespunz\u{a}toare.
-Ob\c{t}inerea unui shard de c\u{a}tre un atacator nu este folositoare, pentru a detecta urm\u{a}torul shard, un atac brut force const\u{a} \^{i}n cereri multiple \^{i}n zona indicat\u{a} de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este s\u{a} stocheze datele \^{i}ntr-un mod cat mai uniform distribuit \todo{spread}.\cite{SGMV:2009}
+Ob\c{t}inerea unui shard de c\u{a}tre un atacator nu este folositoare, pentru a detecta urm\u{a}torul shard, un atac brut force const\u{a} \^{i}n cereri multiple \^{i}n zona indicat\u{a} de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este s\u{a} stocheze datele \^{i}ntr-un mod cat mai uniform distribuit.\cite{SGMV:2009}
 
 \section{Sistemul de stocare Alouneh et al.}
 \label{sec:desc_alouneh}
@@ -810,7 +852,7 @@ Tip Fi\c{s}ier & doc & gif & pdf & png & rar & wav & zip \\\hline
 
 Consider\u{a}m scenariul pentru detectarea con\c{t}inutului unui fi\c{s}ier, demonstr\^{a}nd practic cum un adversar poate s\u{a} fac\u{a} diferen\c{t}a \^{i}ntre $2$ componente stocate pe acela\c{s}i nod apar\c{t}in unor documente similare. Atacul presupune accesul la un singur nod, indiferent de m\u{a}rimea pragului $k$.
 
-Pentru experiment am ales $3$ fi\c{s}iere \textit{pdf} disponibile online la {\cite{Europass:2014}}:
+Pentru experiment am ales $3$ fi\c{s}iere \textit{pdf} disponibile online la {\cite{Europass:2015}}:
 \begin{itemize}
   \item Europass Curriculum Vitae - BG, Bulgaria;
   \item Europass Curriculum Vitae - DK, Dannemark;
@@ -871,7 +913,7 @@ Consider\u{a}m c\u{a} un adversar reu\c{s}e\c{s}te s\u{a} ob\c{t}in\u{a} compone
 Din cauza \c{s}ablonului pe care \^{i}l respect\u{a} cele dou\u{a} CV-uri, un adversar are nevoie \^{i}n cazul de fa\c{t}\u{a} doar de primele $500$ de componente pentru a constata similiaritatea celor $2$ cu o probabilitate ridicat\u{a}.
 Diferen\c{t}a vizuala este evident\u{a} \^{i}ntre oricare din cele $4$ grafice, deci un adversar poate reu\c{s}i s\u{a} afle informa\c{t}ii despre fi\c{s}ierele partajate indiferent de nodul de stocare vulnerabil.
 
-Consider\u{a}m \^{i}n continuare un alt scenariu, \^{i}n care partaj\u{a}m o imagine pentru care informa\c{t}ia se repet\u{a}. Fie imaginea din Fig. {\ref{fig:carouri}} partajat\u{a} folosind schema din Sec\c{t}iunea {\ref{sec:desc_alouneh}} av\^{a}nd $4$ noduri iar informa\c{t}ia stocat\u{a} pe cel pu\c{t}in $2$ din ele pot reconstitui fi\c{s}ierul partajat ini\c{t}ial \todo{E mai ok acum?}. {\ref{fig:alouneh_distribution}}. La fel ca \^{i}n exemplul precedent, Fig. {\ref{fig:carouri_db1}, \ref{fig:carouri_db2}, \ref{fig:carouri_db3}, \ref{fig:carouri_db4}} reprezint\u{a} grafic componente imaginii din Fig. {\ref{fig:carouri}}. Un adversar constat\u{a} cu u\c{s}urin\c{t}\u{a} prin ob\c{t}inerea informa\c{t}iilor stocate aflate pe un singur nod (indiferent de m\u{a}rimea pragului $k$) c\u{a} fi\c{s}ierul original con\c{t}ine un pattern care se repet\u{a}.
+Consider\u{a}m \^{i}n continuare un alt scenariu, \^{i}n care partaj\u{a}m o imagine pentru care informa\c{t}ia se repet\u{a}. Fie imaginea din Fig. {\ref{fig:carouri}} partajat\u{a} folosind schema din Sec\c{t}iunea {\ref{sec:desc_alouneh}} av\^{a}nd $4$ noduri iar informa\c{t}ia stocat\u{a} pe cel pu\c{t}in $2$ din ele pot reconstitui imaginea partajat\u{a} ini\c{t}ial \todo{E mai ok acum?}. {\ref{fig:alouneh_distribution}}. La fel ca \^{i}n exemplul precedent, Fig. {\ref{fig:carouri_db1}, \ref{fig:carouri_db2}, \ref{fig:carouri_db3}, \ref{fig:carouri_db4}} reprezint\u{a} grafic componente imaginii din Fig. {\ref{fig:carouri}}. Un adversar constat\u{a} cu u\c{s}urin\c{t}\u{a} prin ob\c{t}inerea informa\c{t}iilor stocate aflate pe un singur nod (indiferent de m\u{a}rimea pragului $k$) c\u{a} fi\c{s}ierul original con\c{t}ine un pattern care se repet\u{a}.
 
 
 %-----------------------------------------------------
@@ -928,12 +970,6 @@ Consider\u{a}m \^{i}n continuare un alt scenariu, \^{i}n care partaj\u{a}m o ima
 \subsection{Publicarea rezultatelor}
 
 Pe baza rezultatelor ob\c{t}inute am redactat (\^{i}mpreun\u{a} cu mentorul) un articol, aflat momentan \^{i}n procesul de recenzie la Journal of Control Engineering and Applied Informatics (jurnal indexat ISI,categoria C). \cite{Ceai:2015}
-
-\todo{Bibliografie:\\
-1. Accesat ultima data - trebuie inlocuit cu Ultima accesare\\
-2. diffie hellman cu majuscule - in fisierul bib pui in \{ \}ce vrei sa apara cu litere mari\\
-3. ai inca la libliografie quantum - adauga info in text sau sterge de la bibliografie - nu cred ca e utilizata}
-
 %
 % ---- Bibliography ----
 %
