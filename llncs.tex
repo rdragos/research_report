@@ -25,6 +25,7 @@
 \setcounter{secnumdepth}{4}
 \def\examplename{Exemplul}
 \def\contentsname{Cuprins}
+\captionsetup[table]{name=Tabel}
 
 %
 \begin{document}
@@ -630,9 +631,6 @@ Abordarea acestei metode deterministe conduce la insecuritatea sistemului, Aloun
 
 \todo{poti incerca sa adaugi si aici o imagine}
 
-\todo{de ce ai nevoie de subsectiune daca ai una singura?  }
-
-
 
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -642,41 +640,36 @@ Abordarea acestei metode deterministe conduce la insecuritatea sistemului, Aloun
 
 \section{Rezultate ob\c{t}inute}
 
-\^{I}mpreun\u{a} cu mentorul am analizat sistemul Alouneh et al. prezentat \^{i}n Sec\c{t}iunea \ref{sec:desc_alouneh}  \todo{Sec\c{t}iunile mereu cu litera mare si numarul nu in paranteze! - am modificat eu} 
- \cite{AAMK:2013}.
- Am indentificat erori majore ale acestuia \c{s}i am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite gre\c{s}eli pe care le vom eviden\c{t}ia \^{i}n urm\u{a}toarele sec\c{t}iuni.
+\^{I}mpreun\u{a} cu mentorul am analizat sistemul Alouneh et al. prezentat \^{i}n Sec\c{t}iunea \ref{sec:desc_alouneh} \cite{AAMK:2013}.
+ Am indentificat erori majore ale acestuia \c{s}i am implementat todosistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite gre\c{s}eli pe care le vom eviden\c{t}ia \^{i}n urm\u{a}toarele sec\c{t}iuni.
 
 \label{sec:results}
-\subsection{\todo{Vulnerabilit\u{a}\c{t}i eviden\c{t}iate}}
+\subsection{Vulnerabilit\u{a}\c{t}i eviden\c{t}iate}
 
-Spre deosebire de schema Shamir, unde coeficien\c{t}ii (\todo{cu excep\c{t}ia termenului liber, care este egal cu secretul}) sunt ale\c{s}i \^{i}ntr-un mod aleator uniform, sistemul propus de Alouneh et al. folose\c{s}te o schem\u{a} modificat\u{a} Shamir \^{i}n care coeficien\c{t}ii sunt extra\c{s}i din con\c{t}inutul fi\c{s}ierelor originale.
-Alegerea este motivat\u{a} de faptul ca mul\c{t}imea componentelor \c{s}i efortul computa\c{t}ional depus pentru generarea coeficien\c{t}ilor se reduce la un factor de $k$ \todo{nu se reduce la k, se reduce de k ori}, spre deosebire de schema Shamir.
+Spre deosebire de schema Shamir, unde coeficien\c{t}ii (cu excep\c{t}ia termenului liber, care este egal cu secretul) sunt ale\c{s}i \^{i}ntr-un mod aleator uniform, sistemul propus de Alouneh et al. folose\c{s}te o schem\u{a} modificat\u{a} Shamir \^{i}n care coeficien\c{t}ii sunt extra\c{s}i din con\c{t}inutul fi\c{s}ierelor originale.
+Alegerea este motivat\u{a} de faptul ca mul\c{t}imea componentelor \c{s}i efortul computa\c{t}ional depus pentru generarea coeficien\c{t}ilor se reduce la un factor de $k$ ori, spre deosebire de schema Shamir.
 
-\todo{explica simplu ca asta inseamna ca daca se partajeaza un acelasi fisier de mai multe ori se obtin intotdeauna aceleasi componente}
-Determinismul duce la c\^{a}teva atacuri simple \^{i}n momentul \^{i}n care un atacator ob\c{t}ine informa\c{t}iile stocate \^{i}ntr-un nod, indiferent de m\u{a}rimea pragului folosit \^{i}n metoda de partajare. \^{I}n acest sens, am eviden\c{t}iat $2$ atacuri simple \^{i}n cazul \^{i}n care componentele sunt calculate in ordine ($f(01), f(02), \dots$ \todo{Repet, gandeste-te ca va citi raportul cineva care nu are nici o idee despre ce inseamna si trebuie sa inteleaga}):
+Datorit\u{a} determinismului, partajarea unui fi\c{s}ier de mai multe ori implic\u{a} ob\c{t}inerea de componente identice.
+Determinismul duce la c\^{a}teva atacuri simple \^{i}n momentul \^{i}n care un atacator ob\c{t}ine informa\c{t}iile stocate \^{i}ntr-un nod, indiferent de m\u{a}rimea pragului folosit \^{i}n metoda de partajare. \^{I}n acest sens, am eviden\c{t}iat $2$ atacuri simple \^{i}n cazul \^{i}n care componentele sunt calculate in ordine ($f(01), f(02), \dots$):
 \begin{itemize}
 	\item Detectarea tipului unui fi\c{s}ier
-	\item Detectarea tipului de con\c{t}inut unui fi\c{s}ier \todo{reformulare}
+	\item Detectarea con\c{t}inutului unui fi\c{s}ier
 \end{itemize}
 
-Am indicat c\u{a} un atac bazat pe felul \^{i}n care se realizeaz\u{a} completarea fi\c{s}ierului $\mathcal{S}$ \^{i}nainte de partajarea sa poate fi fezabil, \^{i}n condi\c{t}iile \^{i}n care s-a demonstrat ca aceast\u{a} alegere este esen\c{t}ial\u{a} \^{i}n p\u{a}strarea securit\u{a}\c{t}ii \cite{Vaudenay:2002}.
-\todo{din nou nu dai detalii - de unde sa stie cititorul ca nu e precizat in articol cum trebuie facut padding? ce inseamna completarea fisierului s?}
+Deoarece Alouneh et al. nu men\c{t}ionea\u{a} o metoda de padding, am indicat c\u{a} un atac bazat pe felul \^{i}n care se realizeaz\u{a} completarea fi\c{s}ierului (padding) $\mathcal{S}$ \^{i}nainte de partajarea sa poate fi fezabil, \^{i}n condi\c{t}iile \^{i}n care s-a demonstrat ca aceast\u{a} alegere este esen\c{t}ial\u{a} \^{i}n p\u{a}strarea securit\u{a}\c{t}ii \cite{Vaudenay:2002}.
 
 \subsubsection{Detectarea tipului de fi\c{s}ier}\hspace*{\fill} \\
 \label{subsec:file_type_detection}
 
-\^{I}n sistemele de operare \todo{In sistemele de operare?!}, la inceputul fiec\u{a}rui fi\c{s}ier se afl\u{a} o secven\c{t}\u{a} de octe\c{t}i (denumit\u{a} semnatur\u{a} sau antet) \todo{cu rolul de a identifica} tipul acestuia. \^{I}n tabelul {\ref{table:sign}} g\u{a}sim $4$ \todo{4?! nu ai verificat ce ai scris!} din cele mai uzuale antete.
-\todo{Tabelul x contine / indica ... - incearca sa nu mai scrii totul la persoana 1 - nu e formal; tine minte ca si la indicatiile pentru autori cand am scris articolul era mentionat; referirea la tablouri / figuri se face mereu cu majuscula: Fig.x Tabelul x}
+\^{I}n tehnologia informa\c{t}iei, la inceputul fiec\u{a}rui fi\c{s}ier se afl\u{a} o secven\c{t}\u{a} de octe\c{t}i (denumit\u{a} semnatur\u{a} sau antet) cu rolul de a identifica tipul acestuia. Tabelul {\ref{table:sign}} indic\u{a} $7$ din cele mai uzuale antete.
 
-Consider\^{a}nd cazul \^{i}n care dorim sa partaj\u{a}m un fi\c{s}ier \textit{pdf} cu ajutorul sistemului descris in \todo{S}ec\c{t}iunea \ref{sec:desc_alouneh}, folosind $k \leq 4$. Polinomul corespunz\u{a}tor $f(x)$ va fi intotdeauna acela\c{s}i. Presupun\^{a}nd ca numerotarea nodului $i$ este aceea\c{s}i, putem determina cu u\c{s}urin\c{t}\u{a} dac\u{a} este stocat un fi\c{s}ier \textit{pdf} f\u{a}r\u{a} a lua \^{i}n calcul con\c{t}inutul fi\c{s}ierului.
+Se consider\u{a} cazul \^{i}n care partajarea unui fi\c{s}ier \textit{pdf} se face cu ajutorul sistemului descris in {S}ec\c{t}iunea \ref{sec:desc_alouneh}, folosind $k \leq 4$. Polinomul corespunz\u{a}tor $f(x)$ va fi intotdeauna acela\c{s}i. Presupun\^{a}nd ca numerotarea nodului $i$ este aceea\c{s}i, putem determina cu u\c{s}urin\c{t}\u{a} dac\u{a} este stocat un fi\c{s}ier \textit{pdf} f\u{a}r\u{a} a lua \^{i}n calcul con\c{t}inutul fi\c{s}ierului.
+Acest atac este fezabil deorece valoarea lui $k$ este public\u{a} iar $i$ poate sa fie descoperit \^{i}n momentul distribuirii.
 
 Cu alte cuvinte, dac\u{a} un adversar obt\c{i}ne controlul unui singur nod, baz\^{a}ndu-se doar pe valoarea primei componente poate detecta tipul unui fi\c{s}ier.
 
-\^{I}n plus, p\u{a}str\^{a}nd aceea\c{s}i presupunere, anume c\u{a} nodurile \^{i}\c{s}i p\u{a}streaz\u{a} acela\c{s}i indice $i$ iar adversarul ob\c{t}ine valorile $i$ \c{s}i $k$ atunci acesta poate detecta cu o probabilite ridicat\u{a} tipul fi\c{s}ierului folosindu-se de prima component\u{a}. Putem asuma acest atac datorit\u{a} faptului c\u{a} valoarea lui $k$ este public\u{a} iar $i$ poate sa fie descoperit \^{i}n momentul distribuirii (Fig. \ref{fig:alouneh_distribution}).
-\todo{Care este diferenta fata de ce ai scris in paragraful anterior?}
-
-Pentru a exemplifica, un adversar poate distinge cu probabilitate ridicat\u{a} \^{i}ntre fi\c{s}ierele \textit{doc, gif, pdf, png, rar, wav} \c{s}i \textit{zip}. \^{I}n tabelul {\ref{table:shares}} avem generate componentele pentru $k = 2$ \c{s}i $n = 5$.
-Dac\u{a} un adversar descoper\u{a} valoarea primului nod iar prima component\u{a} este $14$ atunci acesta \c{s}tie cu certitunde c\u{a} aceasta corespunde un fi\c{s}ier \textit{gif}. Dac\u{a} ob\c{t}ine accesul nodului $4$ \c{s}i cite\c{s}te valoarea $205$ atunci \c{s}tie c\u{a} fi\c{s}ierul este de tipul \textit{rar}. Daca cite\c{s}te valoarea $27$ de pe primul nod atunci \c{s}tie c\u{a} poate fi un \textit{wav} sau \textit{zip}; dar poate s\u{a} disting\u{a} cele 2 fi\c{s}iere dac\u{a} dezv\u{a}luie o singur\u{a} valoare de pe celelalte noduri ($2$, $3$, $4$ sau $5$) pentru c\u{a} valorile sunt distincte.
+Pentru a exemplifica, un adversar poate distinge cu probabilitate ridicat\u{a} \^{i}ntre fi\c{s}ierele \textit{doc, gif, pdf, png, rar, wav} \c{s}i \textit{zip}. \^{I}n Tabelul {\ref{table:shares}} avem generate componentele pentru $k = 2$ \c{s}i $n = 5$.
+Dac\u{a} un adversar descoper\u{a} valoarea primului nod iar prima component\u{a} este $14$ atunci acesta \c{s}tie cu certitunde c\u{a} aceasta corespunde un fi\c{s}ier \textit{gif}. Dac\u{a} ob\c{t}ine accesul nodului $4$ \c{s}i cite\c{s}te valoarea $205$ atunci \c{s}tie c\u{a} fi\c{s}ierul este de tipul \textit{rar}. Daca cite\c{s}te valoarea $27$ de pe primul nod atunci \c{s}tie c\u{a} poate fi un \textit{wav} sau \textit{zip}; dar poate s\u{a} disting\u{a} cele 2 fi\c{s}iere cu probabilitate $1$ dac\u{a} dezv\u{a}luie o singur\u{a} valoare de pe celelalte noduri ($2$, $3$, $4$ sau $5$) pentru c\u{a} valorile sunt distincte.
 
 %-----------------------------------------------------
 \begin{table}
@@ -721,14 +714,12 @@ zip & 27 & 198 & 141 & 103 & 44 \\ \hline
 
 %-----------------------------------------------------
 
-\subsubsection{Detectarea tipului de con\c{t}inut}\hspace*{\fill} \\
+\subsubsection{Detectarea de con\c{t}inut}\hspace*{\fill} \\
 \label{subsec:file_content_detection}
 
 Multe documente urmeaz\u{a} un anumit tipar precum contracte, chitan\c{t}e, bonuri fiscale sau curriculum vitae. Deoarece majoritatea con\c{t}inutului r\u{a}m\^{a}ne neschimbat, exist\u{a} o probabilitate destul de mare ca multe componente sa aiba aceea\c{s}i valoare. O dat\u{a} ce un adversar reu\c{s}e\c{s}te s\u{a} determine componentele unui nod, poate determina prin analogie tipul de con\c{t}inut al fi\c{s}ierului original.
 
-Fi\c{s}ierele vulnerabile sunt cele care con\c{t}in o secvent\u{a} de octe\c{t}i periodic\u{a} (imagini cu un pattern repetitiv) sau cele care au preponderent octe\c{t}i nuli (valoarea componentelor asociat\u{a} majorit\u{a}\c{t}ii blocurilor va fi $0$).
-\todo{aici idea e putin alta; daca in primul caz comparam 2 fisiere distincte ca sa identificam ce tip de informatie contine unul dintre ele stiind ce contine celalalt, aici avem multiple componente identice care indica faptul ca exista secvente repetitive in continutul fisierului; extinde putin}
-
+Fi\c{s}ierele vulnerabile sunt cele care con\c{t}in o secven\c{t}\u{a} de octe\c{t}i periodic\u{a} (imagini cu un pattern repetitiv) sau cele care au preponderent octe\c{t}i nuli (valoarea componentelor asociat\u{a} majorit\u{a}\c{t}ii blocurilor fiind $0$). Spre deosebire de prima metod\u{a}, aceasta nu necesit\u{a} compararea cu un al $2$-lea fi\c{s}ier, trat\^{a}nd componentele de sine st\u{a}t\u{a}tor. Multiple componente identice indic\u{a} existen\c{t}a unor secven\c{t}e repetitive \^{i}n con\c{t}inutul fi\c{s}ierului.
 
 \subsection{Implementare \c{s}i rezultate practice}
 Pentru a ar\u{a}ta aplicabilitatea rezultatelor \^{i}n practic\u{a}, am implementat propunerea descrisa in Sec\c{t}iunea {\ref{sec:desc_alouneh}} \c{s}i am testat pe c\^{a}teva cazuri.
@@ -744,8 +735,7 @@ Men\c{t}ion\u{a}m aceast\u{a} metoda doar pentru completitudine, aceasta neafect
 
 Extindem analiza f\u{a}cut\u{a} \^{i}n Sec\c{t}iunea {\ref{subsec:file_type_detection}} asupra tipurilor de fi\c{s}iere din Tabelul {\ref{table:sign}} pentru $k = 2$ \c{s}i cre\c{s}tem valoarea indicelui $i$ p\^{a}n\u{a} c\^{a}nd 2 componente devin egale. Fie $f_l$ polinomul de gradul $1$ asociat primului bloc al fi\c{s}ierului aflat pe linia $l$. Analog $f_c$ polinomul de gradul $1$ asociat primului bloc al fi\c{s}ierului aflat pe coloana $c$.
 
-\todo{Tabelul {\ref{table:k2}} prezint\u{a}} valoarea maxim\u{a} a nodului $i$ pentru care $f_l(i) \neq f_c(i)$. Valoarea $-1$ indic\u{a} lips\u{a} de coliziuni ale lui $f_c(x)$, $f_l(x)$ pentru $i$, $i = {1,2,\dots,255}$ ($\not\exists 1 \leq i \leq 255$ a.\^{i}. $f_l(i) = f_c(i)$)).
-\todo {verifica la final ca ai peste tot Tabelul x, Fig.x, Sectiunea x - cu majuscula}
+Tabelul {\ref{table:k2} prezint\u{a}} valoarea maxim\u{a} a nodul $i$ pentru care $f_l(i) \neq f_c(i)$. Valoarea $-1$ indic\u{a} lips\u{a} de coliziuni ale lui $f_c(x)$, $f_l(x)$ pentru $i$, $i = {1,2,\dots,255}$ ($\not\exists 1 \leq i \leq 255$ a.\^{i}. $f_l(i) = f_c(i)$)).
 
 Deoarece pe diagonala principal\u{a} toate componentele sunt identice pentru $k \leq 4$, poate fi ignorat\u{a}. \^{I}n Tabelul {\ref{table:k2}} observ\u{a}m valoarea $0$ pentru perechea $(wav, zip)$ pentru c\u{a} $f_{wav}(1) = f_{zip}(1) = 27$ (Tabelul \ref{table:sign}).
 
@@ -816,7 +806,7 @@ Tip Fi\c{s}ier & doc & gif & pdf & png & rar & wav & zip \\\hline
 \bigskip
 \end{table}
 
-\subsubsection{Detectarea tipului de con\c{t}inut} \hspace*{\fill} \\
+\subsubsection{Detectarea de con\c{t}inut} \hspace*{\fill} \\
 
 Consider\u{a}m scenariul pentru detectarea con\c{t}inutului unui fi\c{s}ier, demonstr\^{a}nd practic cum un adversar poate s\u{a} fac\u{a} diferen\c{t}a \^{i}ntre $2$ componente stocate pe acela\c{s}i nod apar\c{t}in unor documente similare. Atacul presupune accesul la un singur nod, indiferent de m\u{a}rimea pragului $k$.
 
@@ -827,7 +817,7 @@ Pentru experiment am ales $3$ fi\c{s}iere \textit{pdf} disponibile online la {\c
   \item Europass Mobility - RO, Romania.
 \end{itemize}
 
-Primele dou\u{a} fi\c{s}iere reprezint\u{a} \c{s}ablonul pentru un CV european \^{i}n limba bulgar\u{a}, respectiv danez\u{a}. Observ\u{a}m c\u{a} nu doar con\c{t}inutul \c{s}abloanelor difer\u{a}, dar \c{s}i limba \^{i}n care au fost traduse. Cel de-al treilea fi\c{s}ier este complet diferit de primele dou\u{a}, fiind un document personal \^{i}n limba rom\^{a}n\u{a}, folosit pentru organizarea timpului \todo{organizarea timpului? nu mobilitati?}.
+Primele dou\u{a} fi\c{s}iere reprezint\u{a} \c{s}ablonul pentru un CV european \^{i}n limba bulgar\u{a}, respectiv danez\u{a}. Observ\u{a}m c\u{a} nu doar con\c{t}inutul \c{s}abloanelor difer\u{a}, dar \c{s}i limba \^{i}n care au fost traduse. Cel de-al treilea fi\c{s}ier este complet diferit de primele dou\u{a}, fiind un document personal \^{i}n limba rom\^{a}n\u{a}, folosit pentru \^{i}nregistrarea cuno\c{s}tiintelor dob\u{a}ndite \^{i}ntr-o \c{t}ar\u{a} european\u{a}.
 
 Pentru a ar\u{a}ta vulnerabilitatea sistemului Alouneh et al. {\cite{AAMK:2013}}, partaj\u{a}m cele $3$ fi\c{s}iere folosind schema $(2, 4)$. Experimentul reprezint\u{a} o implementare practic\u{a} a metodei prezentate in Fig. {\ref{fig:alouneh_distribution}}.
 
@@ -874,14 +864,14 @@ Pentru a ar\u{a}ta vulnerabilitatea sistemului Alouneh et al. {\cite{AAMK:2013}}
 %-----------------------------------------------------
 %-----------------------------------------------------
 
-Fig. {\ref{fig:db1}}, {\ref{fig:db2}}, {\ref{fig:db3}}, {\ref{fig:db4}} con\c{t}in $2000$ de componente generate pentru cele $3$ fi\c{s}iere, stocate \^{i}n baza de date corespunz\u{a}toare nodurilor $1,2,3$ \c{s}i $4$. Presupunem c\u{a} indicele $i$ este fixat, polinoamele fiind evaluate \^{i}n acela\c{s}i punct $i$ \todo{pentru un anumit nod $i$}. Un adversar care ob\c{t}ine componentele unui nod poate deduce cu u\c{s}urinta graficul lor.
+Fig. {\ref{fig:db1}}, {\ref{fig:db2}}, {\ref{fig:db3}}, {\ref{fig:db4}} con\c{t}in $2000$ de componente generate pentru cele $3$ fi\c{s}iere, stocate \^{i}n baza de date corespunz\u{a}toare nodurilor $1,2,3$ \c{s}i $4$. Presupunem c\u{a} indicele $i$ este fixat, polinoamele fiind evaluate \^{i}n acela\c{s}i nod $i$. Un adversar care ob\c{t}ine componentele unui nod poate deduce cu u\c{s}urinta graficul lor.
 
 Consider\u{a}m c\u{a} un adversar reu\c{s}e\c{s}te s\u{a} ob\c{t}in\u{a} componentele din Fig. {\ref{fig:db1}}. Poate deduce u\c{s}or c\u{a} primele dou\u{a} fi\c{s}iere au un num\u{a}r mare de componente identice iar cel de-al $3$-lea este diferit de primele.
 
 Din cauza \c{s}ablonului pe care \^{i}l respect\u{a} cele dou\u{a} CV-uri, un adversar are nevoie \^{i}n cazul de fa\c{t}\u{a} doar de primele $500$ de componente pentru a constata similiaritatea celor $2$ cu o probabilitate ridicat\u{a}.
 Diferen\c{t}a vizuala este evident\u{a} \^{i}ntre oricare din cele $4$ grafice, deci un adversar poate reu\c{s}i s\u{a} afle informa\c{t}ii despre fi\c{s}ierele partajate indiferent de nodul de stocare vulnerabil.
 
-Consider\u{a}m \^{i}n continuare un alt scenariu, \^{i}n care partaj\u{a}m o imagine pentru care informa\c{t}ia se repet\u{a}. Fie imaginea din Fig. {\ref{fig:carouri}} partajat\u{a} folosind schema $(2,4)$ din tabelul \todo{tabelul?!} {\ref{fig:alouneh_distribution}}. La fel ca \^{i}n exemplul precedent, Fig. {\ref{fig:carouri_db1}, \ref{fig:carouri_db2}, \ref{fig:carouri_db3}, \ref{fig:carouri_db4}} reprezint\u{a} grafic componente imaginii din Fig. {\ref{fig:carouri}}. Un adversar constat\u{a} cu u\c{s}urin\c{t}\u{a} prin ob\c{t}inerea informa\c{t}iilor stocate aflate pe un singur nod (indiferent de m\u{a}rimea pragului $k$) c\u{a} fi\c{s}ierul original con\c{t}ine un pattern care se repet\u{a}.
+Consider\u{a}m \^{i}n continuare un alt scenariu, \^{i}n care partaj\u{a}m o imagine pentru care informa\c{t}ia se repet\u{a}. Fie imaginea din Fig. {\ref{fig:carouri}} partajat\u{a} folosind schema din Sec\c{t}iunea {\ref{sec:desc_alouneh}} av\^{a}nd $4$ noduri iar informa\c{t}ia stocat\u{a} pe cel pu\c{t}in $2$ din ele pot reconstitui fi\c{s}ierul partajat ini\c{t}ial \todo{E mai ok acum?}. {\ref{fig:alouneh_distribution}}. La fel ca \^{i}n exemplul precedent, Fig. {\ref{fig:carouri_db1}, \ref{fig:carouri_db2}, \ref{fig:carouri_db3}, \ref{fig:carouri_db4}} reprezint\u{a} grafic componente imaginii din Fig. {\ref{fig:carouri}}. Un adversar constat\u{a} cu u\c{s}urin\c{t}\u{a} prin ob\c{t}inerea informa\c{t}iilor stocate aflate pe un singur nod (indiferent de m\u{a}rimea pragului $k$) c\u{a} fi\c{s}ierul original con\c{t}ine un pattern care se repet\u{a}.
 
 
 %-----------------------------------------------------
@@ -937,8 +927,7 @@ Consider\u{a}m \^{i}n continuare un alt scenariu, \^{i}n care partaj\u{a}m o ima
 
 \subsection{Publicarea rezultatelor}
 
-Av\^{a}nd rezultatele de mai sus, \^{i}mpreun\u{a} cu mentorul, am scris un articol cuprinz\^{a}nd rezultatele de mai sus \c{s}i l-am trimis la Journal of Control Engineering and Applied Informatics \cite{Ceai:2015}, un jurnal indexat ISI \c{s}i cotat C.
-\todo{reformulare! Pe baza rezultatelor ob\c{t}inute am redactat (\^{i}mpreun\u{a} cu mentorul) un articol, aflat momentan \^{i}n procesul de recenzie la Journal of Control Engineering and Applied Informatics (jurnal indexat ISI,categoria C). \cite{Ceai:2015}} 
+Pe baza rezultatelor ob\c{t}inute am redactat (\^{i}mpreun\u{a} cu mentorul) un articol, aflat momentan \^{i}n procesul de recenzie la Journal of Control Engineering and Applied Informatics (jurnal indexat ISI,categoria C). \cite{Ceai:2015}
 
 \todo{Bibliografie:\\
 1. Accesat ultima data - trebuie inlocuit cu Ultima accesare\\
