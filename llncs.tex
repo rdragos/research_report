@@ -264,17 +264,25 @@ Pentru un atacator care de\c{t}ine chiar \c{s}i $k-1$ valori $s_i$, acesta nu de
 \subsection{Schema Ito, Saito \c{s}i Nishizeki}
 \label{Ito}
 
-\^{I}n continuare vom descrie modalitatea de distribuire a componentelor de la care au pornit Ito, Saito \c{s}i Nishizeki pentru ca schema sa aiba o structur\u{a} de acces $\mathcal{A} \subseteq 2^P$ (submul\c{t}ime a setului de participan\c{t}i) monotona (i.e. $\forall A \in \mathcal{A}, A \subseteq A' \Rightarrow A' \in \mathcal{A}$). \cite{ITO:1989}
+\^{I}n continuare vom descrie modalitatea de distribuire a componentelor de la care au pornit Ito, Saito \c{s}i Nishizeki pentru ca schema sa aiba o structur\u{a} de acces $\mathcal{A} \subseteq 2^P$ (submul\c{t}ime a setului de participan\c{t}i) monoton\u{a} (i.e. $\forall A \in \mathcal{A}, A \subseteq A' \Rightarrow A' \in \mathcal{A}$) \cite{ITO:1989}. 
 Folosind construc\c{t}ia unei scheme majoritare $(k, n)$ autorii au reu\c{s}it s\u{a} descrie elementele din $\mathcal{A}$ folosind rezultatul unei reuniuni de mul\c{t}imi de componente cu un num\u{a}r de elemente mai mare sau egal decat $k$ ( Fig. \ref{fig:ito_et_al}) \cite{ITO:1989}. Nota\c{t}ia $x : Pr$, \^{i}nseamn\u{a} c\u{a} $x$ are proprietatea $Pr$. 
 
-Dezvantajul acestei structuri este num\u{a}rul de componente necesar pentru o structur\u{a} de acces oarecare $\mathcal{A}$. Un mod simplu de construire al func\c{t}iei $Assign$ este urm\u{a}torul:
-\begin{itemize}
-	\item Fie $r$ num\u{a}rul de elemente corespunzator mul\c{t}imii $\mathcal{A}$;
-	\item Se genereaz\u{a} $n \choose r$ componente
-	\item 
-\end{itemize}
+Dezvantajul acestei structuri este num\u{a}rul de componente necesar pentru o structur\u{a} de acces oarecare $\mathcal{A}$. Un mod simplu de construire al func\c{t}iei $Assign$ este urm\u{a}torul: pentru fiecare mul\c{t}ime minimal\u{a} $A \in \mathcal{A}$ ($\forall B \in \mathcal{A}$, $B \neq A, B \not\subset A$) se folose\c{s}te o schem\u{a} de partajare unanim\u{a} $(|A|, |A|)$ a lui $\mathcal{S}$ pentru participan\c{t}ii din $A$.
 
-
+\begin{example}
+	Fie structura de acces $\mathcal{A} = \{ \{P_1, P_2\},\{P_1, P_3, P_4\}\}$.
+	\begin{itemize}
+		\item Gener\u{a}m componentele $s_1, s_2$ a.\^{i}. $s_1 \oplus s_2 = \mathcal{S}$ cu ajutorul schemei unanime $(2,2)$, 
+		\item Gener\u{a}m componentele $s_3, s_4, s_5$ a.\^{i}. $s_3 \oplus s_4 \oplus s_5 = \mathcal{S}$ cu ajutorul schemei unanime $(3,3)$
+	\end{itemize}
+	Participan\c{t}ii primesc in felul urm\u{a}tor componentele:
+	\begin{itemize}
+		\item $P_1: \{s_1, s_3\}$;
+		\item $P_2: \{s_2\}$;
+		\item $P_3: \{s_3\}$;
+		\item $P_4: \{s_4\}$;
+	\end{itemize}
+\end{example}
 
 %---------------- Figure - Ito_et_al- START ------------------------
 \begin{figure*}[h!]
@@ -671,7 +679,7 @@ Abordarea acestei metode deterministe conduce la insecuritatea sistemului, Aloun
 
 %---------------- Figure - alouneh_reconstruction- STOP ------------------------
 
-\todo{poti incerca sa adaugi si aici o imagine}
+%\todo{poti incerca sa adaugi si aici o imagine}
 
 
 %----------------------------------------------------------------
@@ -683,7 +691,7 @@ Abordarea acestei metode deterministe conduce la insecuritatea sistemului, Aloun
 \section{Rezultate ob\c{t}inute}
 
 \^{I}mpreun\u{a} cu mentorul am analizat sistemul Alouneh et al. prezentat \^{i}n Sec\c{t}iunea \ref{sec:desc_alouneh} \cite{AAMK:2013}.
- Am indentificat erori majore ale acestuia \c{s}i am implementat todosistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite gre\c{s}eli pe care le vom eviden\c{t}ia \^{i}n urm\u{a}toarele sec\c{t}iuni.
+ Am indentificat erori majore ale acestuia \c{s}i am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite gre\c{s}eli pe care le vom eviden\c{t}ia \^{i}n urm\u{a}toarele sec\c{t}iuni.
 
 \label{sec:results}
 \subsection{Vulnerabilit\u{a}\c{t}i eviden\c{t}iate}
@@ -913,7 +921,7 @@ Consider\u{a}m c\u{a} un adversar reu\c{s}e\c{s}te s\u{a} ob\c{t}in\u{a} compone
 Din cauza \c{s}ablonului pe care \^{i}l respect\u{a} cele dou\u{a} CV-uri, un adversar are nevoie \^{i}n cazul de fa\c{t}\u{a} doar de primele $500$ de componente pentru a constata similiaritatea celor $2$ cu o probabilitate ridicat\u{a}.
 Diferen\c{t}a vizuala este evident\u{a} \^{i}ntre oricare din cele $4$ grafice, deci un adversar poate reu\c{s}i s\u{a} afle informa\c{t}ii despre fi\c{s}ierele partajate indiferent de nodul de stocare vulnerabil.
 
-Consider\u{a}m \^{i}n continuare un alt scenariu, \^{i}n care partaj\u{a}m o imagine pentru care informa\c{t}ia se repet\u{a}. Fie imaginea din Fig. {\ref{fig:carouri}} partajat\u{a} folosind schema din Sec\c{t}iunea {\ref{sec:desc_alouneh}} av\^{a}nd $4$ noduri iar informa\c{t}ia stocat\u{a} pe cel pu\c{t}in $2$ din ele pot reconstitui imaginea partajat\u{a} ini\c{t}ial \todo{E mai ok acum?}. {\ref{fig:alouneh_distribution}}. La fel ca \^{i}n exemplul precedent, Fig. {\ref{fig:carouri_db1}, \ref{fig:carouri_db2}, \ref{fig:carouri_db3}, \ref{fig:carouri_db4}} reprezint\u{a} grafic componente imaginii din Fig. {\ref{fig:carouri}}. Un adversar constat\u{a} cu u\c{s}urin\c{t}\u{a} prin ob\c{t}inerea informa\c{t}iilor stocate aflate pe un singur nod (indiferent de m\u{a}rimea pragului $k$) c\u{a} fi\c{s}ierul original con\c{t}ine un pattern care se repet\u{a}.
+Consider\u{a}m \^{i}n continuare un alt scenariu, \^{i}n care partaj\u{a}m o imagine pentru care informa\c{t}ia se repet\u{a}. Fie imaginea din Fig. {\ref{fig:carouri}} partajat\u{a} folosind schema din Sec\c{t}iunea {\ref{sec:desc_alouneh}} av\^{a}nd $4$ noduri iar informa\c{t}ia stocat\u{a} pe cel pu\c{t}in $2$ din ele pot reconstitui imaginea partajat\u{a} ini\c{t}ial. {\ref{fig:alouneh_distribution}}. La fel ca \^{i}n exemplul precedent, Fig. {\ref{fig:carouri_db1}, \ref{fig:carouri_db2}, \ref{fig:carouri_db3}, \ref{fig:carouri_db4}} reprezint\u{a} grafic componente imaginii din Fig. {\ref{fig:carouri}}. Un adversar constat\u{a} cu u\c{s}urin\c{t}\u{a} prin ob\c{t}inerea informa\c{t}iilor stocate aflate pe un singur nod (indiferent de m\u{a}rimea pragului $k$) c\u{a} fi\c{s}ierul original con\c{t}ine un pattern care se repet\u{a}.
 
 
 %-----------------------------------------------------
