@@ -26,37 +26,53 @@
 \def\examplename{Exemplul}
 \def\contentsname{Cuprins}
 \captionsetup[table]{name=Tabel}
-
+\restylefloat{table}
 %
 \begin{document}
-\pagestyle{empty}
-%
-%
-\title{TODO}
-%
-\titlerunning{Research report for UROP course}  % abbreviated title (for running head)
-%                                     also used for the TOC unless
-%                                     \toctitle is used
-%
-\subtitle{- Undergraduate Research Opportunities - }
-\author{Drago\c{s} Alin Rotaru.\\{\small \textbf{Mentor}: Ruxandra F. Olimid}}
-\authorrunning{D.A.Rotaru} % abbreviated author list (for running head)
-%
-%%%% list of authors for the TOC (use if author list has to be modified)
-%\tocauthor{}
+% pagina de titlu
+\thispagestyle{empty}
 
-\institute{Universitatea din Bucure\c{s}ti \\ ROMANIA\\
-\email{r.dragos0@gmail.com
-}
-}
+%\centerline{\bf UNIVERSITY OF BUCHAREST}
+
+%\centerline{\bf FACULTY OF MATHEMATICS AND COMPUTER SCIENCE}
 
 
-\maketitle              % typeset the title of the contribution
+\vspace{10.5cm}
 
-\begin{abstract}
-TODO - abstract
-%\keywords{securitate, scheme de partajare}
-\end{abstract}
+
+\centerline{\huge \bf TODO}
+\vspace{0.35cm}
+\centerline{\huge \bf  TODO}
+%\vspace{0.35cm}
+
+
+\vspace{1cm}
+
+\centerline{\large \bf - Undergraduate Research Opportunities -}
+
+\vspace{5.5cm}
+
+\begin{flushleft}
+{\Large \textit{Mentor:}\vspace{0.2cm}}
+
+{\large Lect.univ.dr. Ruxandra OLIMID}
+\end{flushleft}
+
+\vspace{3cm}
+\begin{flushright}
+{\Large \textit{Student:}\vspace{0.2cm}}
+
+%TODO - las Ing.?
+{\Large Drago\c{s} Alin ROTARU}
+\end{flushright}
+
+
+\vspace{3.5cm}
+
+%\centerline{\bf Bucharest}
+
+%\centerline{\bf 2015}
+
 
 \tableofcontents
 \newpage
@@ -84,9 +100,9 @@ O schem\u{a} de partajare este o metod\u{a} de a distribui un secret unor partic
 \begin{itemize}
 	\item Sec\c{t}iunea {\ref{sec:intro}} descrie pe scurt obiectul de studiu.
 	\item Sec\c{t}iunea {\ref{sec:splitting_schemes}} ofer\u{a} o scurt\u{a} introducere \^{i}n domeniul schemelor de partajare \c{s}i descrie \^{i}n detaliu metodele ce vor fi folosite \^{i}n sec\c{t}iunile urm\u{a}toare.
-	\item Sec\c{t}iunea {\ref{sec:long_term_systems_intro}} con\c{t}ine no\c{t}iuni introductive despre sistemele de stocare de lung\u{a} durat\u{a}.
+	\item Sec\c{t}iunea {\ref{sec:long_term_systems_intro}} con\c{t}ine cerin\c{t}ele pe care trebuie s\u{a} le \^{i}ndeplineasc\u{a} un sistem de stocare de lunga durat\u{a}.
 	\item Sec\c{t}iunea {\ref{sec:long_term_systems_full}} descrie c\^{a}teva sisteme considerate relevante pentru \^{i}ntelegerea contribu\c{t}iilor p\^{a}n\u{a} \^{i}n prezent.
-	\item Sec\c{t}iunea {\ref{sec:desc_alouneh}} introduce sistemul criptanalizat.
+	\item Sec\c{t}iunea {\ref{sec:desc_alouneh}} introduce sistemul de stocare criptanalizat.
 	\item Sec\c{t}iunea {\ref{sec:obtained_results}} con\c{t}ine contribu\c{t}iile de cercetare pun\^{a}nd \^{i}n eviden\c{t}\u{a} determinismul prezent al sistemului introdus \^{i}n Sec\c{t}iunea {\ref{sec:desc_alouneh}}.
 \end{itemize}
 
@@ -105,7 +121,7 @@ Formal, o schem\u{a} de partajare este reprezentat\u{a} de o pereche de algoritm
 	\item \textit{$Gen(S, m)$} este un algoritm care prime\c{s}te la intrare un secret \textit{S} \c{s}i un num\u{a}r \^{i}ntreg $m$ \c{s}i \^{i}ntoarce un set de componente ${s_1, s_2, \dots, s_m}$.
 	\item \textit{$Rec({s_i}_1, {s_i}_2, \dots, {s_i}_q)$} este un algoritm care prime\c{s}te ca parametri de intrare o mul\c{t}ime de componente \c{s}i \^{i}ntoarce \textit{S} dac\u{a} mul\c{t}imea $\{{P_i}_1, {P_i}_2, \dots, {P_i}_q \} \in \mathcal{A}$.
 \end{itemize} 
-%todo: add some more text between itemizers
+
 Majoritatea schemelor constau \^{i}n mai multe etape precum:
 \begin{itemize}
 	\item \textit{Ini\c{t}ializare}. Presupune ini\c{t}ializarea variabilelor de mediu necesare.
@@ -120,7 +136,7 @@ Schemele de partajare se clasific\u{a} in func\c{t}ie de cantitatea de informa\c
 	\item \textit{Sisteme perfecte de partajare}: componentele nu ofer\u{a} nici o informatie teoretic\u{a} despre $\mathcal{S}$ indiferent de resursele computa\c{t}ionale.
 	\item \textit{Sisteme statistic sigure}: o frac\c{t}iune de informa\c{t}ie este dezvaluit\u{a} despre $\mathcal{S}$ independent de puterea computional\u{a} a adversarului.
 	\item \textit{Sisteme computa\c{t}ional-sigure de partajare}: se bazeaz\u{a} pe faptul ca reconstituirea lui $\mathcal{S}$ se reduce la o problema \textit{dificil\u{a}} (spre exemplu problema Diffie-Hellman \cite{boneh:1998decision} ) \^{i}n lipsa unor informa\c{t}ii oferite doar grupului de acces $\mathcal{A}$.
-%cite somehow AA article \todo{nu toate problemele sunt demonstrate ca fiind NP complete, se crede ca sunt probleme dificile}. ups, forgot about that:)
+
 \end{itemize} 
 
 \^{I}n continuare vom prezenta cateva sisteme perfecte de partajare utilizate \^{i}n cadrul unor arhitecturi pentru stocarea fisierelor pe o durata indelungat\u{a}.
@@ -342,6 +358,53 @@ Dezvantajul acestei structuri este num\u{a}rul de componente necesar pentru o st
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 
+\subsection{Schema Feldman}
+\label{sec:feldman_scheme}
+Metoda cea mai des folosit\u{a} pentru determinarea validit\u{a}\c{t}ii componentelor este utilizarea semn\u{a}turilor electronice. Acestea sunt realizate prin scheme de verificare non-interactive precum cea a lui Feldman construit\u{a} pe baza schemei Shamir \cite{Feldman:1987} (Fig. \ref{fig:feldman_scheme})
+
+%---------------- Figure - feldman_scheme - START ------------------------
+\begin{figure*}[h!]
+
+\begin{tabular}{|p{\textwidth}|}
+\hline
+
+\\
+\hspace{.1in}
+\textbf{Ini\c{t}ializare}: 
+	Folosind nota\c{t}iile din Fig. \ref{fig:shamir_scheme}, consider\u{a}m polinomul $f$ generat \^{i}n urma Schemei Shamir.
+	\begin{itemize}
+		\item Se alege un $g \in Z_q$ generator al lui $Z_q$;
+	\end{itemize}
+\medskip
+
+\hspace{.1in}
+\textbf{Generare}: Dealerul $\mathcal{D}$:
+	\begin{itemize}
+		\item Calculeaz\u{a} \textit{angajamentele}: $c_0 = g^S$, $c_j = g^{a_j}$, $j \in \{1,\dots,k\}$;
+	\end{itemize}
+\medskip
+
+\hspace{.1in}
+\textbf{Distribu\c{t}ie}: Dealerul $\mathcal{D}$:
+	\begin{itemize}
+		\item Distribuie \textit{angajamentele} $c_j$, $j \in \{0,\dots,k\}$ fiec\u{a}rui participant $i\in \{1,\dots,n\}$;
+	\end{itemize}
+
+\hspace{.1in}
+\\
+\hline
+\end{tabular}
+
+\caption{Schema Feldman \cite{Feldman:1987}}
+\label{fig:feldman_scheme}
+\end{figure*}
+%---------------- Figure - feldman_scheme- STOP ------------------------
+
+Pentru verificarea componentei $s_i = f(i)$, participantul $i$ probeaz\u{a} ecua\c{t}ia:
+
+\begin{equation}
+	g^{s_i} = c_0c_1^ic_2^{i^2} \dots c_t^{i^t} = \prod_{j=0}^k c_j^{i^j} = \prod_{j=0}^k g^{a_ji^j} = g^{\sum\limits_{j=0}^k a_ji^j} = g^{f(i)}
+\end{equation}
 
 
 \section{Sisteme de stocare de lung\u{a} durat\u{a}}
@@ -397,8 +460,6 @@ RAID reprezint\u{a} o tehnologie ce combin\u{a} 2 concepte ortogonale precum dat
 
 PASIS folose\c{s}te schemele de partajare pentru a distribui informa\c{t}ia nodurilor de stocare dintr-o re\c{t}ea. Aceasta introduce agen\c{t}i pe partea clientului pentru a scrie sau \c{s}terge date din noduri, dar \c{s}i agen\c{t}i pentru mentenan\c{t}\u{a}. Componentele obt\c{i}nute \^{i}n urma partaj\u{a}rii unui fisier sunt stocate in re\c{t}ea cu ajutorul agen\c{t}ilor (Fig. \ref{fig:pasis}). Pe l\^{a}ng\u{a} con\c{t}inutul brut al componentelor se adaug\u{a} metadate pentru a re\c{t}ine adresa nodului din re\c{t}ea la care au fost stocate dar \c{s}i noua denumire cu care este salvat\u{a} in re\c{t}ea.
 
-Consider\^{a}nd o schem\u{a} de partajare majoritar\u{a} $(k, n)$ unde oricare din cei $k$ participan\c{t}i pot reconstitui fisierul, dar mai pu\c{t}in de $k$ nu ob\c{t}in nicio informa\c{t}ie dintr-un total de $n$ componente. 
-
 Atunci c\^{a}nd un participant ini\c{t}iaz\u{a} o cerere pentru a citi un fisier, agentul PASIS aflat local procedeaz\u{a} dupa cum urmeaz\u{a}:
 \begin{itemize}
 	\item Caut\u{a} numele celor $n$ componente care alc\u{a}tuiesc fi\c{s}ierul \^{i}ntr-un serviciu care listeaz\u{a} toate datele.
@@ -407,7 +468,7 @@ Atunci c\^{a}nd un participant ini\c{t}iaz\u{a} o cerere pentru a citi un fisier
 	\item Reconstituie fi\c{s}ierul ob\c{t}inut din cele $k$ componente.
 \end{itemize}
 Opera\c{t}ia de scriere este similar\u{a} cu cea de citire, aceasta oprindu-se atunci c\^{a}nd \^{i}n cel pu\c{t}in $n - k + 1$ noduri s-au stocat cu succes componente.
-\^{I}n articol se men\c{t}ioneaz\u{a} \c{s}i compromisul de spa\c{t}iu-timp folosit de PASIS \^{i}n func\c{t}ie de alegerea schemei de partajare. Spre exemplu, cererile de citire pot fi f\u{a}cute la acele $k$ noduri pentru care r\u{a}spunsurile recente au fost cele mai rapide.
+
 Autorii specific\u{a} solu\c{t}ii pentru auto mentenan\c{t}a sistemului cu ajutorul resurselor umane prin monitorizarea periodic\u{a} st\u{a}rii sistemului folosind log-uri sau ajustarea parametrilor din cadrul schemei de partajare.
 
 \begin{figure}
@@ -422,51 +483,9 @@ Autorii specific\u{a} solu\c{t}ii pentru auto mentenan\c{t}a sistemului cu ajuto
 
 \^{I}n 2005, Subbiah \c{s}i Blough propun o nou\u{a} abordare pentru a construi un sistem de stocare securizat \c{s}i tolerant la erori numit GridSharing \cite{SB:2005}.
 
-Schema Shamir nu ofer\u{a} siguran\c{t}\u{a} \^{i}n ceea ce prive\c{s}te detectarea sau actualizarea unor componente incorecte introduse de un atacator. Metoda cea mai des folosit\u{a} este determinarea validit\u{a}\c{t}ii componentelor prin utilizarea semn\u{a}turilor electronice. Aceasta este realizat\u{a} prin scheme de verificare non-interactive precum cea a lui Feldman construit\u{a} pe baza schemei Shamir \cite{Feldman:1987} (Fig. \ref{fig:feldman_scheme})
+Schema Shamir nu ofer\u{a} siguran\c{t}\u{a} \^{i}n ceea ce prive\c{s}te detectarea sau actualizarea unor componente incorecte introduse de un atacator.
+Din acest motiv, scheme de verificare precum cele prezentate in Sec\c{t}iunea {\ref{sec:feldman_scheme}} sunt folosite.
 
-%---------------- Figure - feldman_scheme - START ------------------------
-\begin{figure*}[h!]
-
-\begin{tabular}{|p{\textwidth}|}
-\hline
-
-\\
-\hspace{.1in}
-\textbf{Ini\c{t}ializare}: 
-	Folosind nota\c{t}iile din Fig. \ref{fig:shamir_scheme}, consider\u{a}m polinomul $f$ generat \^{i}n urma Schemei Shamir.
-	\begin{itemize}
-		\item Se alege un $g \in Z_q$ generator al lui $Z_q$;
-	\end{itemize}
-\medskip
-
-\hspace{.1in}
-\textbf{Generare}: Dealerul $\mathcal{D}$:
-	\begin{itemize}
-		\item Calculeaz\u{a} \textit{angajamentele}: $c_0 = g^S$, $c_j = g^{a_j}$, $j \in \{1,\dots,k\}$;
-	\end{itemize}
-\medskip
-
-\hspace{.1in}
-\textbf{Distribu\c{t}ie}: Dealerul $\mathcal{D}$:
-	\begin{itemize}
-		\item Distribuie \textit{angajamentele} $c_j$, $j \in \{0,\dots,k\}$ fiec\u{a}rui participant $i\in \{1,\dots,n\}$;
-	\end{itemize}
-
-\hspace{.1in}
-\\
-\hline
-\end{tabular}
-
-\caption{Schema Feldman \cite{Feldman:1987}}
-\label{fig:feldman_scheme}
-\end{figure*}
-%---------------- Figure - feldman_scheme- STOP ------------------------
-
-Pentru verificarea componentei $s_i = f(i)$, participantul $i$ probeaz\u{a} ecua\c{t}ia:
-
-\begin{equation}
-	g^{s_i} = c_0c_1^ic_2^{i^2} \dots c_t^{i^t} = \prod_{j=0}^k c_j^{i^j} = \prod_{j=0}^k g^{a_ji^j} = g^{\sum\limits_{j=0}^k a_ji^j} = g^{f(i)}
-\end{equation}
 
 Subbiah \c{s}i Blough folosesc un sistem care \^{i}nlocuie\c{s}te schemele de verificare cu o schem\u{a} de partajare unanim\u{a} XOR (consider\u{a}m cazul $q = 2$ \^{i}n Fig. \ref{fig:all_or_nothing}) pentru a p\u{a}stra securitatea construc\c{t}iei.
 \^{I}n cazul detect\u{a}rii componentelor incorecte, este adoptat\u{a} o strategie de tipul replicate-and-voting.
@@ -514,7 +533,6 @@ Arhitectura GridSharing const\u{a} in $N$ servere unde cel mult $c$ servere pot 
 \subsection{POTSHARDS} 
 \label{sec:desc_potshards}
 \^{I}n $2007$ este propus un nou sistem care combin\u{a} caracteristicile PASIS \c{s}i GridSharing ad\u{a}ug\^{a}nd posiblitatea de migrarea a datelor la noduri noi: POTSHARDS (Protection Over Time, Securely Harboring And Reliably Distributing Stuff) \cite{SGMV:2009}.
-
 
 POTSHARDS poate fi g\^{a}ndit ca o aplica\c{t}ie pe partea clientului care comunic\u{a} cu o mul\c{t}ime de noduri (arhive) independente, folosind reconstruc\c{t}ia componentelor \^{i}ntr-un mod securizat \c{s}i semn\u{a}turi algebrice pentru a asigura un grad ridicat de p\u{a}strare a integrita\c{t}ii fi\c{s}ierelor \cite{STM:2006}.
 
