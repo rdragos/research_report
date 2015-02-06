@@ -70,17 +70,16 @@ TODO - abstract
 \label{sec:intro}
 
 \subsection{Istoric}
-Termenul de criptografie este definit in dictionarul Oxford ca fiind "arta de a scrie si a rezolva coduri".
-Criptografia moderna s-a desprins de cea clasica in jurul anilor '80, motivand implementarea rigurozitatii matematice pentru definirea constructiilor criptografice. Asta pentru ca in anii anteriori, experienta a dovedit nesiguranta metodelor de criptare, criptanaliza lor fiind uneori triviala (cifrul lui Cezar, Vigenere \cite{Caesar:2015}, \cite{Vigenere:2015}) sau uneori atinsa cu ceva mai mult efort precum Enigma si alte metode din cel de-al doilea razboi mondial. \ref{wiki:enigma}
+Termenul de criptografie este definit in dic\c{t}ionarul Oxford ca fiind \textit{arta de a scrie \c{s}i a rezolva coduri}.
+Criptografia moderna s-a desprins de cea clasica \^{i}n jurul anilor '80, motiv\^{a}nd implementarea rigurozit\u{a}\c{t}ii matematice pentru definirea construc\c{t}iilor criptografice. Asta pentru ca \^{i}n anii anteriori, experien\c{t}a a dovedit nesiguran\c{t}a metodelor de criptare, criptanaliza lor fiind uneori trivial\u{a} (cifrul lui Cezar, Vigenere \cite{Caesar:2015}, \cite{Vigenere:2015}) sau uneori atins\u{a} cu ceva mai mult efort precum Enigma \c{s}i alte metode din cel de-al doilea r\u{a}zboi mondial \cite{Enigma:2015}.
 
-Criptografia moderna se gaseste pretutindeni in viata de zi cu zi de la ATM-uri, cartele telefonice la semnaturi digitale, protocoale de autentificare, licitatii electronice sau bani digitali, luand amploare o data cu aparitia sistemelor cu cheie publica. O definitie potrivita ar fi "studiul stiintific al tehnicililor pentru a securiza informatia digitala, tranzactiile si calculul distribuit.". \cite{Katz:2007}
+Criptografia modern\u{a} se gase\c{s}te pretutindeni \^{i}n via\c{t}a de zi cu zi de la ATM-uri, cartele telefonice la semn\u{a}turi digitale, protocoale de autentificare, licita\c{t}ii electronice sau bani digitali, lu\^{a}nd amploare o dat\u{a} cu apari\c{t}ia sistemelor cu cheie public\u{a}. O defini\c{t}ie potrivit\u{a} este \textit{studiul \c{s}tiin\c{t}ific al tehnicililor pentru a securiza informa\c{t}ia digital\u{a}, tranzac\c{t}iile \c{s}i calculul distribuit.} \cite{Katz:2007}.
 
-\subsection{Motivatie}
+\subsection{Motiva\c{t}ie}
 \todo{nu are leg\u{a}tur\u{a}: faptul ca sunt scheme cuantice nu are impact asupra structurii de acces; e ok sa men\c{t}ionezi, dar atunci faci asta \^{i}n sec\c{t}iunea anterioar\u{a}, c\^{a}nd po\c{t}i s\u{a} adaugi \c{s}i alte modalit\u{a}\c{t}i de definire: scheme bazate pe latici, scheme bazate pe perechi biliniare, scheme cuantice, etc.}
 %TODO: maybe wrap this up in a definition
 Dezavantajul schemelor generale de partajare este dimensiunea componentelor, exponentiala in functie de numarul de participanti. \cite{Survey:2011}
 De asemenea, s-au dezvoltat scheme pentru modele de calcul neconventional, cum ar fi cel cuantic. \cite{hillery:1999} %maybe expand this
-%Poate aici vine mai bine sub sectiunea cu securitatea teoretica
 
 \subsection{Structura}
 TODO
@@ -220,7 +219,7 @@ Pentru un atacator care de\c{t}ine chiar \c{s}i $k-1$ valori $s_i$, acesta nu de
 \textbf{Ini\c{t}ializare}: 
 	\begin{itemize}
 		\item Fie $S \in Z_q$ unde $q > 1 $ \c{s}i $q$ prim;
-		\item Fie $n$ num\u{a}rul de participan\c{t}i a.i $q > n$;
+		\item Fie $n$ num\u{a}rul de participan\c{t}i a.\^{i} $q > n$;
 		\item Fie $k$ num\u{a}rul minim de componente puse in comun pentru a determina pe $\mathcal{S}$;
 	\end{itemize}
 \medskip
@@ -351,31 +350,34 @@ Dezvantajul acestei structuri este num\u{a}rul de componente necesar pentru o st
 
 
 
-\section{Sisteme de stocare de lunga durata}
+\section{Sisteme de stocare de lung\u{a} durat\u{a}}
 
 %TODO: key management issues
-In acesta sectiune vom arata cateva intrebuintari ale schemelor de partajare. Consideram cazul in care vrem sa stocham rapoarte medicale, imagini, documente clasificate pe un timp indelungat intr-un mediu electronic. Pe parcursul timpului, pot apare in schimb, diverse probleme precum dezastre naturale, defectiunea unor componente hardware, eroare umana, etc \cite{SGMV:2009}.
-Un sistem de stocare necesar nevoilor noastre trebuie sa satisfaca cel putin urmatoarele 3 conditii:
+\^{I}n acest\u{a} sec\c{t}iune vom ar\u{a}ta c\^{a}teva \^{i}ntrebuin\c{t}\u{a}ri ale schemelor de partajare. Consider\u{a}m cazul \^{i}n care vrem s\u{a} stoch\u{a}m rapoarte medicale, imagini, documente clasificate timp \^{i}ndelungat \^{i}ntr-un mediu electronic. Pe parcursul timpului, pot apare \^{i}n schimb, diverse probleme precum dezastre naturale, defec\c{t}iunea unor componente hardware, eroare uman\u{a}, etc \cite{SGMV:2009}.
+Un sistem de stocare, \^{i}n general, trebuie s\u{a} satisfac\u{a} cel pu\c{t}in urm\u{a}toarele 3 condi\c{t}ii:
 \begin{itemize}
-	\item Disponibilitatea: Informatia trebuie sa ramana accesibila tot timpul, in ciuda erorilor de tip hardware.
-	\item Integritatea: Abilitatea sistemului de a raspunde cererilor intr-un mod care garanteaza corectitudinea lor.
-	\item Confidentialitatea: O persoana care nu face parte din grupul de acces sa nu obtina permisiunea de a afla informatii de orice fel despre datele existente in sistem.
+	\item Disponibilitatea: Informa\c{t}ia trebuie s\u{a} r\u{a}m\^{a}n\u{a} accesibil\u{a} tot timpul, \^{i}n ciuda erorilor de tip hardware.
+	\item Integritatea: Abilitatea sistemului de a r\u{a}spunde cererilor \^{i}ntr-un mod care garanteaz\u{a} corectitudinea lor.
+	\item Confiden\c{t}ialitatea: O persoan\u{a} care nu face parte din grupul de acces s\u{a} nu ob\c{t}in\u{a} permisiunea de a afla informa\c{t}ii de orice fel despre datele existente in sistem.
 \end{itemize}
 
-\subsection{Criptare VS scheme de partajare}
+\subsection{Criptare versus Scheme De Partajare}
 
+Una dintre solu\c{t}iile existente pentru a construi acest sistem este criptarea datelor folosind o cheie \^{i}nainte de inserarea lor in spa\c{t}iul de stocare. \^{I}n momentul \^{i}n care un utilizator autorizat dore\c{s}te s\u{a} efectueze o citire a unor date, \^{i}ntrebuin\c{t}eaz\u{a} cheia potrivit\u{a} pentru a le decripta.
 
-Una dintre solutiile existente pentru a construi acest sistem ar putea fi criptarea datelor folosind o cheie inainte de inserarea lor in spatiul de stocare. In momentul in care un user autorizat doreste sa efectueze o citire a unor date, intrebuinteaza cheia potrivita pentru a le decripta.
-In practica exista algoritmi de criptare eficienti precum AES ins\u{a} acea\c{s}tia nu garanteaz\u{a} confiden\c{t}ialitatea datelor \^{i}n cazul \^{i}n care avem de a face cu un adversar fara o limita computationala. Un dezavantaj al criptarii este adminstrarea cheilor, standardele de securitatea schimbandu-se in fiecare an.
-De fiecare data cand cheile sunt inlocuite atunci este necesara recriptarea datelor de pe fiecare baza de date. Cu cat disponibilitatea este mai mare - numarul de noduri duplicate creste- recriptarea lor devine o operatie costisitoare. 
+\^{I}n practic\u{a} exist\u{a} algoritmi de criptare eficienti precum AES \^{i}ns\u{a} acea\c{s}tia nu garanteaz\u{a} confiden\c{t}ialitatea datelor \^{i}n cazul \^{i}n care apare un adversar f\u{a}r\u{a} o limita computa\c{t}ional\u{a}.
 
-Majoritatea tehnicilor de criptarea se bazeaza pe dificultatea factorizarii unui numar sau cea a calcularii logaritmului discret insa o data cu posibila dezvoltare a calculatoarelor cuantice aceste probleme nu vor mai fi atat de dificile \cite{Shor:1994}.
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
+Un dezavantaj al cript\u{a}rii este adminstrarea cheilor, standardele de securitate schimb\^{a}ndu-se \^{i}n fiecare an.
+De fiecare dat\u{a} c\^{a}nd cheile sunt \^{i}nnoite atunci este necesar\u{a} recriptarea datelor de pe fiecare baz\u{a} de date. Cu c\^{a}t disponibilitatea este mai mare - volumul de date cre\c{s}te - recriptarea informa\c{t}iei devine o opera\c{t}ie foarte costisitoare. 
 
+Majoritatea tehnicilor de criptarea se bazeaz\u{a} pe dificultatea factoriz\u{a}rii unui num\u{a}r sau cea a calcul\u{a}rii logaritmului discret \^{i}ns\u{a} o dat\u{a} cu posibila dezvoltare a calculatoarelor cuantice aceste probleme nu vor mai fi at\^{a}t de dificile \cite{Shor:1994}.
+Pentru schemele de partajare, spre desoebire de criptare, avantajul unui adversar nu depinde de puterea sa computa\c{t}ional\u{a}, acestea garant\^{a}nd securitatea teoretic\u{a} precum schema Shamir \cite{S:1979}.
+
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
 
 
 \section{Sisteme de stocare de lung\u{a} durat\u{a} bazate pe scheme de partajare}
@@ -386,7 +388,7 @@ O alternativ\u{a} la solu\c{t}ia cu criptare care asigur\u{a} at\^{a}t confiden\
 \label{sec:desc_pasis}
 PASIS este o solu\c{t}ie pentru un sistem descentralizat care ofer\u{a} beneficii precum securitate, redundan\c{t}\u{a} a datelor si auto-\^{i}ntre\c{t}inere \cite{W:2000}
 Structurile descentralizate \^{i}mpart informa\c{t}ia la mai multe noduri folosind scheme de redundan\c{t}a precum "Redundant Array of Independent Disks" (RAID) pentru a asigura performan\c{t}a, scalabilitatea sistemului dar \c{s}i integritatea datelor \cite{Patterson:1988}.
-RAID reprezint\u{a} o tehnologie ce combin\u{a} 2 concepte ortogonale precum data striping (aranjarea datelor pe discuri multiple \^{i}ntr-o manier\u{a} secven\c{t}ial\u{a} - Fig \ref{fig:raid_strip}) \c{s}i redundan\c{t}\u{a} pentru o disponibilitate ridicat\u{a} \cite{Chen:1994}.
+RAID reprezint\u{a} o tehnologie ce combin\u{a} 2 concepte ortogonale precum data striping (aranjarea datelor pe discuri multiple \^{i}ntr-o manier\u{a} secven\c{t}ial\u{a} - Fig \ref{fig:raid_strip} \todo{Figura, nu inteleg de ce nu o citeaza..}) \c{s}i redundan\c{t}\u{a} pentru o disponibilitate ridicat\u{a} \cite{Chen:1994}.
 
 \begin{figure}
 	\label{fig:raid_strip}
