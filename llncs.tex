@@ -39,7 +39,7 @@
 %                                     \toctitle is used
 %
 \subtitle{- Undergraduate Research Opportunities - }
-\author{Drago\c{s} Alin Rotaru\\{\small Mentor: Ruxandra F. Olimid}}
+\author{Drago\c{s} Alin Rotaru.\\{\small \textbf{Mentor}: Ruxandra F. Olimid}}
 \authorrunning{D.A.Rotaru} % abbreviated author list (for running head)
 %
 %%%% list of authors for the TOC (use if author list has to be modified)
@@ -76,32 +76,27 @@ Criptografia moderna s-a desprins de cea clasica \^{i}n jurul anilor '80, motiv\
 Criptografia modern\u{a} se gase\c{s}te pretutindeni \^{i}n via\c{t}a de zi cu zi de la ATM-uri, cartele telefonice la semn\u{a}turi digitale, protocoale de autentificare, licita\c{t}ii electronice sau bani digitali, lu\^{a}nd amploare o dat\u{a} cu apari\c{t}ia sistemelor cu cheie public\u{a}. O defini\c{t}ie potrivit\u{a} este \textit{studiul \c{s}tiin\c{t}ific al tehnicililor pentru a securiza informa\c{t}ia digital\u{a}, tranzac\c{t}iile \c{s}i calculul distribuit.} \cite{Katz:2007}.
 
 \subsection{Motiva\c{t}ie}
-\todo{nu are leg\u{a}tur\u{a}: faptul ca sunt scheme cuantice nu are impact asupra structurii de acces; e ok sa men\c{t}ionezi, dar atunci faci asta \^{i}n sec\c{t}iunea anterioar\u{a}, c\^{a}nd po\c{t}i s\u{a} adaugi \c{s}i alte modalit\u{a}\c{t}i de definire: scheme bazate pe latici, scheme bazate pe perechi biliniare, scheme cuantice, etc.}
-%TODO: maybe wrap this up in a definition
-Dezavantajul schemelor generale de partajare este dimensiunea componentelor, exponentiala in functie de numarul de participanti. \cite{Survey:2011}
-De asemenea, s-au dezvoltat scheme pentru modele de calcul neconventional, cum ar fi cel cuantic. \cite{hillery:1999} %maybe expand this
 
-\subsection{Structura}
-TODO
+O schem\u{a} de partajare este o metod\u{a} de a distribui un secret unor participan\c{t}i, oferind fiec\u{a}rui participant o component\u{a} (share) a.\^{i}. doar o submul\c{t}ime de participan\c{t}i pot recupera secretul. Schemele de partajare sunt protocoale criptografice versatile \c{s}i sunt folosite in multe aplica\c{t}ii precum: protejarea / recuperarea cheilor criptografice, vot electronic, certificate distribuite unor autorit\u{a}\c{t}i, licita\c{t}ii on-line sau sisteme de stocare de lung\u{a} durat\u{a} \cite{Martin:2008}.
 
-%----------------------------------------------------------------
-%---------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
 
-\subsection{Securitatea Teoretica a Informatiei}
+\subsection{Structur\u{a}}
+\begin{itemize}
+	\item Sec\c{t}iunea {\ref{sec:intro}} descrie pe scurt obiectul de studiu.
+	\item Sec\c{t}iunea {\ref{sec:splitting_schemes}} ofer\u{a} o scurt\u{a} introducere \^{i}n domeniul schemelor de partajare \c{s}i descrie \^{i}n detaliu metodele ce vor fi folosite \^{i}n sec\c{t}iunile urm\u{a}toare.
+	\item Sec\c{t}iunea {\ref{sec:long_term_systems_intro}} con\c{t}ine no\c{t}iuni introductive despre sistemele de stocare de lung\u{a} durat\u{a}.
+	\item Sec\c{t}iunea {\ref{sec:long_term_systems_full}} descrie c\^{a}teva sisteme considerate relevante pentru \^{i}ntelegerea contribu\c{t}iilor p\^{a}n\u{a} \^{i}n prezent.
+	\item Sec\c{t}iunea {\ref{sec:desc_alouneh}} introduce sistemul criptanalizat.
+	\item Sec\c{t}iunea {\ref{sec:obtained_results}} con\c{t}ine contribu\c{t}iile de cercetare pun\^{a}nd \^{i}n eviden\c{t}\u{a} determinismul prezent al sistemului introdus \^{i}n Sec\c{t}iunea {\ref{sec:desc_alouneh}}.
+\end{itemize}
 
-In cazul unor criptosisteme acestea nu pot fi compromise chiar daca adversarul dispune de o putere computationala nelimitata. Cateva exemple de criptosisteme care garanteaza securitatea teoretica-informationala sunt: schemele de partajare, unele protocoale multi-party computation, preluarea intr-un mod sigur(securizat?) informatii de la baze de date. Securitatea teoretica vine insa cu un cost: efortul computational depus este mult mai mare decat in cazul schemelor care nu garanteaza securitatea teoretica (se bazeaza pe dificultatea computationala unor probleme cunoscute). \cite{L:1997}
-
-%----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 \section{Scheme de partajare}
+\label{sec:splitting_schemes}
 
-\label{sec:encryption}
 %TODO: find translation for multi party computation
 
 O schem\u{a} de partajare const\u{a} \^{i}n distribuirea unei informa\c{t}ii secrete $\mathcal{S}$ la mai mul\c{t}i participan\c{t}i $\mathcal{P} = \{P_1, \dots, P_n\}$ astfel \^{i}nc\^{a}t oricare mul\c{t}ime de participan\c{t}i predefinit\u{a}  ca f\u{a}c\^{a}nd parte dintr-o structur\u{a} de acces pe care o vom denumi $\mathcal{A}$ s\u{a} poat\u{a} reconstitui secretul $\mathcal{S}$.
@@ -136,7 +131,6 @@ Primele scheme de partajare au fost dezvoltate independent de Shamir \c{s}i Blak
 
 Denumite \c{s}i scheme majoritare $(k, n)$, acestea rezolvau cazul \^{i}n care oricare grup de participan\c{t}i cu un num\u{a}r mai mare sau egal dec\^{a}t $k$  (m\u{a}rimea pragului) poate reconstitui secretul $\mathcal{S}$ din componentele primite de la dealer. Dac\u{a} schema este perfect \textit{sigur\u{a}} atunci oricare grup cu un num\u{a}r de participan\c{t}i mai mic decat $k$ nu ob\c{t}ine vreo informa\c{t}ie despre $\mathcal{S}$.
 
-%Not\u{a}m $P = \{P_1, \dots, P_n\}$ mul\c{t}imea format\u{a} din cei $n$ participan\c{t}i \^{i}ntr-o schem\u{a} \c{s}i $y \leftarrow^R Y$ ca $y$ este un element ales uniform aleator din mul\c{t}imea $Y$.
 
 Schemele majoritare (spre exemplu schema Shamir) sunt insuficiente pentru a permite partajarea pentru anumite structuri de acces. Consider\u{a}m cazul \^{i}n care vrem sa partajam un secret \^{i}ntre 4 participan\c{t}i: $P_1, P_2, P_3, P_4$ astfel \^{i}nc\^{a}t $\{P_1,P_2\}$ \c{s}i $\{P_3,P_4\}$ s\u{a} fie singurele mul\c{t}imi autorizate pentru reconstruc\c{t}ia secretului $S$ (i.e. $\mathcal{A} = \{ \{P_1,P_2\}, \{P_3,P_4\} \}$). \^{I}n mod evident, problema nu poate fi rezolvat\u{a} cu o structur\u{a} de acces de tip prag: anumite mul\c{t}imi de 2 participan\c{t}i trebuie s\u{a} poat\u{a} reconstrui secretul ($ \{P_1,P_2\}, \{P_3,P_4\} $), \^{i}n timp ce altele nu $( \{P_1,P_3\}, \{P_1,P_4\}, \{P_2,P_3\}, \{P_2,P_4\} $)
 
@@ -351,7 +345,7 @@ Dezvantajul acestei structuri este num\u{a}rul de componente necesar pentru o st
 
 
 \section{Sisteme de stocare de lung\u{a} durat\u{a}}
-
+\label{sec:long_term_systems_intro}
 %TODO: key management issues
 \^{I}n acest\u{a} sec\c{t}iune vom ar\u{a}ta c\^{a}teva \^{i}ntrebuin\c{t}\u{a}ri ale schemelor de partajare. Consider\u{a}m cazul \^{i}n care vrem s\u{a} stoch\u{a}m rapoarte medicale, imagini, documente clasificate timp \^{i}ndelungat \^{i}ntr-un mediu electronic. Pe parcursul timpului, pot apare \^{i}n schimb, diverse probleme precum dezastre naturale, defec\c{t}iunea unor componente hardware, eroare uman\u{a}, etc \cite{SGMV:2009}.
 Un sistem de stocare, \^{i}n general, trebuie s\u{a} satisfac\u{a} cel pu\c{t}in urm\u{a}toarele 3 condi\c{t}ii:
@@ -373,6 +367,7 @@ De fiecare dat\u{a} c\^{a}nd cheile sunt \^{i}nnoite atunci este necesar\u{a} re
 Majoritatea tehnicilor de criptarea se bazeaz\u{a} pe dificultatea factoriz\u{a}rii unui num\u{a}r sau cea a calcul\u{a}rii logaritmului discret \^{i}ns\u{a} o dat\u{a} cu posibila dezvoltare a calculatoarelor cuantice aceste probleme nu vor mai fi at\^{a}t de dificile \cite{Shor:1994}.
 Pentru schemele de partajare, spre desoebire de criptare, avantajul unui adversar nu depinde de puterea sa computa\c{t}ional\u{a}, acestea garant\^{a}nd securitatea teoretic\u{a} precum schema Shamir \cite{S:1979}.
 
+Dezavantajul schemelor generale de partajare este dimensiunea componentelor, exponen\c{t}ial\u{a} \^{i}n func\c{t}ie de num\u{a}rul de participan\c{t}i. \cite{Survey:2011}
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -381,6 +376,7 @@ Pentru schemele de partajare, spre desoebire de criptare, avantajul unui adversa
 
 
 \section{Sisteme de stocare de lung\u{a} durat\u{a} bazate pe scheme de partajare}
+\label{sec:long_term_systems_full}
 
 O alternativ\u{a} la solu\c{t}ia cu criptare care asigur\u{a} at\^{a}t confiden\c{t}ialitate c\^{a}t \c{s}i redundan\c{t}a necesar\u{a} este intrebuin\c{t}area sistemelor de stocare de lung\u{a} durat\u{a} bazate pe scheme de partajare \cite{W:2000,SB:2005,SGMV:2009}.
 
@@ -517,7 +513,7 @@ Arhitectura GridSharing const\u{a} in $N$ servere unde cel mult $c$ servere pot 
 
 \subsection{POTSHARDS} 
 \label{sec:desc_potshards}
-\^{I}n $2007$ este propus un nou sistem care combin\u{a} caracteristicile PASIS \c{s}i GridSharing ad\u{a}ug\^{a}nd posiblitatea de migrarea a datelor la noduri noi: Protection Over Time, Securely Harboring And Reliably Distributing Stuff (POTSHARDS) \cite{SGMV:2009}.
+\^{I}n $2007$ este propus un nou sistem care combin\u{a} caracteristicile PASIS \c{s}i GridSharing ad\u{a}ug\^{a}nd posiblitatea de migrarea a datelor la noduri noi: POTSHARDS (Protection Over Time, Securely Harboring And Reliably Distributing Stuff) \cite{SGMV:2009}.
 
 
 POTSHARDS poate fi g\^{a}ndit ca o aplica\c{t}ie pe partea clientului care comunic\u{a} cu o mul\c{t}ime de noduri (arhive) independente, folosind reconstruc\c{t}ia componentelor \^{i}ntr-un mod securizat \c{s}i semn\u{a}turi algebrice pentru a asigura un grad ridicat de p\u{a}strare a integrita\c{t}ii fi\c{s}ierelor \cite{STM:2006}.
@@ -691,11 +687,11 @@ Abordarea acestei metode deterministe conduce la insecuritatea sistemului, Aloun
 %----------------------------------------------------------------
 
 \section{Rezultate ob\c{t}inute}
+\label{sec:obtained_results}
 
 \^{I}mpreun\u{a} cu mentorul am analizat sistemul Alouneh et al. prezentat \^{i}n Sec\c{t}iunea \ref{sec:desc_alouneh} \cite{AAMK:2013}.
  Am indentificat erori majore ale acestuia \c{s}i am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite gre\c{s}eli pe care le vom eviden\c{t}ia \^{i}n urm\u{a}toarele sec\c{t}iuni.
 
-\label{sec:results}
 \subsection{Vulnerabilit\u{a}\c{t}i eviden\c{t}iate}
 
 Spre deosebire de schema Shamir, unde coeficien\c{t}ii (cu excep\c{t}ia termenului liber, care este egal cu secretul) sunt ale\c{s}i \^{i}ntr-un mod aleator uniform, sistemul propus de Alouneh et al. folose\c{s}te o schem\u{a} modificat\u{a} Shamir \^{i}n care coeficien\c{t}ii sunt extra\c{s}i din con\c{t}inutul fi\c{s}ierelor originale.
