@@ -242,8 +242,9 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 \begin{frame}
     \frametitle{Schema Shamir}
     \only<1> {
-        \begin{exampleblock}{Example}
-           Se consider\u{a} 8 participan\c{t}i, unde oricare $3$ pot reconstitui secretul $\mathcal{S}$. Fie polinomul $f(x) = 20x ^ 3 + 14x ^ 2 + 31x + S$
+        \begin{exampleblock}{Exemplu}
+           Se consider\u{a} 8 participan\c{t}i, unde oricare $3$ pot reconstitui secretul $\mathcal{S}$.
+           Fie polinomul $f(x) = a_3x ^ 3 + a_2x ^ 2 + a_1x + S$, $a_i \leftarrow^R Z_q$, $a_i$ ale\c{s}i \^{i}n mod aleator din corpul $Z_q$.
         \end{exampleblock}
     }
     \only<2> {
@@ -288,6 +289,50 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 \section{Sisteme de stocare}
 
 \begin{frame}
-    \frametitle{Asigurarea disponibilt\u{a}\c{t}ii cu ajutorul sistemelor RAID} 
+    \frametitle{Asigurarea disponibilit\u{a}\c{t}ii cu ajutorul sistemelor RAID}
+    \begin{itemize}
+        \item RAID (Redundant array of independent disks) combin\u{a} 2 concepte ortgonale:
+        \pause
+            \begin{itemize}
+                \item Data striping
+                \pause
+                \item Redundan\c{t}a datelor 
+            \end{itemize}
+        \pause
+        \item Datele sunt distribuite \^{i}n moduri diferite denumite niveluri RAID.
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    \frametitle{Nivelul 0 Raid - Data Striping}
+    \begin{textblock*}{4cm}(3.7cm, 3cm)
+        \begin{figure}
+            \includegraphics[width=6cm,height=6cm,keepaspectratio]{img/raid/raid0.png}
+       \end{figure}
+    \end{textblock*}  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Nivelul 1 Raid - Redundan\c{t}a datelor}
+    \begin{textblock*}{4cm}(4cm, 2cm)
+        \begin{figure}
+            \includegraphics[width=4cm,height=4cm,keepaspectratio]{img/raid/raid1.png}
+       \end{figure}
+    \end{textblock*}  
+\end{frame}
+
+\begin{frame}
+    \frametitle{Sisteme securizate de stocare de lunga durata}
+    \begin{itemize}
+        \item Securitatea este asigurat\u{a} cu ajutorul schemelor de partajare.
+        \pause
+        \item Disponibilitatea cu nivele RAID.
+    \end{itemize}
+\end{frame}
+
+
+\subsection{PASIS}
+
+\begin{frame}
+    \frametitle{PASIS}
 \end{frame}
 \end{document}
