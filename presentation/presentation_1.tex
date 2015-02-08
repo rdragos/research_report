@@ -80,10 +80,14 @@
 \usepackage[absolute, overlay]{textpos}
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 \usepackage{tikz}
+\usepackage{caption}
 \usetikzlibrary{positioning,calc,backgrounds,shapes}
 
 \usepackage[labelformat=empty]{caption}
 \captionsetup{compatibility=false}
+\theoremstyle{definition}
+\newtheorem{my_example}[theorem]{Exemplu}
+
 
 \tikzset{My Arrow Style/.style={single arrow, fill=red!30, anchor=base, align=center,text width=4cm}}
 \newcommand{\arrowthis}[2][]{\tikz[baseline] \node [My Arrow Style,#1] {#2};}
@@ -206,16 +210,17 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 \begin{frame}
     \frametitle{Schema Shamir - intui\c{t}ie}
     \begin{itemize}
-        \item $k$ puncte distincte \^{i}n plan definesc o curb\u{a} polinomial\u{a} unic\u{a} av\^{a}nd acelasi grad
+        \item $k$ puncte distincte \^{i}n plan definesc o curb\u{a} polinomial\u{a} unic\u{a} av\^{a}nd grad $k - 1$
         \pause
         \item Mai pu\c{t}in de $k$ puncte nu pot reconstitui polinomul original
     \end{itemize}
     \pause
     \only<3-> {
-        \begin{textblock*}{4cm}(5cm, 5cm)
+        \begin{textblock*}{4cm}(4cm, 5cm)
         \begin{figure}
-            \includegraphics[width=3.5cm,height=3.5cm,keepaspectratio]{img/shamir/shamir.png}
-       \end{figure}
+            \includegraphics[width=3.5cm,height=2.7cm,keepaspectratio]{img/shamir/shamir.png}
+            \caption{"3 polynomials of degree 2 through 2 points" by Vlsergey}
+        \end{figure}
         \end{textblock*}
      }
 \end{frame}
@@ -231,26 +236,26 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
         \pause
         \item Mai pu\c{t}in de $k$ participan\c{t}i nu ob\c{t}in nici o informa\c{t}ie despre $\mathcal{S}$
         \pause
-        \item Se alege un polinom $f$ de grad $k$ av\^{a}nd coeficien\c{t}i aleatori, termenul liber fiind $\mathcal{S}$
+        \item Se alege un polinom $f$ de grad $k - 1$ av\^{a}nd coeficien\c{t}i aleatori, termenul liber fiind $\mathcal{S}$
         \pause
         \item Participantul $P_i$ primeste $f(i)$, $i = \{1, 2, ...n\}$
         \pause
-        \item Dupa reconstituire secretul $\mathcal{S}$ se afla \^{i}n $f(0)$.
+        \item Dup\u{a} reconstituire secretul $\mathcal{S}$ se afl\u{a} \^{i}n $f(0)$.
     \end{itemize}
 \end{frame}
 
 \begin{frame}
     \frametitle{Schema Shamir}
     \only<1> {
-        \begin{exampleblock}{Exemplu}
+        \begin{my_example}
            Se consider\u{a} 8 participan\c{t}i, unde oricare $3$ pot reconstitui secretul $\mathcal{S}$.
            Fie polinomul $f(x) = a_3x ^ 3 + a_2x ^ 2 + a_1x + S$, $a_i \leftarrow^R Z_q$, $a_i$ ale\c{s}i \^{i}n mod aleator din corpul $Z_q$.
-        \end{exampleblock}
+        \end{my_example}
     }
     \only<2> {
      \begin{textblock*}{4cm}(3.5cm, 2cm)
         \begin{figure}
-            \includegraphics[width=6cm,height=6cm,keepaspectratio]{img/shamir/example.png}
+            \includegraphics[width=6cm,height=6cm,keepaspectratio]{img/shamir/shamir-split.png}
        \end{figure}
         \end{textblock*}
  
@@ -265,6 +270,8 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
         \item $n-1$ participan\c{t}i primesc numere aleatoare: $s_1, s_2, \dots s_{n-1}$.
         \pause
         \item Cel de-al $n$-lea participant prime\c{s}te $S \oplus s_1 \oplus s_2 \oplus \dots \oplus s_{n-1}$.
+        \pause
+        \item Reconstruc\c{t}ia: $\mathcal{S} = s_1 \oplus s_2 \oplus \dots \oplus s_n$.
     \end{itemize}
 \end{frame}
 
@@ -273,7 +280,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 
     \only<1-> {
     \begin{itemize}
-        \item Schema Shamir e insuficient\u{a} pentru a realiza partajarea lui $\mathcal{S}$ unui grup particular de participan\c{t}i.
+        \item Schema Shamir e insuficient\u{a} pentru a realiza partajarea lui $\mathcal{S}$ unui grup oarecare de participan\c{t}i.
     \end{itemize}
     }
     \only<2-> {
@@ -283,6 +290,12 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
            \end{figure}
         \end{textblock*}
     }
+    \only<2-> {
+
+        \begin{textblock*}{4cm}(8cm, 6cm)
+            {$\mathcal{S}$ poate fi reconstruit doar din $\{P_2, P_3\}$ sau $\{P_2, P_4\}$}
+        \end{textblock*}  
+    }
 \end{frame}
 
 %------------------------------------------------
@@ -291,7 +304,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 \begin{frame}
     \frametitle{Asigurarea disponibilit\u{a}\c{t}ii cu ajutorul sistemelor RAID}
     \begin{itemize}
-        \item RAID (Redundant array of independent disks) combin\u{a} 2 concepte ortgonale:
+        \item RAID (Redundant Array of Independent Disks) combin\u{a} 2 concepte ortgonale:
         \pause
             \begin{itemize}
                 \item Data striping
@@ -425,6 +438,60 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
         \end{center}
         \bigskip
     \end{table}
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Alouneh et al. - determinarea continutului de fi\c{s}ier}
+    \only<1-1> {
+        \begin{center}
+         \begin{textblock*}{4cm}(1cm, 1cm)
+            \begin{figure}
+                \includegraphics[width=11cm,height=11cm,keepaspectratio]{img/results/CV_BG.png}
+                \caption{CV Europass BG}
+           \end{figure}
+        \end{textblock*} 
+        \end{center}
+    }
+    \only<2-2>{
+    \begin{center}
+         \begin{textblock*}{4cm}(1cm, 1cm)
+            \begin{figure}
+                \includegraphics[width=11cm,height=11cm,keepaspectratio]{img/results/CV_DK.png}
+                \caption{CV Europass DK}
+           \end{figure}
+        \end{textblock*} 
+        \end{center}
+    }
+    \only<3-3>{
+    \begin{center}
+         \begin{textblock*}{4cm}(1cm, 1cm)
+            \begin{figure}
+                \includegraphics[width=11cm,height=11cm,keepaspectratio]{img/results/RO_MOB.png}
+                \caption{Europass Mobility RO}
+           \end{figure}
+        \end{textblock*} 
+        \end{center}
+    }
+\end{frame}
+\begin{frame}
+    \frametitle{Alouneh et al. - determinarea continutului de fi\c{s}ier}
+    Partajarea celor 3 fi\c{s}iere cu schema $(2,4)$. 
+    \only<1> { 
+        Atacatorul ob\c{t}ine componentele aflate pe nodul $1$:
+       \begin{textblock*}{4cm}(3cm, 2cm)
+            \begin{figure}
+                \includegraphics[width=7cm,height=7cm,keepaspectratio]{img/results/db1.png}
+           \end{figure}
+        \end{textblock*} 
+    }
+    \only<2> {
+     Atacatorul ob\c{t}ine componentele aflate pe nodul $2$:
+       \begin{textblock*}{4cm}(3cm, 2cm)
+            \begin{figure}
+                \includegraphics[width=7cm,height=7cm,keepaspectratio]{img/results/db2.png}
+           \end{figure}
+        \end{textblock*} 
     }
 \end{frame}
 \end{document}
