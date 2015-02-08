@@ -316,6 +316,8 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
     \begin{textblock*}{4cm}(4cm, 2cm)
         \begin{figure}
             \includegraphics[width=4cm,height=4cm,keepaspectratio]{img/raid/raid1.png}
+
+            \caption{}
        \end{figure}
     \end{textblock*}  
 \end{frame}
@@ -334,5 +336,95 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 
 \begin{frame}
     \frametitle{PASIS}
+    \only<1-2> {
+        \begin{itemize}
+            \item Informa\c{t}ia este partajat\u{a} cu ajutorul agen\c{t}ilor PASIS folosind Schema Shamir.
+            \pause
+            \item Componentele (share-uri) rezultate in urma partaj\u{a}rii sunt distribuite apoi nodurilor existente \^{i}n re\c{t}ea.
+        \end{itemize}
+    }
+    \only<3-> {
+         \begin{textblock*}{4cm}(3cm, 2cm)
+            \begin{figure}
+                \includegraphics[width=7cm,height=7cm,keepaspectratio]{img/raid/PASIS.png}
+           \end{figure}
+        \end{textblock*}
+    }
+\end{frame}
+
+\section{Alouneh et al.}
+\begin{frame}
+    \frametitle{Alouneh et al.}
+    \begin{itemize}
+        \item Informa\c{t}ia este partajat\u{a} cu ajutorul unei aplica\c{t}ii la nivelul clientului folosind o versiune modificat\u{a} a schemei Shamir.
+        \pause
+        \item Coeficien\c{t}ii polinomului $f$ nu mai sunt ale\c{s}i aleator ci sunt lua\c{t}i direct din fisierul partajat in maniera secvential\u{a}.
+        \pause
+        \item Nodul cu indexul $i$ prime\c{s}te valoarea polinomului $f(i)$.
+    \end{itemize} 
+    \pause
+    \begin{exampleblock}{Exemplu}
+        Fie un fi\c{s}ier $File$ avand octetii: $10$ $15$ in aceasta ordine.
+        Polinomul dup\u{a} care se realizeaza partajarea este $f(x) = 10 + 15x$.
+        Nodul $i$ primeste valoarea $f(i)$
+    \end{exampleblock}
+\end{frame}
+\begin{frame}
+    \frametitle{Alouneh et al.: partajare + reconstruc\c{t}ie}
+     \begin{textblock*}{4cm}(3cm, 2cm)
+        \begin{figure}
+            \includegraphics[width=7cm,height=7cm,keepaspectratio]{img/results/sharing.png}
+       \end{figure}
+    \end{textblock*}
+\end{frame}
+
+\section{Results}
+\begin{frame}
+    \frametitle{Alouneh et al. - atacuri}
+    Construirea polinomului este determinista! $\rightarrow$ Componentele vor fi acelea\c{s}i pentru fi\c{s}iere identice partajate.
+\end{frame}
+\begin{frame}
+    \frametitle{Alouneh et al. - determinarea tipului de fi\c{s}ier partajat}
+    Prin ob\c{t}inerea informatiilor dintr-un singur nod, se poate constata tipul de fisier partajat ini\c{t}ial:
+    %-----------------------------------------------------
+    \only<1-1> {
+        \begin{table}[b]
+        \bigskip
+        \begin{center}
+        \caption{Semn\u{a}turi de fi\c{s}iere}\label{tb:margins}
+        \label{table:sign}
+            \begin{tabular}{ccccc}
+            Tip fi\c{s}ier &  \multicolumn{4}{c}{Primii 4 octe\c{t}i}\\ \hline 
+            doc &  D0 & CF & 11 & E0\\
+            gif & 47 & 49 & 46 & 38 \\
+            pdf & 25 & 50 & 44 & 46 \\
+            png & 89 & 50 & 4E & 47 \\
+            rar & 52 & 61 & 72 & 21 \\
+            wav & 52 & 49 & 46 & 46 \\
+            zip & 50 & 4B & 03 & 04\\  \hline
+            \end{tabular}
+        \end{center}
+        \bigskip
+        \end{table}
+    }
+    \only<2-2> {
+    \begin{table}[t]
+        \begin{center}
+        \caption{Indicele maxim $i$ a.\^{i}. componentele primului bloc sa fie distincte($k=3$)}\label{tb:margins}
+        \label{table:k3}
+        \begin{tabular}{cccccccc}
+        Tip Fi\c{s}ier & doc & gif & pdf & png & rar & wav & zip \\\hline
+          doc & - & 63 & -1 & -1 & -1 & -1 & -1\\
+          gif & 63 & - & -1 & -1 & -1 & -1 & -1\\
+          pdf & -1 & -1 & - & 164 & -1 & 119 & -1\\
+          png & -1 & -1 & 164 & - & 143 & 122 & 129\\
+          rar & -1 & -1 & -1 & 143 & - & 143 & -1\\
+          wav & -1 & -1 & 119 & 122 & 143 & - & 172\\
+          zip & -1 & -1 & -1 & 129 & -1 & 172 & -\\ \hline
+        \end{tabular}
+        \end{center}
+        \bigskip
+    \end{table}
+    }
 \end{frame}
 \end{document}
