@@ -132,6 +132,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 \section{Overview} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
 %------------------------------------------------
 
+\subsection{Motiva\c{t}ie}
 \begin{frame}
     \frametitle{Motiva\c{t}ie: scheme de partajare} % Table of contents slide, comment this block out to remove it
     \only<1-2>{
@@ -199,6 +200,9 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
     }
 \end{frame}
 
+%------------------------------------------------
+\section{Scheme de partajare}
+
 \begin{frame}
     \frametitle{Schema Shamir - intui\c{t}ie}
     \begin{itemize}
@@ -211,9 +215,79 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
         \begin{textblock*}{4cm}(5cm, 5cm)
         \begin{figure}
             \includegraphics[width=3.5cm,height=3.5cm,keepaspectratio]{img/shamir/shamir.png}
-        \end{figure}
+       \end{figure}
         \end{textblock*}
      }
+\end{frame}
 
+\begin{frame}
+    \frametitle{Schema Shamir}
+    \begin{itemize}
+        \item Secret $\mathcal{S}$
+        \pause
+        \item Schema $(k,n)$ majoritar\u{a}
+        \pause
+        \item Oricare $k$ participan\c{t}i din cei $n$ pot reconstitui $\mathcal{S}$
+        \pause
+        \item Mai pu\c{t}in de $k$ participan\c{t}i nu ob\c{t}in nici o informa\c{t}ie despre $\mathcal{S}$
+        \pause
+        \item Se alege un polinom $f$ de grad $k$ av\^{a}nd coeficien\c{t}i aleatori, termenul liber fiind $\mathcal{S}$
+        \pause
+        \item Participantul $P_i$ primeste $f(i)$, $i = \{1, 2, ...n\}$
+        \pause
+        \item Dupa reconstituire secretul $\mathcal{S}$ se afla \^{i}n $f(0)$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Schema Shamir}
+    \only<1> {
+        \begin{exampleblock}{Example}
+           Se consider\u{a} 8 participan\c{t}i, unde oricare $3$ pot reconstitui secretul $\mathcal{S}$. Fie polinomul $f(x) = 20x ^ 3 + 14x ^ 2 + 31x + S$
+        \end{exampleblock}
+    }
+    \only<2> {
+     \begin{textblock*}{4cm}(3.5cm, 2cm)
+        \begin{figure}
+            \includegraphics[width=6cm,height=6cm,keepaspectratio]{img/shamir/example.png}
+       \end{figure}
+        \end{textblock*}
+ 
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Schema unanim\u{a} XOR}
+    \begin{itemize}
+        \item Schema majoritar\u{a} $(n,n)$.
+        \pause
+        \item $n-1$ participan\c{t}i primesc numere aleatoare: $s_1, s_2, \dots s_{n-1}$.
+        \pause
+        \item Cel de-al $n$-lea participant prime\c{s}te $S \oplus s_1 \oplus s_2 \oplus \dots \oplus s_{n-1}$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Schema Ito, Saito \c{s}i Nishizeki}
+
+    \only<1-> {
+    \begin{itemize}
+        \item Schema Shamir e insuficient\u{a} pentru a realiza partajarea lui $\mathcal{S}$ unui grup particular de participan\c{t}i.
+    \end{itemize}
+    }
+    \only<2-> {
+        \begin{textblock*}{4cm}(3.5cm, 5cm)
+            \begin{figure}
+                \includegraphics[width=3.5cm,height=3.5cm,keepaspectratio]{img/shamir/Ito.png}
+           \end{figure}
+        \end{textblock*}
+    }
+\end{frame}
+
+%------------------------------------------------
+\section{Sisteme de stocare}
+
+\begin{frame}
+    \frametitle{Asigurarea disponibilt\u{a}\c{t}ii cu ajutorul sistemelor RAID} 
 \end{frame}
 \end{document}
