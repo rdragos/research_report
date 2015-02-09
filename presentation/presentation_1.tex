@@ -133,6 +133,15 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 %----------------------------------------------------------------------------------------
 
 %------------------------------------------------
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Cuprins pentru sec\c{t}iunea \thesection}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
 \section{Overview} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
 %------------------------------------------------
 
@@ -225,6 +234,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
      }
 \end{frame}
 
+\subsection{Schema Shamir}
 \begin{frame}
     \frametitle{Schema Shamir}
     \begin{itemize}
@@ -262,6 +272,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
     }
 \end{frame}
 
+\subsection{Schema unanim\u{a} XOR}
 \begin{frame}
     \frametitle{Schema unanim\u{a} XOR}
     \begin{itemize}
@@ -275,6 +286,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
     \end{itemize}
 \end{frame}
 
+\subsection{Schema Ito, Saito \c{s}i Nishizeki}
 \begin{frame}
     \frametitle{Schema Ito, Saito \c{s}i Nishizeki}
 
@@ -301,6 +313,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 %------------------------------------------------
 \section{Sisteme de stocare}
 
+\subsection{RAID}
 \begin{frame}
     \frametitle{Asigurarea disponibilit\u{a}\c{t}ii cu ajutorul sistemelor RAID}
     \begin{itemize}
@@ -336,11 +349,11 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 \end{frame}
 
 \begin{frame}
-    \frametitle{Sisteme securizate de stocare de lunga durata}
+    \frametitle{Sisteme securizate de stocare de lung\u{a} durat\u{a}}
     \begin{itemize}
         \item Securitatea este asigurat\u{a} cu ajutorul schemelor de partajare.
         \pause
-        \item Disponibilitatea cu nivele RAID.
+        \item Disponibilitatea cu nivele RAID sau scheme de partajare. 
     \end{itemize}
 \end{frame}
 
@@ -348,7 +361,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 \subsection{PASIS}
 
 \begin{frame}
-    \frametitle{PASIS}
+    \frametitle{PASIS (Perpetually Available and  Secure Information Systems)}
     \only<1-2> {
         \begin{itemize}
             \item Informa\c{t}ia este partajat\u{a} cu ajutorul agen\c{t}ilor PASIS folosind Schema Shamir.
@@ -367,7 +380,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 
 \section{Alouneh et al.}
 \begin{frame}
-    \frametitle{Alouneh et al.}
+    \frametitle{Alouneh et al. (2013)}
     \begin{itemize}
         \item Informa\c{t}ia este partajat\u{a} cu ajutorul unei aplica\c{t}ii la nivelul clientului folosind o versiune modificat\u{a} a schemei Shamir.
         \pause
@@ -376,14 +389,15 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
         \item Nodul cu indexul $i$ prime\c{s}te valoarea polinomului $f(i)$.
     \end{itemize} 
     \pause
-    \begin{exampleblock}{Exemplu}
-        Fie un fi\c{s}ier $File$ avand octetii: $10$ $15$ in aceasta ordine.
-        Polinomul dup\u{a} care se realizeaza partajarea este $f(x) = 10 + 15x$.
-        Nodul $i$ primeste valoarea $f(i)$
-    \end{exampleblock}
+    \begin{my_example}
+        Fie un fi\c{s}ier $File$ avand octe\c{t}ii: $10$ $15$ \^{i}n aceast\u{a} ordine.
+
+        Polinomul dup\u{a} care se realizeaz\u{a} partajarea este $f(x) = 10 + 15x$.
+        Nodul $i$ prime\c{s}te valoarea $f(i)$
+    \end{my_example}
 \end{frame}
 \begin{frame}
-    \frametitle{Alouneh et al.: partajare + reconstruc\c{t}ie}
+    \frametitle{Alouneh et al. (2013): partajare + reconstruc\c{t}ie}
      \begin{textblock*}{4cm}(3cm, 2cm)
         \begin{figure}
             \includegraphics[width=7cm,height=7cm,keepaspectratio]{img/results/sharing.png}
@@ -391,13 +405,31 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
     \end{textblock*}
 \end{frame}
 
-\section{Results}
+\section{Rezultate personale}
 \begin{frame}
-    \frametitle{Alouneh et al. - atacuri}
-    Construirea polinomului este determinista! $\rightarrow$ Componentele vor fi acelea\c{s}i pentru fi\c{s}iere identice partajate.
+    \frametitle{Alouneh et al. (2013) - atacuri}
+    \only<1-2> {
+        \begin{itemize}
+            \item Construirea polinomului este determinist\u{a}!
+            \pause
+            \item Componentele rezultate vor fi acelea\c{s}i pentru fi\c{s}iere identice partajate.
+        \end{itemize}
+    }
+    \only<3-> {
+        Consider\^{a}nd c\u{a} dealerul $\mathcal{D}$ nu schimb\u{a} numaratoarea nodurilor la diferite distribu\c{t}iii:
+        \begin{itemize}
+            \item Compararea \^{i}ntre 2 tipuri de fi\c{s}iere partajate pe acela\c{s}i nod este fezabil\u{a}
+            \pause
+            \item Detectarea fi\c{s}ierelor av\^{a}nd con\c{t}inut similar sau diferit
+            \pause
+            \item Detectarea unui pattern repetitiv dintr-un fi\c{s}ier
+        \end{itemize}
+    }
 \end{frame}
+
+\subsection{Detectarea tipului de fi\c{s}ier partajat}
 \begin{frame}
-    \frametitle{Alouneh et al. - determinarea tipului de fi\c{s}ier partajat}
+    \frametitle{Alouneh et al. (2013) - determinarea tipului de fi\c{s}ier partajat}
     Prin ob\c{t}inerea informatiilor dintr-un singur nod, se poate constata tipul de fisier partajat ini\c{t}ial:
     %-----------------------------------------------------
     \only<1-1> {
@@ -441,8 +473,9 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
     }
 \end{frame}
 
+\subsection{Determinarea con\c{t}inutului de fi\c{s}ier}
 \begin{frame}
-    \frametitle{Alouneh et al. - determinarea continutului de fi\c{s}ier}
+    \frametitle{Alouneh et al. (2013) - determinarea con\c{t}inutului de fi\c{s}ier}
     \only<1-1> {
         \begin{center}
          \begin{textblock*}{4cm}(1cm, 1cm)
@@ -475,23 +508,80 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
     }
 \end{frame}
 \begin{frame}
-    \frametitle{Alouneh et al. - determinarea continutului de fi\c{s}ier}
-    Partajarea celor 3 fi\c{s}iere cu schema $(2,4)$. 
+    \frametitle{Alouneh et al. (2013) - determinarea con\c{t}inutului de fi\c{s}ier}
+    \begin{textblock*}{4cm}(1cm,2cm)
+        Partajarea celor 3 fi\c{s}iere cu schema $(2,4)$. 
+    \end{textblock*}
+
     \only<1> { 
-        Atacatorul ob\c{t}ine componentele aflate pe nodul $1$:
-       \begin{textblock*}{4cm}(3cm, 2cm)
+        \begin{textblock*}{4cm}(1cm,5cm)
+            Adversarul ob\c{t}ine componentele aflate pe nodul $1$:
+        \end{textblock*}
+       \begin{textblock*}{4cm}(6cm, 1cm)
             \begin{figure}
                 \includegraphics[width=7cm,height=7cm,keepaspectratio]{img/results/db1.png}
            \end{figure}
         \end{textblock*} 
     }
     \only<2> {
-     Atacatorul ob\c{t}ine componentele aflate pe nodul $2$:
-       \begin{textblock*}{4cm}(3cm, 2cm)
+    \begin{textblock*}{4cm}(1cm,5cm)
+            Adversarul ob\c{t}ine componentele aflate pe nodul $2$:
+        \end{textblock*}
+       \begin{textblock*}{4cm}(6cm, 1cm)
             \begin{figure}
                 \includegraphics[width=7cm,height=7cm,keepaspectratio]{img/results/db2.png}
            \end{figure}
         \end{textblock*} 
     }
 \end{frame}
+
+\subsection{Detectarea unui pattern repetitiv dintr-un fi\c{s}ier}
+\begin{frame}
+
+    \frametitle{Alouneh et al. (2013) - determinarea unui pattern \^{i}n fi\c{s}ier}
+    \only<1-> {
+        \begin{textblock*}{4cm}(7cm, 1cm)
+        \begin{figure}
+            \includegraphics[width=4cm,height=4cm,keepaspectratio]{img/results/carouri.png}
+        \end{figure}
+        \end{textblock*} 
+    }
+    \only<2-3> {
+        \begin{textblock*}{4cm}(1cm, 1cm)
+        \begin{figure}
+            \includegraphics[width=6cm,height=6cm,keepaspectratio]{img/results/carouri_db1.png}
+            \caption{Nod 1}
+        \end{figure}
+        \end{textblock*}
+    }
+    \only<3-3> {
+        \begin{textblock*}{4cm}(1cm, 4.5cm)
+        \begin{figure}
+            \includegraphics[width=6cm,height=6cm,keepaspectratio]{img/results/carouri_db2.png}
+            \caption{Nod 2}
+        \end{figure}
+        \end{textblock*}
+    }
+    \only<4-> {
+        \begin{textblock*}{4cm}(1cm, 1cm)
+        \begin{figure}
+            \includegraphics[width=6cm,height=6cm,keepaspectratio]{img/results/carouri_db3.png}
+            \caption{Nod 3}
+        \end{figure}
+        \end{textblock*}
+    }
+    \only<5-> {
+        \begin{textblock*}{4cm}(1cm, 4.5cm)
+        \begin{figure}
+            \includegraphics[width=6cm,height=6cm,keepaspectratio]{img/results/carouri_db4.png}
+            \caption{Nod 4} 
+        \end{figure}
+        \end{textblock*}
+    }
+\end{frame}
+
+\begin{frame}
+\Huge{\centerline{Mul\c{t}umesc!}}
+\end{frame}
+
 \end{document}
