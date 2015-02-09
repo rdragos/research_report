@@ -218,15 +218,15 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 
 \begin{frame}
     \frametitle{Schema Shamir - intui\c{t}ie}
-    \begin{textblock*}{12cm}(1cm,1cm)
-        \begin{itemize}
-            \item $k$ puncte distincte \^{i}n plan definesc o curb\u{a} polinomial\u{a} unic\u{a} av\^{a}nd grad $k - 1$
-            \pause
-            \item Mai pu\c{t}in de $k$ puncte nu pot reconstitui polinomul original
-        \end{itemize}
-        \pause
-    \end{textblock*}
-    \only<3-> {
+    \only<1-2> {
+        \begin{textblock*}{12cm}(1cm,1cm)
+            \begin{itemize}
+                \item $k$ puncte distincte \^{i}n plan definesc o curb\u{a} polinomial\u{a} unic\u{a} av\^{a}nd grad $k - 1$
+                \item Mai pu\c{t}in de $k$ puncte nu pot reconstitui polinomul original
+            \end{itemize}
+        \end{textblock*}
+    }
+    \only<2-> {
         \begin{textblock*}{4cm}(4cm, 4.5cm)
         \begin{figure}
             \includegraphics[width=3.5cm,height=2.7cm,keepaspectratio]{img/shamir/shamir.png}
@@ -260,7 +260,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
     \frametitle{Schema Shamir}
     \only<1> {
         \begin{my_example}
-           Se consider\u{a} 8 participan\c{t}i, unde oricare $3$ pot reconstitui secretul $\mathcal{S}$.
+           Se consider\u{a} 8 participan\c{t}i, unde oricare $4$ pot reconstitui secretul $\mathcal{S}$.
            Fie polinomul $f(x) = a_3x ^ 3 + a_2x ^ 2 + a_1x + S$, $a_i \leftarrow^R Z_q$, $a_i$ ale\c{s}i \^{i}n mod aleator din $Z_q$.
         \end{my_example}
     }
@@ -325,7 +325,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
                 \item Data striping
                 \pause
                 \item Redundan\c{t}a datelor 
-            \end{itemize} ai 
+            \end{itemize}
         \pause
         \item Datele sunt distribuite \^{i}n moduri diferite denumite niveluri RAID.
     \end{itemize}
@@ -418,7 +418,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
         \end{itemize}
     }
     \only<3-> {
-        Consider\^{a}nd c\u{a} dealerul $\mathcal{D}$ nu schimb\u{a} num\u{a}r\u{a}toarea nodurilor la diferite distribu\c{t}ii:
+        Consider\^{a}nd c\u{a} dealerul $\mathcal{D}$ nu schimb\u{a} numerotoarea nodurilor la diferite distribu\c{t}ii:
         \begin{itemize}
             \item Compararea \^{i}ntre 2 tipuri de fi\c{s}iere partajate pe acela\c{s}i nod este fezabil\u{a}
             \pause
