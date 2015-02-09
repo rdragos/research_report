@@ -218,14 +218,16 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 
 \begin{frame}
     \frametitle{Schema Shamir - intui\c{t}ie}
-    \begin{itemize}
-        \item $k$ puncte distincte \^{i}n plan definesc o curb\u{a} polinomial\u{a} unic\u{a} av\^{a}nd grad $k - 1$
+    \begin{textblock*}{12cm}(1cm,1cm)
+        \begin{itemize}
+            \item $k$ puncte distincte \^{i}n plan definesc o curb\u{a} polinomial\u{a} unic\u{a} av\^{a}nd grad $k - 1$
+            \pause
+            \item Mai pu\c{t}in de $k$ puncte nu pot reconstitui polinomul original
+        \end{itemize}
         \pause
-        \item Mai pu\c{t}in de $k$ puncte nu pot reconstitui polinomul original
-    \end{itemize}
-    \pause
+    \end{textblock*}
     \only<3-> {
-        \begin{textblock*}{4cm}(4cm, 5cm)
+        \begin{textblock*}{4cm}(4cm, 4.5cm)
         \begin{figure}
             \includegraphics[width=3.5cm,height=2.7cm,keepaspectratio]{img/shamir/shamir.png}
             \caption{"3 polynomials of degree 2 through 2 points" by Vlsergey}
@@ -259,13 +261,13 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
     \only<1> {
         \begin{my_example}
            Se consider\u{a} 8 participan\c{t}i, unde oricare $3$ pot reconstitui secretul $\mathcal{S}$.
-           Fie polinomul $f(x) = a_3x ^ 3 + a_2x ^ 2 + a_1x + S$, $a_i \leftarrow^R Z_q$, $a_i$ ale\c{s}i \^{i}n mod aleator din corpul $Z_q$.
+           Fie polinomul $f(x) = a_3x ^ 3 + a_2x ^ 2 + a_1x + S$, $a_i \leftarrow^R Z_q$, $a_i$ ale\c{s}i \^{i}n mod aleator din $Z_q$.
         \end{my_example}
     }
     \only<2> {
-     \begin{textblock*}{4cm}(3.5cm, 2cm)
+     \begin{textblock*}{4cm}(3cm, 1.5cm)
         \begin{figure}
-            \includegraphics[width=6cm,height=6cm,keepaspectratio]{img/shamir/shamir-split.png}
+            \includegraphics[width=7cm,height=7cm,keepaspectratio]{img/shamir/shamir-split.png}
        \end{figure}
         \end{textblock*}
  
@@ -323,16 +325,16 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
                 \item Data striping
                 \pause
                 \item Redundan\c{t}a datelor 
-            \end{itemize}
+            \end{itemize} ai 
         \pause
         \item Datele sunt distribuite \^{i}n moduri diferite denumite niveluri RAID.
     \end{itemize}
 \end{frame}
 \begin{frame}
     \frametitle{Nivelul 0 Raid - Data Striping}
-    \begin{textblock*}{4cm}(3.7cm, 3cm)
+    \begin{textblock*}{4cm}(3cm, 3cm)
         \begin{figure}
-            \includegraphics[width=6cm,height=6cm,keepaspectratio]{img/raid/raid0.png}
+            \includegraphics[width=7cm,height=7cm,keepaspectratio]{img/raid/raid0.png}
        \end{figure}
     \end{textblock*}  
 \end{frame}
@@ -361,7 +363,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 \subsection{PASIS}
 
 \begin{frame}
-    \frametitle{PASIS (Perpetually Available and  Secure Information Systems)}
+    \frametitle{PASIS (2000)}
     \only<1-2> {
         \begin{itemize}
             \item Informa\c{t}ia este partajat\u{a} cu ajutorul agen\c{t}ilor PASIS folosind Schema Shamir.
@@ -398,7 +400,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
 \end{frame}
 \begin{frame}
     \frametitle{Alouneh et al. (2013): partajare + reconstruc\c{t}ie}
-     \begin{textblock*}{4cm}(3cm, 2cm)
+     \begin{textblock*}{4cm}(3cm, 1cm)
         \begin{figure}
             \includegraphics[width=7cm,height=7cm,keepaspectratio]{img/results/sharing.png}
        \end{figure}
@@ -416,7 +418,7 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
         \end{itemize}
     }
     \only<3-> {
-        Consider\^{a}nd c\u{a} dealerul $\mathcal{D}$ nu schimb\u{a} numaratoarea nodurilor la diferite distribu\c{t}iii:
+        Consider\^{a}nd c\u{a} dealerul $\mathcal{D}$ nu schimb\u{a} num\u{a}r\u{a}toarea nodurilor la diferite distribu\c{t}ii:
         \begin{itemize}
             \item Compararea \^{i}ntre 2 tipuri de fi\c{s}iere partajate pe acela\c{s}i nod este fezabil\u{a}
             \pause
@@ -580,6 +582,51 @@ Universitatea din Bucure\c{s}ti\\ % Your institution for the title page
     }
 \end{frame}
 
+\begin{frame}
+    \frametitle{Implementare}
+    \only<1-2> {
+        \begin{itemize}
+            \item Python 3.0
+            \item Serializarea datelor: Cerealizer
+            \item Grafice: Matplotlib
+            \pause
+            \item Cod surs\u{a}: \href{https://github.com/rdragos/splitting_scheme}{\beamergotobutton{GitHub}}
+        \end{itemize}
+    }
+    \only<3-> {
+       \begin{center}
+         \begin{textblock*}{4cm}(1cm, 1cm)
+            \begin{figure}
+                \includegraphics[width=11cm,height=11cm,keepaspectratio]{img/results/github.png}
+                \caption{Cod GitHub}
+           \end{figure}
+        \end{textblock*} 
+        \end{center} 
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Prezent}
+    \only<1-1> {
+        Articolul se afl\u{a} momentan \^{i}n procesul de recenzie la Journal of Control Engineering andu Applied Informatics (jurnal indexat ISI,categoria C)
+    }
+    \only<2-2> {
+        \begin{center}
+         \begin{textblock*}{4cm}(1cm, 1cm)
+            \begin{figure}
+                \includegraphics[width=11cm,height=11cm,keepaspectratio]{img/results/ceai.png}
+                \caption{WebSite Jurnal}
+           \end{figure}
+        \end{textblock*} 
+        \end{center} 
+    }
+\end{frame}
+\section{Concluzii}
+
+\begin{frame}
+    \frametitle{Concluzii}
+    Modificarea unor protocoale criptografice necesit\u{a} demonstra\c{t}ii riguroase!
+\end{frame}
 \begin{frame}
 \Huge{\centerline{Mul\c{t}umesc!}}
 \end{frame}
