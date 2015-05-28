@@ -1,0 +1,38 @@
+\contentsline {section}{\numberline {1}Introducere}{3}
+\contentsline {subsection}{\numberline {1.1}Istoric}{3}
+\contentsline {subsection}{\numberline {1.2}Motiva\c {t}ie}{3}
+\contentsline {subsection}{\numberline {1.3}Structur\u {a}}{4}
+\contentsline {section}{\numberline {2}Func\c {t}ii pseudoaleatoare}{4}
+\contentsline {subsection}{\numberline {2.1}Defini\c {t}ii de securitate}{4}
+\contentsline {subsection}{\numberline {2.2}Func\c {t}ii pseudoaleatoare constr\^{a}nse}{4}
+\contentsline {section}{\numberline {3}ID-NIKE}{4}
+\contentsline {subsection}{\numberline {3.1}Construc\c {t}ia Boneh Waters}{4}
+\contentsline {section}{\numberline {4}Multi-party ID NIKE}{4}
+\contentsline {subsection}{\numberline {4.1}Propriet\u {a}ti de securitate}{5}
+\contentsline {subsection}{\numberline {4.2}Construc\c {t}ie Multi-Party ID NIKE bazat\u {a} pe func\c {t}ii pseudoaleatoare constr\^{a}nse}{5}
+\contentsline {subsection}{\numberline {4.3}Contribu\c {t}ii}{5}
+\contentsline {section}{\numberline {5}Scheme de partajare}{5}
+\contentsline {subsection}{\numberline {5.1}Istoric}{6}
+\contentsline {subsection}{\numberline {5.2}Schema unanim\u {a}}{6}
+\contentsline {subsection}{\numberline {5.3}Schema Shamir}{6}
+\contentsline {subsection}{\numberline {5.4}Schema Ito, Saito \c {s}i Nishizeki}{7}
+\contentsline {subsection}{\numberline {5.5}Schema Feldman}{9}
+\contentsline {section}{\numberline {6}Sisteme de stocare de lung\u {a} durat\u {a}}{10}
+\contentsline {subsection}{\numberline {6.1}Criptare vs. scheme de partajare}{10}
+\contentsline {section}{\numberline {7}Sisteme de stocare de lung\u {a} durat\u {a} bazate pe scheme de partajare}{11}
+\contentsline {subsection}{\numberline {7.1}PASIS}{11}
+\contentsline {subsection}{\numberline {7.2}GridSharing}{12}
+\contentsline {subsection}{\numberline {7.3}POTSHARDS}{14}
+\contentsline {section}{\numberline {8}Sistemul de stocare Alouneh et al.}{15}
+\contentsline {section}{\numberline {9}Contribu\c {t}ii}{17}
+\contentsline {subsection}{\numberline {9.1}Vulnerabilit\u {a}\c {t}i eviden\c {t}iate}{18}
+\contentsline {subsubsection}{\numberline {9.1.1}Detectarea tipului de fi\c {s}ier}{19}
+\contentsline {subsubsection}{\numberline {9.1.2}Detectarea de con\c {t}inut}{19}
+\contentsline {subsection}{\numberline {9.2}Implementare \c {s}i rezultate practice}{20}
+\contentsline {subsubsection}{\numberline {9.2.1}Detectarea tipului de fi\c {s}ier}{21}
+\contentsline {subsubsection}{\numberline {9.2.2}Detectarea de con\c {t}inut}{22}
+\contentsline {section}{\numberline {10}Implement\u {a}ri alternative}{26}
+\contentsline {subsection}{\numberline {10.1}Arhitectur\u {a} bazat\u {a} pe scheme de partajare}{26}
+\contentsline {subsection}{\numberline {10.2}Servere Amazon}{26}
+\contentsline {subsection}{\numberline {10.3}Reconstruirea fi\c {s}ierelor}{26}
+\contentsline {section}{\numberline {11}Concluzii}{26}

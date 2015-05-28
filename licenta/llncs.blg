@@ -1,0 +1,56 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: llncs.aux
+The style file: splncs.bst
+Database file #1: llncs.bib
+A bad cross reference---entry "SB:2005"
+refers to entry "2005", which doesn't exist
+A bad cross reference---entry "STM:2006"
+refers to entry "DBLP:conf/icdcs/2006", which doesn't exist
+Warning--I didn't find a database entry for "BSRR:2006"
+Warning--I didn't find a database entry for "SGM:2006"
+Warning--I didn't find a database entry for "Ceai_art:2015"
+Warning--I didn't find a database entry for "2005"
+Warning--I didn't find a database entry for "DBLP:conf/icdcs/2006"
+You've used 29 entries,
+            2087 wiz_defined-function locations,
+            697 strings with 8755 characters,
+and the built_in function-call counts, 7729 in all, are:
+= -- 804
+> -- 208
+< -- 18
++ -- 85
+- -- 56
+* -- 477
+:= -- 1011
+add.period$ -- 36
+call.type$ -- 29
+change.case$ -- 28
+chr.to.int$ -- 0
+cite$ -- 29
+duplicate$ -- 423
+empty$ -- 794
+format.name$ -- 56
+if$ -- 1910
+int.to.chr$ -- 0
+int.to.str$ -- 29
+missing$ -- 21
+newline$ -- 141
+num.names$ -- 29
+pop$ -- 117
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 288
+stack$ -- 0
+substring$ -- 476
+swap$ -- 211
+text.length$ -- 18
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 79
+width$ -- 31
+write$ -- 324
+(There were 2 error messages)
