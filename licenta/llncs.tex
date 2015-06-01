@@ -1,10 +1,5 @@
-% This is LLNCS.DEM the demonstration file of
-% the LaTeX macro package from Springer-Verlag
-% for Lecture Notes in Computer Science,
-% version 2.4 for LaTeX2e as of 16. April 2010
-%
-\documentclass{llncs}
-%
+\documentclass[12pt]{book}
+\usepackage{amsmath, amsthm, amssymb, url,graphicx}
 \usepackage{makeidx}  % allows for indexgeneration
 \usepackage{llncsdoc}
 \usepackage{algorithmic}
@@ -17,101 +12,126 @@
 \usepackage[parfill]{parskip} 
 \usepackage{float}
 \usepackage{caption}
-%\restylefloat{table}
+
+\title{Protocale Criptografice de Grup}
+\author{Drago\c{s} Alin Rotaru}
+\date{2015}
+
+\renewcommand{\chaptername}{Capitolul}
+\renewcommand\contentsname{Cuprins}
 
 \newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
 \newcommand{\todo}[1]{{\color{red}{TODO #1}}}
-\renewcommand\refname{Referin\c{t}e}
-\setcounter{secnumdepth}{4}
-\def\examplename{Exemplul}
-\def\contentsname{Cuprins}
-\captionsetup[table]{name=Tabel}
-%\restylefloat{table}
-%
+
+\newtheorem{implicatie}{\textbf{Implica\c{t}a}}[section]
+\newtheorem{observatie}{\textbf{Observa\c{t}ia}}[section]
+\newtheorem{definitie}{\textbf{Defini\c{t}ia}}[section]
+\newtheorem{teorema}{\textbf{Teorema}}[section]
+\newtheorem{lema}{\textbf{Lema}}[section]
+%\def\examplename{Exemplul}
+
+\newtheorem{exemplu}{\textbf{Exemplu}}[section]
+ 
 \begin{document}
-% pagina de titlu
+%  de titlu
 \thispagestyle{empty}
 
-%\centerline{\bf UNIVERSITY OF BUCHAREST}
+\centerline{\bf UNIVERSITATEA BUCURE\c{S}TI}
 
-%\centerline{\bf FACULTY OF MATHEMATICS AND COMPUTER SCIENCE}
-
-
-\vspace{10.5cm}
-\vspace{10.5cm}
-
-\centerline{\huge \bf Lucrare de licen\c{t}\u{a}}
-\vspace{0.35cm}
-%\centerline{\huge \bf - Sisteme de stocare de lung\u{a} durat\u{a}}
-%\vspace{0.35cm}
-
-
-\vspace{3cm}
-
-\centerline{\Large \bf - Protocoale Criptografice de Grup - }
-\vspace{0.35cm}
+\centerline{\bf FACULTATEA DE MATEMATIC\u{A} \c{S}I INFORMATIC\u{A}}
 
 \vspace{4.5cm}
 
-\begin{flushleft}
-{\Large \textit{Profesor \^{i}ndrum\u{a}tor:}\vspace{0.2cm}}
+\centerline{\huge \bf Protocoale Criptografice de Grup}
 
-{\large Lect.univ.dr. Ruxandra OLIMID}
-\end{flushleft}
+\vspace{0.5cm}
 
-\vspace{2.5cm}
-\begin{flushright}
-{\Large \textit{Student:}\vspace{0.2cm}}
-
-{\Large Drago\c{s} Alin ROTARU}
-\end{flushright}
-
+\centerline{\large \bf Lucrare de Licen\c{t}\u{a}}
 
 \vspace{3.5cm}
 
-%\centerline{\bf Bucharest}
+\begin{flushleft}
+{\Large \textit{Coordonator:}\vspace{0.2cm}}
 
-%\centerline{\bf 2015}
+{\Large Lect.dr. Ruxandra F. Olimid}
+\end{flushleft}
+
+\vspace{1cm}
+\begin{flushright}
+{\Large \textit{Student:}\vspace{0.2cm}}
+
+{\Large Drago\c{s} Alin Rotaru}
+\end{flushright}
 
 
-\tableofcontents
-\newpage
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
+\vspace{2.5cm}
 
-\section{Introducere}
-\label{sec:intro}
+\centerline{\bf BUCURE\c{S}TI}
 
-\subsection{Istoric}
-Termenul de criptografie este definit in dic\c{t}ionarul Oxford ca fiind \textit{arta de a scrie \c{s}i a rezolva coduri}.
-Criptografia modern\u{a} s-a desprins de cea clasica \^{i}n jurul anilor '80, motiv\^{a}nd implementarea rigurozit\u{a}\c{t}ii matematice pentru definirea construc\c{t}iilor criptografice. Aceasta pentru ca \^{i}n anii anteriori, experien\c{t}a a dovedit nesiguran\c{t}a metodelor de criptare, criptanaliza lor fiind uneori trivial\u{a} (cifrul lui Cezar, Vigenere \cite{Caesar:2015}, \cite{Vigenere:2015}) sau uneori atins\u{a} cu ceva mai mult efort precum Enigma \c{s}i alte metode din cel de-al doilea r\u{a}zboi mondial. \cite{Enigma:2015}
+\centerline{\bf 2015}
 
-Criptografia modern\u{a} se gase\c{s}te pretutindeni \^{i}n via\c{t}a de zi cu zi de la ATM-uri, cartele telefonice la semn\u{a}turi digitale, protocoale de autentificare, licita\c{t}ii electronice sau bani digitali, lu\^{a}nd amploare o dat\u{a} cu apari\c{t}ia sistemelor cu cheie public\u{a}. O defini\c{t}ie potrivit\u{a} este \textit{studiul \c{s}tiin\c{t}ific al tehnicililor pentru a securiza informa\c{t}ia digital\u{a}, tranzac\c{t}iile \c{s}i calculul distribuit} \cite{Katz:2007}.
+\chapter*{Abstract}
 
-Un rol important \^{i}n criptografia actual\u{a} \^{i}l de\c{t}ine criptografia de grup, care permite definirea \c{s}i analiza securit\u{a}\c{t}ii unor protocoale la care iau parte mai mult de 2 participan\c{t}i.
+Criptografia modern\u{a} se gase\c{s}te pretutindeni \^{i}n via\c{t}a de zi cu zi de la ATM-uri, cartele telefonice la semn\u{a}turi digitale, protocoale de autentificare, licita\c{t}ii electronice sau bani digitali, lu\^{a}nd amploare o dat\u{a} cu apari\c{t}ia sistemelor cu cheie public\u{a}. O defini\c{t}ie potrivit\u{a} este \textit{studiul \c{s}tiin\c{t}ific al tehnicililor pentru a securiza informa\c{t}ia digital\u{a}, tranzac\c{t}iile \c{s}i calculul distribuit}. \cite{Katz:2007}
 
-\^{I}n cadrul criptografiei exist\u{a} multiple primitive care stau la baza tutoror protocoalelor precum: semn\u{a}turi digitale, func\c{t}ii one-way (hash), scheme de partajare, schmbul sigur de chei.
+\^{I}n cadrul criptografiei exist\u{a} primitive multiple care stau la baza tutoror protocoalelor precum: semn\u{a}turi digitale, func\c{t}ii one-way (hash), scheme de partajare, schimbul sigur de chei. Un rol important il de\c{t}ine criptografia de grup, care permite definirea \c{s}i analiza securit\u{a}\c{t}ii unor protocoale la care iau parte mai mult de 2 participan\c{t}i.
 
-Schemele de partajare sunt utilizate \^{i}n aplica\c{t}ii precum: protejarea \c{s}i recuperarea cheilor criptografice, vot electronic, certificate distribuite unor autorit\u{a}\c{t}i, licita\c{t}ii on-line sau sisteme de stocare de lung\u{a} durat\u{a}. \cite{Martin:2008}
-
-O schem\u{a} de partajare reprezint\u{a} o metod\u{a} de a distribui un secret unor participan\c{t}i, oferind fiec\u{a}rui participant o component\u{a} (share) astfel \^{i}nc\^{a}t doar o submul\c{t}ime de participan\c{t}i pot recupera secretul.
-
-\subsection{Motiva\c{t}ie}
-
-Lucrarea de fa\c{t}\u{a} analizeaz\u{a} c\^{a}teva dintre primitivele criptografice prezentand aplicatii construite pe baza lor, finalizand cu prezentarea unei arhitecturi implementate cu ajutorul schemelor de partajare.
-
-vulnerabilitati sistemele de stocare de lung\u{a} durat\u{a} bazate pe scheme de partajare a secretelor.
-Cum volumul de datelor electronice este \^{i}n continu\u{a} cre\c{s}tere, necesitatea stoc\u{a}rii sigure a devenit extrem de necesar\u{a}.
-
-Date sensibile trebuie men\c{t}inute secrete, c\^{a}teodat\u{a} pentru lungi perioade de timp (zeci de ani). Exemple includ informa\c{t}ii militare, documete legale sau dosare medicale: informa\c{t}iile militare pot fi clasificate zeci de ani, un testament trebuie men\c{t}inut secret p\^{a}n\u{a} la deschiderea sa oficial\u{a},  un dosar medical necesit\u{a} p\u{a}strare sigur\u{a} (cel pu\c{t}in) pe toat\u{a} durata vie\c{t}ii pacientului.
-
-P\u{a}strarea confiden\c{t}ialit\u{a}\c{t}ii \c{s}i redundan\c{t}i datelor pe perioade lungi de timp reprezint\u{a} o sarcin\u{a} dificil\u{a} din cauza multiplelor probleme care pot ap\u{a}rea precum atacuri, erori umane, defec\c{t}iunea unor componente hardware sau dezastre naturale \cite{BSRR:2006,SGM:2006}.
+P\u{a}strarea confiden\c{t}ialit\u{a}\c{t}ii \c{s}i redundan\c{t}ei datelor pe perioade lungi de timp reprezint\u{a} o sarcin\u{a} dificil\u{a} din cauza multiplelor probleme care pot ap\u{a}rea precum atacuri, erori umane, defec\c{t}iunea unor componente hardware sau dezastre naturale. \cite{SGMV:2009}
 Problemele sunt cu at\^{a}t mai actuale ast\u{a}zi, c\^{a}nd organiza\c{t}iile \^{i}\c{s}i p\u{a}streaz\u{a} datele \^{i}n cloud pentru sc\u{a}derea costurilor necesare \^{i}ntre\c{t}inerii unui centru propriu de date (datacenter), deci informa\c{t}iile sunt stocate \c{s}i procesate \^{i}n afara unui control fizic al proprietarului.
 
-\subsection{Structur\u{a}}
+
+Lucrarea de fa\c{t}\u{a} analizeaz\u{a} c\^{a}teva dintre primitivele criptografice prezent\^{a}nd apoi protocoale construite pe baza lor. In primele 2 capitole sunt descrise ...
+
+In final introducem o arhitectur\u{a} implementat\u{a} cu ajutorul schemelor de partajare elimin\^{a}nd astfel c\^{a}teva vulnerabilit\u{a}\c{t}i prezente la sistemele men\c{t}ionate anterior.
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+\setcounter{tocdepth}{3}
+\tableofcontents
+
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+
+
+% 					Structura
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+\chapter*{Structur\u{a}}
+\addcontentsline{toc}{chapter}{Structur\u{a}}
+
 \begin{itemize}
 	%\item Sec\c{t}iunea {\ref{sec:intro}} descrie pe scurt obiectul de studiu.
 	\item \todo{Completeaza descrierea}
@@ -121,25 +141,122 @@ Problemele sunt cu at\^{a}t mai actuale ast\u{a}zi, c\^{a}nd organiza\c{t}iile \
 	\item Sec\c{t}iunea {\ref{sec:alouneh_contributions}} con\c{t}ine contribu\c{t}iile de cercetare, pun\^{a}nd \^{i}n eviden\c{t}\u{a} problemele cauzate de determinismul sistemului introdus \^{i}n Sec\c{t}iunea {\ref{sec:desc_alouneh}}.
 \end{itemize}
 
+
+
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+\section{Introducere + Motivatie - deocamdata text reciclabil}
+\label{sec:intro}
+
+Termenul de criptografie este definit in dic\c{t}ionarul Oxford ca fiind \textit{arta de a scrie \c{s}i a rezolva coduri}.
+Criptografia modern\u{a} s-a desprins de cea clasica \^{i}n jurul anilor '80, motiv\^{a}nd implementarea rigurozit\u{a}\c{t}ii matematice pentru definirea construc\c{t}iilor criptografice. Aceasta pentru ca \^{i}n anii anteriori, experien\c{t}a a dovedit nesiguran\c{t}a metodelor de criptare, criptanaliza lor fiind uneori trivial\u{a} (cifrul lui Cezar, Vigenere \cite{Caesar:2015}, \cite{Vigenere:2015}) sau uneori atins\u{a} cu ceva mai mult efort precum Enigma \c{s}i alte metode din cel de-al doilea r\u{a}zboi mondial. \cite{Enigma:2015}
+
+Schemele de partajare sunt utilizate \^{i}n aplica\c{t}ii precum: protejarea \c{s}i recuperarea cheilor criptografice, vot electronic, certificate distribuite unor autorit\u{a}\c{t}i, licita\c{t}ii on-line sau sisteme de stocare de lung\u{a} durat\u{a}. \cite{Martin:2008}
+
+O schem\u{a} de partajare reprezint\u{a} o metod\u{a} de a distribui un secret unor participan\c{t}i, oferind fiec\u{a}rui participant o component\u{a} (share) astfel \^{i}nc\^{a}t doar o submul\c{t}ime de participan\c{t}i pot recupera secretul ini\c{t}ial.
+
+Cum volumul de datelor electronice este \^{i}n continu\u{a} cre\c{s}tere, necesitatea stoc\u{a}rii sigure a devenit extrem de necesar\u{a}.
+
+Date sensibile trebuie men\c{t}inute secrete, c\^{a}teodat\u{a} pentru lungi perioade de timp (zeci de ani). Exemple includ informa\c{t}ii militare, documete legale sau dosare medicale: informa\c{t}iile militare pot fi clasificate zeci de ani, un testament trebuie men\c{t}inut secret p\^{a}n\u{a} la deschiderea sa oficial\u{a}, un dosar medical necesit\u{a} p\u{a}strare sigur\u{a} (cel pu\c{t}in) pe toat\u{a} durata vie\c{t}ii pacientului.
+
+
+
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 
 
-\section{Func\c{t}ii pseudoaleatoare}
-\label{sec:prf}
 
-\subsection{Defini\c{t}ii de securitate}
+
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+\chapter{Func\c{t}ii Pseudoaleatoare}
+\label{cha:prf}
+
+\section{Introducere}
+
+\section{Defini\c{t}ii de Securitate}
 \label{subsec:prf-security}
 
-\subsection{Func\c{t}ii pseudoaleatoare constr\^{a}nse}
+\section{Func\c{t}ii Pseudoaleatoare Constr\^{a}nse}
 \label{subsec:cprf}
+
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+\chapter{Schimb de chei non-interactiv}
+%this can be revised
+\label{cha:nike}
 
 \section{ID-NIKE}
 \label{sec:id-nike}
 
-\subsection{Construc\c{t}ia Boneh Waters}
+\subsection{Construc\c{t}ia Boneh Waters (2013)}
 \label{subsec:boneh-waters}
 
 \section{Multi-party ID NIKE}
@@ -154,11 +271,39 @@ Problemele sunt cu at\^{a}t mai actuale ast\u{a}zi, c\^{a}nd organiza\c{t}iile \
 %gee, e mult mai usor in engleza
 \label{subsec:multi-party-prf}
 
-\subsection{Contribu\c{t}ii}
-\label{subsec:multi-party-contributions}
+\section{Contribu\c{t}ii}
+\label{sec:multi-party-contributions}
 
-\section{Scheme de partajare}
-\label{sec:splitting_schemes}
+
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+
+
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+\chapter{Scheme de Partajare}
+\label{chap:secret_sharing}
+
+
+\section{Introducere}
+\label{sec:intro_secret_sharing}
 
 O schem\u{a} de partajare const\u{a} \^{i}n distribuirea unei informa\c{t}ii secrete $\mathcal{S}$ la mai mul\c{t}i participan\c{t}i $\mathcal{P} = \{P_1, \dots, P_n\}$ astfel \^{i}nc\^{a}t oricare mul\c{t}ime de participan\c{t}i predefinit\u{a}  ca f\u{a}c\^{a}nd parte dintr-o structur\u{a} de acces pe care o vom denumi $\mathcal{A}$ s\u{a} poat\u{a} reconstitui secretul $\mathcal{S}$.
 Formal, o schem\u{a} de partajare este reprezentat\u{a} de o pereche de algoritmi \textbf{$(Gen, Rec)$}:
@@ -184,10 +329,6 @@ Schemele de partajare se clasific\u{a} in func\c{t}ie de cantitatea de informa\c
 
 \end{itemize} 
 
-\^{I}n continuare vom prezenta cateva sisteme perfecte de partajare utilizate \^{i}n cadrul unor arhitecturi pentru stocarea fisierelor pe o durata indelungat\u{a}.
-
-\subsection{Istoric}
-
 Primele scheme de partajare au fost dezvoltate independent de Shamir \c{s}i Blakley in 1979 \cite{B:1979, S:1979}.
 
 Denumite \c{s}i scheme majoritare $(k, n)$, acestea rezolvau cazul \^{i}n care oricare grup de participan\c{t}i cu un num\u{a}r mai mare sau egal dec\^{a}t $k$  (m\u{a}rimea pragului) poate reconstitui secretul $\mathcal{S}$ din componentele primite de la dealer. Dac\u{a} schema este perfect \textit{sigur\u{a}} atunci oricare grup cu un num\u{a}r de participan\c{t}i mai mic decat $k$ nu ob\c{t}ine vreo informa\c{t}ie despre $\mathcal{S}$.
@@ -199,7 +340,7 @@ Astfel de scheme de partajare pentru structuri de acces generale au fost dezvolt
 Benaloh \c{s}i Leichter au demonstrat ca schemele de partajare de tip prag nu pot fi folosite pe structuri general monotone (familie de submul\c{t}imi ale lui $\mathcal{P}$ cu proprietatea c\u{a} dac\u{a} $A \in \mathcal{A}$ \c{s}i $A \subset A'$, atunci $A' \in \mathcal{A}$) \c{s}i ob\c{t}in o construc\c{t}ie mai eficient\u{a} ca Ito et. al din punct de vedere al num\u{a}rului de componente distribuite participan\c{t}ilor \cite{JJ:1990}.
 
 
-\subsection{Schema unanim\u{a}}
+\section{Schema unanim\u{a}}
 
 Presupun\^{a}nd ca vrem s\u{a} imp\u{a}r\c{t}im un secret $\mathcal{S}$ la $n$ participan\c{t}i astfel \^{i}nc\^{a}t $\mathcal{S}$ sa poat\u{a} fi recuperat doar daca to\c{t}i cei $n$ participan\c{t}i \^{i}\c{s}i combin\u{a} componentele pe care le de\c{t}in. Metoda este echivalent\u{a} cu o schem\u{a} $(n, n)$ majoritar\u{a}. Un exemplu este schema introdus\u{a} de Karin, Greene \c{s}i Hellman (Fig.\ref{fig:all_or_nothing})  \cite{Karnin:83}.
 
@@ -251,7 +392,7 @@ Presupun\^{a}nd ca vrem s\u{a} imp\u{a}r\c{t}im un secret $\mathcal{S}$ la $n$ p
 
 
 
-\subsection{Schema Shamir}
+\section{Schema Shamir}
 
 Schema Shamir ofer\u{a} mai mult\u{a} flexibilitate dec\^{a}t schema unanima prin faptul ca oricare $k$ (sau mai multi) participan\c{t}i
 din cei $n$ pot recupera $\mathcal{S}$, \^{i}ns\u{a} mai pu\c{t}in de $k$ participan\c{t}i nu ob\c{t}in nicio informa\c{t}ie despre $\mathcal{S}$. Schema Shamir este deci o schem\u{a} $(k,n)$ majoritar\u{a}.
@@ -313,7 +454,7 @@ Pentru un atacator care de\c{t}ine chiar \c{s}i $k-1$ valori $s_i$, acesta nu de
 
 %---------------- Figure - shamir_scheme- STOP ------------------------
 
-\subsection{Schema Ito, Saito \c{s}i Nishizeki}
+\section{Schema Ito, Saito \c{s}i Nishizeki}
 \label{Ito}
 
 \^{I}n continuare vom descrie modalitatea de distribuire a componentelor de la care au pornit Ito, Saito \c{s}i Nishizeki pentru ca schema sa aiba o structur\u{a} de acces $\mathcal{A} \subseteq 2^P$ (submul\c{t}ime a setului de participan\c{t}i) monoton\u{a} (i.e. $\forall A \in \mathcal{A}, A \subseteq A' \Rightarrow A' \in \mathcal{A}$) \cite{ITO:1989}. 
@@ -321,7 +462,7 @@ Folosind construc\c{t}ia unei scheme majoritare $(k, n)$ autorii au reu\c{s}it s
 
 Dezvantajul acestei structuri este num\u{a}rul de componente necesar pentru o structur\u{a} de acces oarecare $\mathcal{A}$. Un mod simplu de construire al func\c{t}iei $Assign$ este urm\u{a}torul: pentru fiecare mul\c{t}ime minimal\u{a} $A \in \mathcal{A}$ ($\forall B \in \mathcal{A}$, $B \neq A, B \not\subset A$) se folose\c{s}te o schem\u{a} de partajare unanim\u{a} $(|A|, |A|)$ a lui $\mathcal{S}$ pentru participan\c{t}ii din $A$.
 
-\begin{example}
+\begin{exemplu}
 	Fie structura de acces $\mathcal{A} = \{ \{P_1, P_2\},\{P_1, P_3, P_4\}\}$.
 	\begin{itemize}
 		\item Gener\u{a}m componentele $s_1, s_2$ a.\^{i}. $s_1 \oplus s_2 = \mathcal{S}$ cu ajutorul schemei unanime $(2,2)$, 
@@ -334,7 +475,7 @@ Dezvantajul acestei structuri este num\u{a}rul de componente necesar pentru o st
 		\item $P_3: \{s_4\}$;
 		\item $P_4: \{s_5\}$;
 	\end{itemize}
-\end{example}
+\end{exemplu}
 
 %---------------- Figure - Ito_et_al- START ------------------------
 \begin{figure*}[h!]
@@ -401,7 +542,7 @@ Dezvantajul acestei structuri este num\u{a}rul de componente necesar pentru o st
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 
-\subsection{Schema Feldman}
+\section{Schema Feldman}
 \label{sec:feldman_scheme}
 Metoda cea mai des folosit\u{a} pentru determinarea validit\u{a}\c{t}ii componentelor este utilizarea semn\u{a}turilor electronice. Acestea sunt realizate prin scheme de verificare non-interactive precum cea a lui Feldman construit\u{a} pe baza schemei Shamir \cite{Feldman:1987} (Fig. \ref{fig:feldman_scheme})
 
@@ -450,9 +591,28 @@ Pentru verificarea componentei $s_i = f(i)$, participantul $i$ probeaz\u{a} ecua
 \end{equation}
 
 
-\section{Sisteme de stocare de lung\u{a} durat\u{a}}
-\label{sec:long_term_systems_intro}
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 
+
+
+\chapter{Sisteme de stocare de lung\u{a} durat\u{a}}
+
+
+\section{Introducere}
+\label{sec:long_term_systems_intro}
 
 Un sistem de stocare, \^{i}n general, trebuie s\u{a} satisfac\u{a} cel pu\c{t}in urm\u{a}toarele 3 condi\c{t}ii:
 \begin{itemize}
@@ -461,7 +621,15 @@ Un sistem de stocare, \^{i}n general, trebuie s\u{a} satisfac\u{a} cel pu\c{t}in
 	\item Confiden\c{t}ialitatea: O persoan\u{a} care nu face parte din grupul de acces s\u{a} nu ob\c{t}in\u{a} permisiunea de a afla informa\c{t}ii de orice fel despre datele existente in sistem.
 \end{itemize}
 
-\subsection{Criptare vs. scheme de partajare}
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+\section{Criptare vs. scheme de partajare}
 
 Una dintre solu\c{t}iile existente pentru a construi acest sistem este criptarea datelor folosind o cheie \^{i}nainte de inserarea lor in spa\c{t}iul de stocare. \^{I}n momentul \^{i}n care un utilizator autorizat dore\c{s}te s\u{a} efectueze o citire a unor date, \^{i}ntrebuin\c{t}eaz\u{a} cheia potrivit\u{a} pentru a le decripta.
 
@@ -474,18 +642,35 @@ Majoritatea tehnicilor de criptarea se bazeaz\u{a} pe dificultatea factoriz\u{a}
 Pentru schemele de partajare, spre desoebire de criptare, avantajul unui adversar nu depinde de puterea sa computa\c{t}ional\u{a}, acestea garant\^{a}nd securitatea teoretic\u{a} precum schema Shamir \cite{S:1979}.
 
 Dezavantajul schemelor generale de partajare este dimensiunea componentelor, exponen\c{t}ial\u{a} \^{i}n func\c{t}ie de num\u{a}rul de participan\c{t}i. \cite{Survey:2011}
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
 
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 
 \section{Sisteme de stocare de lung\u{a} durat\u{a} bazate pe scheme de partajare}
 \label{sec:long_term_systems_full}
 
-O alternativ\u{a} la solu\c{t}ia cu criptare care asigur\u{a} at\^{a}t confiden\c{t}ialitate c\^{a}t \c{s}i redundan\c{t}a necesar\u{a} este intrebuin\c{t}area sistemelor de stocare de lung\u{a} durat\u{a} bazate pe scheme de partajare \cite{W:2000,SB:2005,SGMV:2009}.
+O alternativ\u{a} la solu\c{t}ia cu criptare care asigur\u{a} at\^{a}t confiden\c{t}ialitate c\^{a}t \c{s}i redundan\c{t}a necesar\u{a} este intrebuin\c{t}area sistemelor de stocare de lung\u{a} durat\u{a} bazate pe scheme de partajare \cite{W:2000,SBM:2005,SGMV:2009}.
 
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 \subsection{PASIS}
 \label{sec:desc_pasis}
 PASIS este o solu\c{t}ie pentru un sistem descentralizat care ofer\u{a} beneficii precum securitate, redundan\c{t}\u{a} a datelor si auto-\^{i}ntre\c{t}inere \cite{W:2000}
@@ -521,6 +706,14 @@ Autorii specific\u{a} solu\c{t}ii pentru auto mentenan\c{t}a sistemului cu ajuto
 	\bigskip
 \end{figure}
 
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
 \subsection{GridSharing} 
 \label{sec:desc_gridsharing}
 
@@ -544,7 +737,7 @@ Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribu
 
 Arhitectura GridSharing const\u{a} in $N$ servere unde cel mult $c$ servere pot fi abandonate, $b$ servere bizantine \c{s}i $l$ cu scurgeri de informa\c{t}ii. Cele $N$ pot fi aranjate \^{i}ntr-un grid cu $r$ linii \c{s}i $N/r$ coloane (consider\u{a}m pentru simplitate c\u{a} $N \Mod r = 0$). Caracteristicile modelului bizantin \c{s}i cel specific scurgerilor de informa\c{t}ii permit dezv\u{a}luirea componentelor unui adversar de pe cel mult $l + b$ servere.
 
-\begin{example}
+\begin{exemplu}
 
 	Not\u{a}m ${x \choose y}$ fiind combin\u{a}ri de $x$ elemente grupate c\^{a}te $y$.
 	Consider\u{a}m ca \^{i}mpar\c{t}im un secret $\mathcal{S}$ la $4$ linii (participan\c{t}i) astfel \^{i}nc\^{a}t sistemul s\u{a} permit\u{a} $2$ componente de tip $b$, $1$ component\u{a} de tip $l$ \c{s}i $20$ servere. \^{I}n cazul acesta vom folosi o schem\u{a} majoritar\u{a} XOR $\big( {4 \choose 3}, {4 \choose 3}\big) = (4,4)$.
@@ -563,7 +756,7 @@ Arhitectura GridSharing const\u{a} in $N$ servere unde cel mult $c$ servere pot 
 		\item Serverele situate pe a $3$-a linie primesc $s_3$
 		\item Serverele situate pe a $4$-a linie primesc $s_4$
 	\end{itemize}
-\end{example}
+\end{exemplu}
 
 \begin{figure}[H]
 	\includegraphics[width=12cm]{img/GridSharing.png}    % The printed column width is 8.4 cm.
@@ -573,6 +766,13 @@ Arhitectura GridSharing const\u{a} in $N$ servere unde cel mult $c$ servere pot 
 \end{figure}
 
 
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
 \subsection{POTSHARDS} 
 \label{sec:desc_potshards}
 \^{I}n $2007$ este propus un nou sistem care combin\u{a} caracteristicile PASIS \c{s}i GridSharing ad\u{a}ug\^{a}nd posiblitatea de migrare a datelor la noduri noi: POTSHARDS (Protection Over Time, Securely Harboring And Reliably Distributing Stuff) \cite{SGMV:2009}.
@@ -581,7 +781,7 @@ POTSHARDS poate fi g\^{a}ndit ca o aplica\c{t}ie pe partea clientului care comun
 
 Confiden\c{t}ialitatea este asigurat\u{a} prin adoptarea unei scheme de partajare XOR unanim\u{a}, la fel ca \^{i}n GridSharing.
 
-Ca prim pas, POTSHARDS preproceseaz\u{a} fi\c{s}ierul \^{i}ntr-un obiect, partajeaz\u{a} obiectul \^{i}n fragmente la care adaug\u{a} meta-date, numite \textit{shards} (Fig. \ref{fig:data-potshard}) \cite{SGMV:2009}. Acestea sunt trimise apoi arhivelor independente, fiecare av\^{a}nd propriul domeniu de securitate, localizate in \textit{regiuni}. Pentru a reconstitui cu succes informa\c{t}ia ini\c{t}ial\u{a}, meta-datele shard-urilor con\c{t}in detalii despre structura pointerilor aproximativi, indic\^{a}nd regiunea \^{i}n care se afl\u{a} urm\u{a}torul shard. Pointerii aproximativi sunt folositi pentru a reconstitui intreaga arhiva doar din shard-uri.
+Ca prim pas, POTSHARDS preproceseaz\u{a} fi\c{s}ierul \^{i}ntr-un obiect, partajeaz\u{a} obiectul \^{i}n fragmente la care adaug\u{a} meta-date, numite \textit{shards} (Fig. \ref{fig:data-potshard}). \cite{SGMV:2009} Acestea sunt trimise apoi arhivelor independente, fiecare av\^{a}nd propriul domeniu de securitate, localizate in \textit{regiuni}. Pentru a reconstitui cu succes informa\c{t}ia ini\c{t}ial\u{a}, meta-datele shard-urilor con\c{t}in detalii despre structura pointerilor aproximativi, indic\^{a}nd regiunea \^{i}n care se afl\u{a} urm\u{a}torul shard. Pointerii aproximativi sunt folositi pentru a reconstitui intreaga arhiva doar din shard-uri.
 
 \begin{figure}[b!]
 	\begin{center}
@@ -608,7 +808,15 @@ Procesul de fragmentare a datelor este prezentat in Fig. \ref{fig:potshards-laye
 Pentru ca reconstituirea unui fi\c{s}ier sa fie fezabil\u{a} unui utilizator, acestuia \^{i}i este \^{i}ntoars\u{a} o list\u{a} cu loca\c{t}iile exacte shard-urilor corespunz\u{a}toare.
 Ob\c{t}inerea unui shard de c\u{a}tre un atacator nu este folositoare, pentru a detecta urm\u{a}torul shard, un atac brut force const\u{a} \^{i}n cereri multiple \^{i}n zona indicat\u{a} de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este s\u{a} stocheze datele \^{i}ntr-un mod cat mai uniform distribuit\cite{SGMV:2009}.
 
-\section{Sistemul de stocare Alouneh et al.}
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+\section{Sistemul de stocare Alouneh et al. (2013)}
 \label{sec:desc_alouneh}
 
 Alouneh et al. propun un sistem pentru stocarea sigur\u{a} a datelor un timp indelungat folosind schema Shamir cu c\^{a}teva modific\u{a}ri. Aceste schimb\u{a}ri se vor ar\u{a}ta esen\c{t}iale mai t\^{a}rziu \^{i}n men\c{t}inerea securit\u{a}\c{t}ii \cite{AAMK:2013}.
@@ -662,7 +870,7 @@ Men\c{t}ion\u{a}m c\u{a} toate opera\c{t}iile se vor efectua in $GF(256)$ modulo
 
 %---------------- Figure - alouneh_distribution - STOP ------------------------
 
-\begin{example}
+\begin{exemplu}
 Vom exemplifica modul de calcul \^{i}n $GF(256) \Mod {g(x)} $ unde $g(x) = x ^ 8 + x ^ 4 + x ^ 3 + 1$. Lu\u{a}m polinomul $f(x) = 10 + 15x$ corespunz\^{a}tor unui fi\c{s}ier format din octe\c{t}ii (\^{i}n aceast\u{a} ordine) $10$ $15$.
 	\begin{equation} \label{eq:f_01}
 	\begin{split}
@@ -681,14 +889,14 @@ Vom exemplifica modul de calcul \^{i}n $GF(256) \Mod {g(x)} $ unde $g(x) = x ^ 8
 	 & = 3A_{(16)}
 	 \end{split}
 	 \end{equation}
-\end{example}
+\end{exemplu}
 Reconstituirea unui fi\c{s}ier (Fig. \ref{fig:alouneh_reconstruction}) se realizeaz\u{a} din orice mul\c{t}ime de componente $A$ de dimensiune minim $k$ folosind interpolarea Lagrange (utilizat\u{a} \c{s}i \^{i}n cadrul schemei Shamir):
 \begin{equation}
 	\label{eq:lagrange_poly}
 	f(x)=\sum_{i \in A} f(i) \prod_{j \in A, j \neq i} \frac{x-j}{i-j}
 \end{equation}
 
-\begin{example}
+\begin{exemplu}
 Vom exemplifica interpolarea conform ecua\c{t}iei {\ref{eq:lagrange_poly}} folosind componentele (\ref{eq:f_01}) \c{s}i (\ref{eq:f_02}) calculate \^{i}n exemplul anterior:
 	\begin{equation}
 	\begin{split}
@@ -698,7 +906,7 @@ Vom exemplifica interpolarea conform ecua\c{t}iei {\ref{eq:lagrange_poly}} folos
 		& = F6\cdot 3F\cdot x + F6\cdot30 = 15x + 10
 	\end{split}
 	\end{equation}
-\end{example}
+\end{exemplu}
 
 Noutatea arhitecturii const\u{a} in diminuarea redundan\c{t}ei componentelor la un factor de $k$, spre deosebire de sistemele descrise in Sec\c{t}iunile \ref{sec:desc_pasis}, \ref{sec:desc_gridsharing} \c{s}i \ref{sec:desc_potshards}. Reducerea spa\c{t}iului ocupat de componente este datorat \^{i}nlocuirii coeficien\c{t}ilor genera\c{t}i aleator din schema Shamir cu octe\c{t}ii din fi\c{s}ierul ce va fi partajat, fiecare component\u{a} av\^{a}nd nevoie de $1/k$ din dimensiunea fi\c{s}ierului $\mathcal{S}$.
 
@@ -741,11 +949,12 @@ Abordarea acestei metode deterministe conduce la insecuritatea sistemului, Aloun
 
 
 
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 
 \section{Contribu\c{t}ii}
 \label{sec:alouneh_contributions}
@@ -824,7 +1033,10 @@ zip & 27 & 198 & 141 & 103 & 44 \\ \hline
 \bigskip
 \end{table}
 
-%-----------------------------------------------------
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
 
 \subsubsection{Detectarea de con\c{t}inut}\hspace*{\fill} \\
 \label{subsec:file_content_detection}
@@ -832,6 +1044,10 @@ zip & 27 & 198 & 141 & 103 & 44 \\ \hline
 Multe documente urmeaz\u{a} un anumit tipar precum contracte, chitan\c{t}e, bonuri fiscale sau curriculum vitae. Deoarece majoritatea con\c{t}inutului r\u{a}m\^{a}ne neschimbat, exist\u{a} o probabilitate destul de mare ca multe componente sa aiba aceea\c{s}i valoare. O dat\u{a} ce un adversar reu\c{s}e\c{s}te s\u{a} determine componentele unui nod, poate determina prin analogie tipul de con\c{t}inut al fi\c{s}ierului original.
 
 Fi\c{s}ierele vulnerabile sunt cele care con\c{t}in o secven\c{t}\u{a} de octe\c{t}i periodic\u{a} (imagini cu un pattern repetitiv) sau cele care au preponderent octe\c{t}i nuli (valoarea componentelor asociat\u{a} majorit\u{a}\c{t}ii blocurilor fiind $0$). Spre deosebire de prima metod\u{a}, aceasta nu necesit\u{a} compararea cu un al $2$-lea fi\c{s}ier, trat\^{a}nd componentele de sine st\u{a}t\u{a}tor. Multiple componente identice indic\u{a} existen\c{t}a unor secven\c{t}e repetitive \^{i}n con\c{t}inutul fi\c{s}ierului.
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 
 \subsection{Implementare \c{s}i rezultate practice}
 Pentru a ar\u{a}ta aplicabilitatea rezultatelor \^{i}n practic\u{a}, am implementat propunerea descrisa in Sec\c{t}iunea {\ref{sec:desc_alouneh}} \c{s}i am testat pe c\^{a}teva cazuri.
@@ -842,6 +1058,10 @@ Pentru a realiza comunicarea \^{i}ntre procese am folosit Cerealizer iar distrib
 Av\^{a}nd \^{i}n vedere c\u{a} articolul original nu men\c{t}ioneaz\u{a} o metod\u{a} de padding, am considerat o metod\u{a} standard pentru a completa octe\c{t}ii ultimului bloc: alipim la sf\^{a}r\c{s}itul lui $\mathcal{S}$ octe\c{t}ii $80$ $00$ $\dots$ $00$ $00$ p\^{a}n\u{a} c\^{a}nd lungimea ultimului bloc ajunge la $k$ octe\c{t}i.
 
 Men\c{t}ion\u{a}m aceast\u{a} metoda doar pentru completitudine, aceasta neafect\^{a}nd rezultatele, care consider\u{a} doar secven\c{t}ele de octe\c{t}i din antet sau de la \^{i}nceputul fi\c{s}ierului.
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 
 \subsubsection{Detectarea tipului de fi\c{s}ier}\hspace*{\fill} \\
 
@@ -881,8 +1101,8 @@ Spre exemplu, un adversar care ob\c{t}ine accesul unui singur nod de stocare, ia
 Preciz\u{a}m c\u{a} acest atac func\c{t}ioneaz\u{a} doar dac\u{a} nodurile de stocare \^{i}\c{s}i p\u{a}streaz\u{a} indexul \^{i}n cazul partaj\u{a}rii repetate a.\^{i}. aplica\c{t}ia disponibil\u{a} pe partea de client calculeaz\u{a} cele $n$ valori $f(i_1),\dots,f(i_2)$ pentru $i_1,\dots,i_n$ distincte \c{s}i p\u{a}streaz\u{a} nodul $j$ asociat lui $i_j$.
 
 
-%-----------------------------------------------------
-
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 \begin{table}[t]
 \begin{center}
 \caption{Indicele maxim $i$ a.\^{i}. componentele primului bloc sa fie distincte($k=3$)}\label{tb:margins}
@@ -1044,25 +1264,58 @@ Consider\u{a}m \^{i}n continuare un alt scenariu, \^{i}n care partaj\u{a}m o ima
 \end{figure}
 %-----------------------------------------------------
 
-\section{Implement\u{a}ri alternative}
-\label{sec:alternave-implementations}
 
-\subsection{Arhitectur\u{a} bazat\u{a} pe scheme de partajare}
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 
-\subsection{Servere Amazon}
 
-\subsection{Reconstruirea fi\c{s}ierelor}
 
-%
-% ---- Bibliography ----
-%
-%\begin{thebibliography}{5}
-%
+\chapter{Implementare alternativ\u{a} a sistemelor de stocare}
+\label{cha:alternave-implementations}
 
-\section{Concluzii}
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+\section{Arhitectur\u{a} bazat\u{a} pe scheme de partajare}
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+% poate tehnologii folosite?
+\section{Instan\c{t}e Amazon EC2}
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+\section{Reconstituirea fi\c{s}ierelor}
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
 \clearpage
+
 \bibliographystyle{splncs}
 \bibliography{llncs}
-%\end{thebibliography}
 
 \end{document}
+
+
