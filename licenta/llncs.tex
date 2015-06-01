@@ -468,7 +468,7 @@ Pentru un atacator care deține chiar și $k-1$ valori $s_i$, acesta nu determin
 În continuare vom descrie modalitatea de distribuire a componentelor de la care au pornit Ito, Saito și Nishizeki pentru ca schema sa aibă o structură de acces $\mathcal{A} \subseteq 2^P$ (submulțime a setului de participanți) monotonă (i.e. $\forall A \in \mathcal{A}, A \subseteq A' \Rightarrow A' \in \mathcal{A}$) \cite{ITO:1989}. 
 Folosind construcția unei scheme majoritare $(k, n)$ autorii au reușit să descrie elementele din $\mathcal{A}$ folosind rezultatul unei reuniuni de mulțimi de componente cu un număr de elemente mai mare sau egal decât $k$ (Fig. \ref{fig:ito_et_al}). \cite{ITO:1989} Notația $x : Pr$, înseamnă că $x$ are proprietatea $Pr$. 
 
-Dezvantajul acestei structuri este numărul de componente necesar pentru o structură de acces oarecare $\mathcal{A}$. Un mod simplu de construire al funcției $Assign$ este următorul: pentru fiecare mulțime minimală $A \in \mathcal{A}$ ($\forall B \in \mathcal{A}$, $B \neq A, B \not\subset A$) se folosește o schemă de partajare unanimă $(|A|, |A|)$ a lui $\mathcal{S}$ pentru participanții din $A$.
+Dezvantajul acestei structuri este numărul de componente necesar pentru o structură de acces oarecare $\mathcal{A}$. Un mod simplu de construire al funcției $Assign$ din figura Fig. \ref{fig:ito_et_al} este următorul: pentru fiecare mulțime minimală $A \in \mathcal{A}$ ($\forall B \in \mathcal{A}$, $B \neq A, B \not\subset A$) se folosește o schemă de partajare unanimă $(|A|, |A|)$ a lui $\mathcal{S}$ pentru participanții din $A$.
 
 \begin{exemplu}
 	Fie structura de acces $\mathcal{A} = \{ \{P_1, P_2\},\{P_1, P_3, P_4\}\}$.
@@ -552,7 +552,10 @@ Dezvantajul acestei structuri este numărul de componente necesar pentru o struc
 
 \section{Schema Feldman}
 \label{sec:feldman_scheme}
-Metoda cea mai des folosită pentru determinarea validității componentelor este utilizarea semnăturilor electronice. Acestea sunt realizate prin scheme de verificare non-interactive precum cea a lui Feldman construită pe baza schemei Shamir \cite{Feldman:1987} (Fig. \ref{fig:feldman_scheme})
+
+Uneori, canalul de comunicaţie prin intermediul căruia dealerul $\mathcal{D}$ transmite componentele nu este întotdeauna sigur. Din fericire, participanții pot constata cu ușurință integritatea componentelor primite folosind scheme de verificare. Primele direcții către astfel de construcții au fost oferite în anul $1985$ de către Chor et al. \cite{chor:1985verifiable}
+
+În continuare vom exemplifica o schemă de verificare non-interactivă precum cea a lui Feldman, construită pe baza schemei Shamir. (Fig. \ref{fig:feldman_scheme}). \cite{Feldman:1987} Spre deosebire de schema Shamir, securitatea schemei Feldman este una computațională și deține un model de adversar pentru care problema logaritmului discret este dificilă.
 
 %---------------- Figure - feldman_scheme - START ------------------------
 \begin{figure*}[h!]
@@ -565,7 +568,7 @@ Metoda cea mai des folosită pentru determinarea validității componentelor est
 \textbf{Inițializare}: 
 	Folosind notațiile din Fig. \ref{fig:shamir_scheme}, considerăm polinomul $f$ generat în urma Schemei Shamir.
 	\begin{itemize}
-		\item Se alege un $g \in Z_q$ generator al lui $Z_q$;
+		\item Se alege un $g \in Z_q$ generator al lui $Z_q$ a.î. este dificil de calculat $\log_g x$
 	\end{itemize}
 \medskip
 
