@@ -1,4 +1,4 @@
-\documentclass[12pt]{book}
+\documentclass[oneside]{book}
 \usepackage{amsmath, amsthm, amssymb, url,graphicx}
 \usepackage{makeidx}  % allows for indexgeneration
 \usepackage{llncsdoc}
@@ -28,6 +28,7 @@
 
 \renewcommand{\chaptername}{Capitolul}
 \renewcommand\contentsname{Cuprins}
+\renewcommand{\bibname}{Referinţe}
 
 \newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
 \newcommand{\todo}[1]{{\color{red}{TODO #1}}}
@@ -45,10 +46,11 @@
 %  de titlu
 \thispagestyle{empty}
 
+\begin{center}
 \centerline{\bf UNIVERSITATEA BUCUREȘTI}
-
 \centerline{\bf FACULTATEA DE MATEMATICĂ ȘI INFORMATICĂ}
 
+\end{center}
 \vspace{4.5cm}
 
 \centerline{\huge \bf Protocoale Criptografice de Grup}
@@ -73,7 +75,7 @@
 \end{flushright}
 
 
-\vspace{2.5cm}
+\vspace{2cm}
 
 \centerline{\bf BUCUREȘTI}
 
@@ -81,17 +83,11 @@
 
 \chapter*{Abstract}
 
-Criptografia modernă se găsește pretutindeni în viața de zi cu zi de la ATM-uri, cartele telefonice la semnături digitale, protocoale de autentificare, licitații electronice sau bani digitali, luând amploare o dată cu apariția sistemelor cu cheie publică. O definiție potrivită este \textit{studiul științific al tehnicilor pentru a securiza informația digitală, tranzacțiile și calculul distribuit}. \cite{Katz:2007}
+\hspace*{5mm} Criptografia modernă se găsește pretutindeni în viața de zi cu zi de la ATM-uri, cartele telefonice la protocoale de autentificare, licitații electronice sau bani digitali, luând amploare o dată cu apariția sistemelor cu cheie publică. O definiție potrivită este \textit{studiul științific al tehnicilor pentru a securiza informația digitală, tranzacțiile și calculul distribuit} \cite{Katz:2007}. În cadrul criptografiei există primitive multiple care stau la baza tutoror protocoalelor precum: semnături digitale, vot electronic, scheme de partajare, schimbul sigur de chei. Un rol important îl deține criptografia de grup, care permite definirea și analiza securității unor protocoale la care iau parte mai mult de 2 participanți (vot elecronic, semnături de grup, partajarea de secrete).
 
-În cadrul criptografiei există primitive multiple care stau la baza tutoror protocoalelor precum: semnături digitale, funcții one-way (hash), scheme de partajare, schimbul sigur de chei. Un rol important îl deține criptografia de grup, care permite definirea și analiza securității unor protocoale la care iau parte mai mult de 2 participanți.
+\hspace*{5mm}Păstrarea confidențialității și redundanței datelor pe perioade lungi de timp reprezintă o sarcină dificilă din cauza multiplelor probleme care pot apărea precum atacuri, erori umane, defecțiunea unor componente hardware sau dezastre naturale \cite{SGMV:2009}. Problemele sunt cu atât mai actuale astăzi, când organizațiile își păstrează datele în cloud pentru scăderea costurilor necesare întreținerii unui centru propriu de date (datacenter), deci informațiile sunt stocate și procesate în afara unui control fizic al roprietarului.
 
-Păstrarea confidențialității și redundanței datelor pe perioade lungi de timp reprezintă o sarcină dificilă din cauza multiplelor probleme care pot apărea precum atacuri, erori umane, defecțiunea unor componente hardware sau dezastre naturale. \cite{SGMV:2009}
-Problemele sunt cu atât mai actuale astăzi, când organizațiile își păstrează datele în cloud pentru scăderea costurilor necesare întreținerii unui centru propriu de date (datacenter), deci informațiile sunt stocate și procesate în afara unui control fizic al proprietarului.
-
-
-Lucrarea de față analizează câteva dintre primitivele criptografice prezentând apoi protocoale construite pe baza lor. In primele 2 capitole sunt descrise ...
-
-In final introducem o arhitectură implementată cu ajutorul schemelor de partajare eliminând astfel câteva vulnerabilități prezente la sistemele menționate anterior.
+\hspace*{5mm}Lucrarea de față analizează câteva dintre primitivele criptografice prezentând protocoale construite pe baza lor precum şi contribuţii personale în dezvoltarea lor \cite{RD:2014, RD:2015}. În final introducem o arhitectură implementată cu ajutorul schemelor de partajare, eliminând astfel câteva vulnerabilități prezente la sistemele menționate anterior.
 
 
 %------------------------------------------------------------------------------------------
@@ -138,7 +134,7 @@ In final introducem o arhitectură implementată cu ajutorul schemelor de partaj
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 
-\chapter*{Structură}
+\chapter*{Introducere şi organizarea lucrării}
 \addcontentsline{toc}{chapter}{Structură}
 
 \begin{itemize}
@@ -224,25 +220,82 @@ Date sensibile trebuie menținute secrete, câteodată pentru lungi perioade de 
 
 \section{Introducere}
 
+O funcţie pseudoaleatoare (PRF) $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ este un algoritm polinomial determinist definit pe mulţimea cheilor $\mathcal{K}$ unde $\mathcal{X}$, $\mathcal{Y}$ reprezintă domeniul, respectiv codomeniul lui $F$.
+Primele construcţii au fost definite în $1986$ pornind de la un PRG (generator pseudoaleator) sigur \cite{goldreich1986construct}. Această primitivă este folosită în special pentru generarea de chei în protocoale actuale precum TLS (fostul SSL) \cite{dierks2008transport}.
+
+Un caz particular de PRF în care $\mathcal{Y} = \mathcal{X}$ şi $F$ este bijectivă, sunt permutările pseudoaleatoare (PRP): AES, 3DES, având proprietatea utilă de a admite inversă. %as putea un nume mai bun, nu chiar inversabilitate
+
+Intuitiv, funcţia $F$ poate fi evaluată eficient (în timp polinomial) în toate punctele $x \in \mathcal{X}$ din momentul în care o cheie $k \in \mathcal{K}$ este fixată. 
+Din punct de vedere al securității, un adversar PPT (timp probabilistic polinomial) $\mathcal{A}$ nu poate face diferența între o instanţă aleatoare $F(k, \cdot)$, $k \in \mathcal{K}$ şi o funcție aleasă aleator din toate funcţiile posibile având domeniul $\mathcal{X}$, codomeniul $\mathcal{Y}$.
+
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+
 \section{Definiții de Securitate}
 \label{subsec:prf-security}
+
+În procesul formalizării noţiunii de securitate \textit{adaptivă} a unei funcții PRF $F$, vom avea în vedere un adversar PPT $\mathcal{A}$. În definiție sunt prezentate $2$ experimente cu adversarul $\mathcal{A}$: $EXP(0)$ și $EXP(1)$ iar avantajul lui va consta în abilitatea de a le distinge. Notăm cu $s \leftarrow^R S$ faptul că $s$ este ales în mod aleator uniform din mulţimea $S$. 
+
+La începutul experimentului este apelată funcția $Setup(1^\lambda)$ care primește la intrare un parametru de securitate $\lambda$ și întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Fie $V, C \subseteq X$ $2$ mulțimi de puncte (inițial vide) pentru care $\mathcal{A}$ cunoaște valorile $F(k, \cdot)$ trimise la $\mathsf{F.eval}$, respectiv la $\mathsf{F.challenge}$. De asemenea, $\mathcal{A}$ are acces la $2$ tipuri de oracole:
+\begin{itemize}
+	\item $\mathsf{F.eval}$: pentru un $x \in \mathcal{X}$ întoarce $F(k, x)$ dacă $x \not \in C$ și actualizează mulțimea $V \leftarrow V \cup x$, altfel $\bot$.
+	\item $\mathsf{F.challenge}$: pentru un $x \not \in V$ întoarce $F(k, x)$ dacă $b = 0$ și $y \leftarrow^R \mathcal{Y}$ dacă $b = 1$ iar $C \leftarrow C \cup x$. 
+\end{itemize}
+La finalul experimentului, $\mathcal{A}$ întoarce o valoare $b' \in \{0, 1\}$.
+
+Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sfârșitul jocului. Notăm cu $AdvPRF_{\mathcal{A},F}(\lambda) = |Pr[W_0] - Pr[W_1]|$ avantajul lui $A$.
+
+\begin{definitie}
+	O funcție PRF $F$ este sigură dacă pentru orice adversar PPT A, $AdvPRF_{\mathcal{A},F}(\lambda)$ este o funcție neglijabilă.
+\end{definitie}
+
 
 \section{Funcții Pseudoaleatoare Constrânse}
 \label{subsec:cprf}
 
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
-%----------------------------------------------------------------
+O funcție cPRF (pseudoaleatoare constrânsă) $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ este o funcție PRF care deține \textit{chei de constrângere} ce permit evaluarea funcției $F$ în subdomenii $S \subseteq \mathcal{X}$ menținând proprietățile de securitate ale funcțiilor PRF.
+
+\begin{definitie}
+\label{def:cprf}
+	O funcție PRF $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ este constrânsă la o mulțime $\mathcal{S} \subseteq 2^{\mathcal{X}}$ dacă există o mulțime în plus de chei $\mathcal{K}_c$ și $2$ algoritmi:
+	\begin{itemize}
+		\item $\mathsf{F.constrain(k, S)}$: un algoritm nedeterminist care pentru o cheie $k \in \mathcal{K}_c$ și o mulțime $S \subseteq \mathcal{S}$ întoarce o cheie $k_s \in \mathcal{K}_c$ pentru care se poate face evaluarea lui $F(k, x)$ pentru orice $x \in S$.
+		\item $\mathsf{F.eval(k_s, x)}$: un algoritm determinist care pentru o cheie $k_s \in \mathcal{K}_c$ și un punct $x \in \mathcal{X}$ întoarce $F(k, x)$  $\mbox{dacă} \hspace{.1in} x \in S$, sau $\bot$ $\mbox{dacă} \hspace{.1in} x \notin S$
+	\end{itemize}
+	unde $\bot \not \in \mathcal{Y}$
+\end{definitie}
+
+Alte construcții pe baza cPRF definite în \cite{boneh:2013constrained} și care vor fi folosite ulterior sunt: \textit{stânga/dreapta PRF} - funcții cPRF ce admit evaluarea lor având partea stângă a domeniului fixată; \textit{bit-fixate PRF} - funcții cPRF care pot fi evaluate în domenii corespunzătoare unei expresii având unii biți fixați. Autorii \cite{boneh:2013constrained} menționează că aceste construcții sunt posibile în cadrul funcțiilor multiliniare iar problema devine mai interesantă (deocamdată nerezolvată) în contextul LWE \cite{regev2009lattices}. 
+
+\begin{definitie}
+	Fie o funcție $F: \mathcal{K} \times \mathcal{X}^2 \rightarrow \mathcal{Y}$ PRF. $\forall v \in \mathcal{X}$ o funcție stânga/dreapta admite $2$ chei de constrângere ${k_v}^L$ și ${k_v}^R$ ce permit evaluarea funcției $F$ în toate punctele $(v, x) \in \mathcal{X}^2$, respectiv $(x, v) \in \mathcal{X}^2$. Notăm această funcție cPRF stânga/dreapta cu $PRF^{L/R}$.
+\end{definitie}
+
+\begin{definitie}
+	Fie o funcție $F: \mathcal{K} \times {\{0, 1\}}^n \rightarrow \mathcal{Y}$. $\forall v \in {\{0, 1, ? \}}^n$ o funcție bit-fixată admite o cheie de constrângere $k_v$ ce permite evaluarea funcției $F$ în toate punctele $x \in \{0,1\}^n$ ce satisfac modelul lui $v$.
+	Notăm această funcție cPRF bit-fixată cu $PRF^{bf}$.
+\end{definitie}
+
+Noțiunea de securitate pentru cPRF \cite{boneh:2013constrained} este asemănătoare cu cea pentru PRF: $2$ experimente $EXP(0), EXP(1)$, doar că în acest caz este necesară existența unui oracol $F.constrain$ pentru a permite adversarului să interogheze $F$ conform definiției \ref{def:cprf}.
+
+La începutul fiecărui experiment este apelată funcția $Setup(\lambda)$ și întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Inițial mulțimile $V, C \subseteq \mathcal{X}$ sunt vide iar adversarul $\mathcal{A}$ are acces la $3$ oracole:
+\begin{itemize}
+	\item $\mathsf{F.eval}$: pentru un $x \in \mathcal{X}$ întoarce $F(k, x)$ dacă $x \not \in C$ și actualizează mulțimea $V \leftarrow V \cup x$, altfel $\bot$.
+	\item $\mathsf{F.constrain}$: pentru o mulțime $S \in \mathcal{S}$ întoarce $F.constrain(k, S)$ dacă $S \cap C = \emptyset$ și actualizează mulțimea $V = V \cup x$, altfel $\bot$
+	\item $\mathsf{F.challenge}$: pentru un $x \not \in V$ întoarce $F(k, x)$ dacă $b = 0$ și $y \leftarrow^R \mathcal{Y}$ dacă $b = 1$ iar $C \leftarrow C \cup x$. 
+\end{itemize}
+
+La finalul experimentului, $\mathcal{A}$ întoarce o valoare $b' \in \{0, 1\}$.
+
+Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sfârșitul jocului. Notăm cu $AdvPRF_{\mathcal{A},F}(\lambda) = |Pr[W_0] - Pr[W_1]|$ avantajul lui $A$.
+
+\begin{definitie}
+	O funcție cPRF $F$ este sigură dacă pentru orice adversar PPT $\mathcal{A}$, $AdvPRF_{\mathcal{A},F}(\lambda)$ este o funcție neglijabilă.
+\end{definitie}
 
 
-
-
-
-
-
-
-
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
@@ -258,25 +311,26 @@ Date sensibile trebuie menținute secrete, câteodată pentru lungi perioade de 
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 
-\chapter{Schimb de chei non-interactiv}
-%this can be revised
+\chapter{NIKE}
 \label{cha:nike}
+
+NIKE (Non Interactive Key Exchange) reprezintă primitivă criptografică importantă ce 
 
 \section{ID-NIKE}
 \label{sec:id-nike}
 
-\subsection{Construcția Boneh Waters (2013)}
+\subsection{Construcția Boneh-Waters (2013)}
 \label{subsec:boneh-waters}
 
-\section{Multi-party ID NIKE}
+\section{Multi-Party ID-NIKE}
 \label{subsec:multi-party-id}
 
 \todo{redenumeste multi-party}
 
-\subsection{Proprietăti de securitate}
+\subsection{Proprietăţi de Securitate}
 \label{subsec:multi-party-security}
 
-\subsection{Construcție Multi-Party ID NIKE bazată pe funcții pseudoaleatoare constrânse}
+\subsection{Construcție Multi-Party ID-NIKE bazată pe funcții pseudoaleatoare constrânse}
 %gee, e mult mai usor in engleza
 \label{subsec:multi-party-prf}
 
@@ -318,7 +372,7 @@ O schemă de partajare constă în distribuirea unei informații secrete $\mathc
 Formal, o schemă de partajare este reprezentată de o pereche de algoritmi \textbf{$(Gen, Rec)$}:
 \begin{itemize}
 	\item \textit{$Gen(S, m)$} este un algoritm care primește la intrare un secret \textit{S} și un număr întreg $m$ și întoarce un set de componente ${s_1, s_2, \dots, s_m}$.
-	\item \textit{$Rec({s_i}_1, {s_i}_2, \dots, {s_i}_q)$} este un algoritm care primește ca parametri de intrare o mulțime de componente și întoarce \textit{S} dacă mulțimea $\{{P_i}_1, {P_i}_2, \dots, {P_i}_q \} \in \mathcal{A}$.
+	\item \textit{$Rec({s_i}_1, {s_i}_2, \dots, {s_i}_q)$} este un algoritm care primește ca parametri de intrare o mulțime de componente și întoarce \textit{S} dacă mulțimea $\{{P_i}_1, {P_i}_2$ $\dots$ ${P_i}_q \}$ $\in \mathcal{A}$.
 \end{itemize} 
 
 Majoritatea schemelor constau în mai multe etape precum:
@@ -566,7 +620,7 @@ Uneori, canalul de comunicaţie prin intermediul căruia dealerul $\mathcal{D}$ 
 \\
 \hspace{.1in}
 \textbf{Inițializare}: 
-	Folosind notațiile din Fig. \ref{fig:shamir_scheme}, considerăm polinomul $f$ generat în urma Schemei Shamir.
+	Folosind notațiile din Fig.\ref{fig:shamir_scheme}, considerăm polinomul $f$ generat în urma Schemei Shamir.
 	\begin{itemize}
 		\item Se alege un $g \in Z_q$ generator al lui $Z_q$ a.î. este dificil de calculat $\log_g x$
 	\end{itemize}
@@ -598,7 +652,7 @@ Uneori, canalul de comunicaţie prin intermediul căruia dealerul $\mathcal{D}$ 
 Pentru verificarea componentei $s_i = f(i)$, participantul $i$ probează ecuația:
 
 \begin{equation}
-	g^{s_i} = c_0c_1^ic_2^{i^2} \dots c_t^{i^t} = \prod_{j=0}^k c_j^{i^j} = \prod_{j=0}^k g^{a_ji^j} = g^{\sum\limits_{j=0}^k a_ji^j} = g^{f(i)}
+	g^{s_i} = c_0c_1^ic_2^{i^2} \dots c_t^{i^k} = \prod_{j=0}^k c_j^{i^j} = \prod_{j=0}^k g^{a_ji^j} = g^{\sum\limits_{j=0}^k a_ji^j} = g^{f(i)}
 \end{equation}
 
 
@@ -744,7 +798,7 @@ Se identifică 3 tipuri de defecțiuni care pot apărea pe serverele unde sunt s
 	\item Bizantine: atunci când serverul nu respectă întotdeauna protocoalele inițiale iar componentele salvate local au fost compromise.
 	\item Scurgeri de informații: serverul execută protocoalele corect dar e posibil ca un adversar să fi obținut componentele stocate.
 \end{itemize}
-Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribuite. Cel de-al 3-lea model a fost introdus pentru a defini atacatorul care folosește vulnerabilitățile cu intenția de a \textit{învața} din informații.
+Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribuite. Cel de-al 3-lea model a fost introdus pentru a defini atacatorul care folosește vulnerabilitățile cu intenția de a \textit{învăța} din informații.
 
 Arhitectura GridSharing constă in $N$ servere unde cel mult $c$ servere pot fi abandonate, $b$ servere bizantine și $l$ cu scurgeri de informații. Cele $N$ pot fi aranjate într-un grid cu $r$ linii și $N/r$ coloane (considerăm pentru simplitate că $N \Mod r = 0$). Caracteristicile modelului bizantin și cel specific scurgerilor de informații permit dezvăluirea componentelor unui adversar de pe cel mult $l + b$ servere.
 
@@ -1303,6 +1357,8 @@ Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru 
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 % poate tehnologii folosite?
+% About automatically startup scripts on EC2. AMI Images. Rest API, Django Framework, Angular
+% Bootstrap, Bootswatch
 \section{Instanțe Amazon EC2}
 
 %------------------------------------------------------------------------------------------
