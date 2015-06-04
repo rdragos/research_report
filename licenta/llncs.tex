@@ -105,7 +105,7 @@
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 
-\setcounter{tocdepth}{3}
+\setcounter{tocdepth}{2}
 \tableofcontents
 
 
@@ -236,7 +236,7 @@ Din punct de vedere al securității, un adversar PPT (timp probabilistic polino
 \section{Definiții de Securitate}
 \label{subsec:prf-security}
 
-În procesul formalizării noţiunii de securitate \textit{adaptivă} a unei funcții PRF $F$, vom avea în vedere un adversar PPT $\mathcal{A}$. În definiție sunt prezentate $2$ experimente cu adversarul $\mathcal{A}$: $EXP(0)$ și $EXP(1)$ iar avantajul lui va consta în abilitatea de a le distinge. Notăm cu $s \leftarrow^R S$ faptul că $s$ este ales în mod aleator uniform din mulţimea $S$. 
+În procesul formalizării noţiunii de securitate \textit{adaptivă} a unei funcții PRF $F$, vom avea în vedere un adversar PPT $\mathcal{A}$. În definiție sunt prezentate $2$ experimente cu adversarul $\mathcal{A}$: $EXP(b))$, $b \leftarrow ^ R \{0,1\}$, iar avantajul lui va consta în abilitatea de a le distinge. Notăm cu $s \leftarrow^R S$ faptul că $s$ este ales în mod aleator uniform din mulţimea $S$. 
 
 La începutul experimentului este apelată funcția $Setup(1^\lambda)$ care primește la intrare un parametru de securitate $\lambda$ și întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Fie $V, C \subseteq X$ $2$ mulțimi de puncte (inițial vide) pentru care $\mathcal{A}$ cunoaște valorile $F(k, \cdot)$ trimise la $\mathsf{F.eval}$, respectiv la $\mathsf{F.challenge}$. De asemenea, $\mathcal{A}$ are acces la $2$ tipuri de oracole:
 \begin{itemize}
@@ -282,9 +282,9 @@ Noțiunea de securitate pentru cPRF \cite{boneh:2013constrained} este asemănăt
 
 La începutul fiecărui experiment este apelată funcția $Setup(\lambda)$ și întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Inițial mulțimile $V, C \subseteq \mathcal{X}$ sunt vide iar adversarul $\mathcal{A}$ are acces la $3$ oracole:
 \begin{itemize}
-	\item $\mathsf{F.eval}$: pentru un $x \in \mathcal{X}$ întoarce $F(k, x)$ dacă $x \not \in C$ și actualizează mulțimea $V \leftarrow V \cup x$, altfel $\bot$.
-	\item $\mathsf{F.constrain}$: pentru o mulțime $S \in \mathcal{S}$ întoarce $F.constrain(k, S)$ dacă $S \cap C = \emptyset$ și actualizează mulțimea $V = V \cup x$, altfel $\bot$
-	\item $\mathsf{F.challenge}$: pentru un $x \not \in V$ întoarce $F(k, x)$ dacă $b = 0$ și $y \leftarrow^R \mathcal{Y}$ dacă $b = 1$ iar $C \leftarrow C \cup x$. 
+	\item $\mathsf{F.eval}$: pentru un $x \in \mathcal{X}$ întoarce $F(k, x)$ dacă $x \not \in C$ și actualizează mulțimea $V \leftarrow V \cup x$, altfel $\bot$;
+	\item $\mathsf{F.constrain}$: pentru o mulțime $S \in \mathcal{S}$ întoarce $F.constrain(k, S)$ dacă $S \cap C = \emptyset$ și actualizează mulțimea $V = V \cup x$, altfel $\bot$;
+	\item $\mathsf{F.challenge}$: pentru un $x \not \in V$ întoarce $F(k, x)$ dacă $b = 0$ și $y \leftarrow^R \mathcal{Y}$ dacă $b = 1$ iar $C \leftarrow C \cup x$;
 \end{itemize}
 
 La finalul experimentului, $\mathcal{A}$ întoarce o valoare $b' \in \{0, 1\}$.
@@ -314,18 +314,79 @@ Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sf
 \chapter{NIKE}
 \label{cha:nike}
 
-NIKE (Non Interactive Key Exchange) reprezintă primitivă criptografică importantă ce 
+NIKE (Non Interactive Key Exchange - schimb de chei non-interactiv) reprezintă o primitivă criptografică importantă în care mai mulți participanți pot stabili de comun acord o cheie comună fără ca aceștia să fie on-line în același timp. Un exemplu des întâlnit în zilele noastre este schimbul de chei Diffie-Hellman \cite{diffie1976new}. Construcția a fost apoi extinsă la $3$ persoane de Joux folosind funcții biliniare \cite{joux2000one} iar Boneh și Silverberg au generalizat la $n$ persoane (multi-party) bazându-se pe funcții multi-liniare \cite{boneh:2003applications}.
 
 \section{ID-NIKE}
 \label{sec:id-nike}
 
+Criptografia bazată pe identitatea participanților a fost introdusă de Shamir \cite{shamir:1985identity}. Aceasta presupune folosirea identității (email, nume, stradă), informație care îl identifică pe participant într-un mod unic, fără să genereze o pereche de cheie publică, secretă. Principalul dezavantaj este nevoia de o terță autorizată care să administreze generarea de chei secrete, însă avantajul este utilizarea de mai puține resurse din partea participanților. Așadar criptografia bazată pe ID este ideală într-un mediu în care utilizatorii dețin resurse computaționale limitate (rețea de routere).
+
+ID-NIKE combină principiile oferite de NIKE cu ID-urile participanților. Formal, ID-NIKE constă în $3$ algoritmi:
+\begin{itemize}
+	\item $Setup(\lambda)$: primește ca date de intrare parametrul de securitate $\lambda$ și întoarce o cheie secretă $msk$ împreună cu parametrii publici $params$;
+	\item $Extract(msk, id_i)$: primește ca date de intrare cheia secretă $msk$, identitatea $id_i \in \mathcal{ID}$ și întoarce cheia privată $sk_{id_i}$;
+	\item $KeyGen(params, sk_{id_i}, id_j)$: primește ca date de intrare parametrii publici $params$, o cheie secretă $sk_{id_i}$, o identitate $id_j \neq id_i$ și întoarce cheia comună $k_{id_i, id_j}$.
+\end{itemize}
+
+\subsubsection{Corectitudine}
+Este garantată dacă pentru orice pereche de participanți, $id_i, id_j$ $\in \mathcal{ID}$, $id_i \neq id_j$ $KeyGen(params, sk_{id_i}, id_j)$ $=$ $KeyGen(params, sk_{id_j}, id_i)$. 
+
+\subsubsection{Securitate}
+Amintim definiția de securitate adaptivă pentru ID-NIKE din \cite{paterson:2009relations}. Fie $EXP(b)$, $b \leftarrow^R \{0,1\}$, două experimente cu un adeversar $PPT$ $\mathcal{A}$. La începutul fiecărui experiment $EXP(b)$ se execută $Setup(\lambda)$ oferind adversarului $\mathcal{A}$ $params$ și menținând $msk$ privat. $\mathcal{A}$ are acces la $3$ oracole:
+\begin{itemize}
+	\item $Ext(id_i)$: primește ca date de intrare o identitate $id_i$, apelează $Extract(msk, id_i)$ și întoarce $sk_{id_i}$;
+	\item $Rev(id_i, id_j)$: primește ca date de intrare $2$ identități $id_i, id_j$, $id_i \neq id_j$, apelează funcția $Extract(msk, id_i)$ și întoarce cheia comună $k_{id_i, id_j}$ din $KeyGen(params, sk_{id_i}, id_j)$;
+	\item $Test(id_i, id_j)$: primește ca date de intrare $2$ identități $id_i, id_j$, $id_i \neq id_j$. Dacă $b = 0$ atunci întoarce $Rev(id_i, id_j)$, altfel întoarce $sk_{id_i, id_j} \leftarrow^R \mathcal{SK}$ unde cu $\mathcal{SK}$ am notat spațiul de chei posibile.
+\end{itemize}
+
+Pentru a elimina situația în care adersarul $\mathcal{A}$ câștigă trivial, acestuia nu îi este permis să interogheze $Ext$ pentru o identitate în $Test$, precum și faptul că toate interogările $Rev$ și $Test$ să fie distincte.
+
+La finalul experimentului, $\mathcal{A}$ întoarce o valoare $b' \in \{0, 1\}$.
+
+Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sfârșitul jocului. Notăm cu $AdvKE_{\mathcal{A}}(\lambda) = |Pr[W_0] - Pr[W_1]|$ avantajul lui $A$.
+
+\begin{definitie}
+	ID-NIKE este adaptiv sigură dacă pentru orice adersar PPT, $\mathcal{A}$ funcția $AdvKE_{\mathcal{A}}(\lambda)$ este neglijabilă.
+\end{definitie}
+
 \subsection{Construcția Boneh-Waters (2013)}
 \label{subsec:boneh-waters}
+În figura \ref{fig:bw-nike} prezentăm construcția Boneh-Waters bazată pe funcții constrânse stânga/dreapta \cite{boneh:2013constrained}.
+
+\begin{figure*}[h!]
+
+\begin{tabular}{|p{\textwidth}|}
+\hline
+
+\\
+\hspace{.1in}
+$\mathsf{Setup}(\lambda)$: Fie $F : \mathcal{K} \times \mathcal{X}^2 \rightarrow \mathcal{Y}$ o funcție PRF stânga/dreapta sigură, alege \\
+	\hspace{.3in} în mod aleator $msk \leftarrow^R \mathcal{K}$ și întoarce parametrii publici $params$ \\ 
+	\hspace{.3in} corespunzători funcției $F$; \\
+
+\hspace{.1in}
+$\mathsf{Extract}(msk, id_i)$: calculează $\mathsf{F.constrain}(msk, \{(id_i, \cdot)\})$ pentru a obține $k^{L}_{id_i}$ \\
+	\hspace{.3in} și $\mathsf{F.constrain}(msk, \{(\cdot, id_i)\})$ pentru a obține $k^{R}_{id_i}$, apoi \\ 
+	\hspace{.3in} întoarce $sk_{id_i} = (k^{L}_{id_i},k^{R}_{id_i})$; \\
+
+\hspace{.1in}
+$\mathsf{KeyGen}(params, sk_{id_i},id_j)$: întoarce $F(msk, (id_i, id_j))$ dacă $id_i < id_j$ și \\
+	\hspace{.3in} $F(msk, (id_j, id_i))$ dacă $ id_i > id_j$ (în ordine lexicografică).
+
+\\
+\hline
+\end{tabular}
+\caption{Construcția Boneh-Waters \cite{boneh:2013constrained}}
+\label{fig:bw-nike}
+\end{figure*}
+
+\subsubsection{Corectitudine}
+\subsubsection{Securitate}
 
 \section{Multi-Party ID-NIKE}
 \label{subsec:multi-party-id}
 
-\todo{redenumeste multi-party}
+Multi-Party (mai multe părți) ID-NIKE reprezintă generalizarea protocolului ID-NIKE pentru cazul cu $n$ participanți $(n > 2)$. Mai întâi definim modelul de securitate pentru acest protocol după care introducem construcția multi-party bazată pe funcții bit-fixate \cite{RD:2014}.
 
 \subsection{Proprietăţi de Securitate}
 \label{subsec:multi-party-security}
