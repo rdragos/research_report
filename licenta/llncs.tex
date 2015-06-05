@@ -29,7 +29,7 @@
 \renewcommand{\chaptername}{Capitolul}
 \renewcommand\contentsname{Cuprins}
 \renewcommand{\bibname}{Referinţe}
-
+\renewcommand{\figurename}{Figura}
 \newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
 \newcommand{\todo}[1]{{\color{red}{TODO #1}}}
 
@@ -238,9 +238,9 @@ Din punct de vedere al securității, un adversar PPT (timp probabilistic polino
 
 În procesul formalizării noţiunii de securitate \textit{adaptivă} a unei funcții PRF $F$, vom avea în vedere un adversar PPT $\mathcal{A}$. În definiție sunt prezentate $2$ experimente cu adversarul $\mathcal{A}$: $EXP(b))$, $b \leftarrow ^ R \{0,1\}$, iar avantajul lui va consta în abilitatea de a le distinge. Notăm cu $s \leftarrow^R S$ faptul că $s$ este ales în mod aleator uniform din mulţimea $S$. 
 
-La începutul experimentului este apelată funcția $Setup(1^\lambda)$ care primește la intrare un parametru de securitate $\lambda$ și întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Fie $V, C \subseteq X$ $2$ mulțimi de puncte (inițial vide) pentru care $\mathcal{A}$ cunoaște valorile $F(k, \cdot)$ trimise la $\mathsf{F.eval}$, respectiv la $\mathsf{F.challenge}$. De asemenea, $\mathcal{A}$ are acces la $2$ tipuri de oracole:
+La începutul experimentului este apelată funcția $Setup(1^\lambda)$ care primește la intrare un parametru de securitate $\lambda$ și întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Fie $V, C \subseteq X$, $2$ mulțimi de puncte (inițial vide) pentru care $\mathcal{A}$ cunoaște valorile $F(k, \cdot)$ trimise la $\mathsf{F.eval}$, respectiv la $\mathsf{F.challenge}$. De asemenea, $\mathcal{A}$ are acces la $2$ tipuri de oracole:
 \begin{itemize}
-	\item $\mathsf{F.eval}$: pentru un $x \in \mathcal{X}$ întoarce $F(k, x)$ dacă $x \not \in C$ și actualizează mulțimea $V \leftarrow V \cup x$, altfel $\bot$.
+	\item $\mathsf{F.eval}$: pentru un $x \in \mathcal{X}$ întoarce $F(k, x)$ dacă $x \not \in C$ și actualizează mulțimea $V \leftarrow V \cup x$, altfel $\bot$ $(\not \in \mathcal{Y})$.
 	\item $\mathsf{F.challenge}$: pentru un $x \not \in V$ întoarce $F(k, x)$ dacă $b = 0$ și $y \leftarrow^R \mathcal{Y}$ dacă $b = 1$ iar $C \leftarrow C \cup x$. 
 \end{itemize}
 La finalul experimentului, $\mathcal{A}$ întoarce o valoare $b' \in \{0, 1\}$.
@@ -255,32 +255,31 @@ Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sf
 \section{Funcții Pseudoaleatoare Constrânse}
 \label{subsec:cprf}
 
-O funcție cPRF (pseudoaleatoare constrânsă) $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ este o funcție PRF care deține \textit{chei de constrângere} ce permit evaluarea funcției $F$ în subdomenii $S \subseteq \mathcal{X}$ menținând proprietățile de securitate ale funcțiilor PRF.
+O funcție cPRF (pseudoaleatoare constrânsă) $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ este o funcție PRF care deține \textit{chei de constrângere} ce permit evaluarea funcției $F$ în subdomenii $S \subseteq 2^{\mathcal{X}}$ menținând proprietățile de securitate ale funcțiilor PRF.
 
 \begin{definitie}
 \label{def:cprf}
-	O funcție PRF $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ este constrânsă la o mulțime $\mathcal{S} \subseteq 2^{\mathcal{X}}$ dacă există o mulțime în plus de chei $\mathcal{K}_c$ și $2$ algoritmi:
+	O funcție PRF $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ este constrânsă la o mulțime $\mathcal{S} \subseteq 2^{\mathcal{X}}$ dacă există o mulțime adițională de chei $\mathcal{K}_c$ și $2$ algoritmi:
 	\begin{itemize}
 		\item $\mathsf{F.constrain(k, S)}$: un algoritm nedeterminist care pentru o cheie $k \in \mathcal{K}_c$ și o mulțime $S \subseteq \mathcal{S}$ întoarce o cheie $k_s \in \mathcal{K}_c$ pentru care se poate face evaluarea lui $F(k, x)$ pentru orice $x \in S$.
-		\item $\mathsf{F.eval(k_s, x)}$: un algoritm determinist care pentru o cheie $k_s \in \mathcal{K}_c$ și un punct $x \in \mathcal{X}$ întoarce $F(k, x)$  $\mbox{dacă} \hspace{.1in} x \in S$, sau $\bot$ $\mbox{dacă} \hspace{.1in} x \notin S$
+		\item $\mathsf{F.eval(k_s, x)}$: un algoritm determinist care pentru o cheie $k_s \in \mathcal{K}_c$ și un punct $x \in \mathcal{X}$ întoarce $F(k, x)$  $\mbox{dacă} \hspace{.1in} x \in S$, sau $\bot$ $(\not \in \mathcal{Y})$ $\mbox{dacă} \hspace{.1in} x \notin S$
 	\end{itemize}
-	unde $\bot \not \in \mathcal{Y}$
 \end{definitie}
 
-Alte construcții pe baza cPRF definite în \cite{boneh:2013constrained} și care vor fi folosite ulterior sunt: \textit{stânga/dreapta PRF} - funcții cPRF ce admit evaluarea lor având partea stângă a domeniului fixată; \textit{bit-fixate PRF} - funcții cPRF care pot fi evaluate în domenii corespunzătoare unei expresii având unii biți fixați. Autorii \cite{boneh:2013constrained} menționează că aceste construcții sunt posibile în cadrul funcțiilor multiliniare iar problema devine mai interesantă (deocamdată nerezolvată) în contextul LWE \cite{regev2009lattices}. 
+Alte construcții pe baza cPRF definite în \cite{boneh:2013constrained} și care vor fi folosite ulterior sunt: \textit{stânga/dreapta PRF} - funcții cPRF ce admit evaluarea lor având partea stângă a domeniului fixată; \textit{bit-fixate PRF} - funcții cPRF care pot fi evaluate în domenii corespunzătoare unei expresii având unii biți fixați. Autorii \cite{boneh:2013constrained} menționează că aceste construcții sunt posibile în contextul funcțiilor multiliniare iar problema devine mai interesantă (deocamdată nerezolvată) în contextul LWE \cite{regev2009lattices}. 
 
 \begin{definitie}
 	Fie o funcție $F: \mathcal{K} \times \mathcal{X}^2 \rightarrow \mathcal{Y}$ PRF. $\forall v \in \mathcal{X}$ o funcție stânga/dreapta admite $2$ chei de constrângere ${k_v}^L$ și ${k_v}^R$ ce permit evaluarea funcției $F$ în toate punctele $(v, x) \in \mathcal{X}^2$, respectiv $(x, v) \in \mathcal{X}^2$. Notăm această funcție cPRF stânga/dreapta cu $PRF^{L/R}$.
 \end{definitie}
 
 \begin{definitie}
-	Fie o funcție $F: \mathcal{K} \times {\{0, 1\}}^n \rightarrow \mathcal{Y}$. $\forall v \in {\{0, 1, ? \}}^n$ o funcție bit-fixată admite o cheie de constrângere $k_v$ ce permite evaluarea funcției $F$ în toate punctele $x \in \{0,1\}^n$ ce satisfac modelul lui $v$.
+	Fie o funcție $F: \mathcal{K} \times {\{0, 1\}}^n \rightarrow \mathcal{Y}$ PRF. $\forall v \in {\{0, 1, ? \}}^n$ o funcție bit-fixată admite o cheie de constrângere $k_v$ ce permite evaluarea funcției $F$ în toate punctele $x \in \{0,1\}^n$ ce satisfac modelul lui $v$.
 	Notăm această funcție cPRF bit-fixată cu $PRF^{bf}$.
 \end{definitie}
 
 Noțiunea de securitate pentru cPRF \cite{boneh:2013constrained} este asemănătoare cu cea pentru PRF: $2$ experimente $EXP(0), EXP(1)$, doar că în acest caz este necesară existența unui oracol $F.constrain$ pentru a permite adversarului să interogheze $F$ conform definiției \ref{def:cprf}.
 
-La începutul fiecărui experiment este apelată funcția $Setup(\lambda)$ și întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Inițial mulțimile $V, C \subseteq \mathcal{X}$ sunt vide iar adversarul $\mathcal{A}$ are acces la $3$ oracole:
+La începutul fiecărui experiment este apelată funcția $Setup(\lambda)$ care întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Inițial mulțimile $V, C \subseteq \mathcal{X}$ sunt vide iar adversarul $\mathcal{A}$ are acces la $3$ oracole:
 \begin{itemize}
 	\item $\mathsf{F.eval}$: pentru un $x \in \mathcal{X}$ întoarce $F(k, x)$ dacă $x \not \in C$ și actualizează mulțimea $V \leftarrow V \cup x$, altfel $\bot$;
 	\item $\mathsf{F.constrain}$: pentru o mulțime $S \in \mathcal{S}$ întoarce $F.constrain(k, S)$ dacă $S \cap C = \emptyset$ și actualizează mulțimea $V = V \cup x$, altfel $\bot$;
@@ -314,29 +313,48 @@ Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sf
 \chapter{NIKE}
 \label{cha:nike}
 
-NIKE (Non Interactive Key Exchange - schimb de chei non-interactiv) reprezintă o primitivă criptografică importantă în care mai mulți participanți pot stabili de comun acord o cheie comună fără ca aceștia să fie on-line în același timp. Un exemplu des întâlnit în zilele noastre este schimbul de chei Diffie-Hellman \cite{diffie1976new}. Construcția a fost apoi extinsă la $3$ persoane de Joux folosind funcții biliniare \cite{joux2000one} iar Boneh și Silverberg au generalizat la $n$ persoane (multi-party) bazându-se pe funcții multi-liniare \cite{boneh:2003applications}.
+NIKE (Non Interactive Key Exchange - schimb de chei non-interactiv) reprezintă o primitivă criptografică importantă în care o mulțime de participanți pot stabili de comun acord o cheie comună fără ca aceștia să fie on-line în același timp. Un exemplu des întâlnit în zilele noastre este schimbul de chei Diffie-Hellman \cite{diffie1976new}. Construcția a fost apoi extinsă la $3$ persoane de Joux folosind funcții biliniare \cite{joux2000one} iar Boneh și Silverberg au generalizat la $n$ persoane (multi-party) bazându-se pe funcții multi-liniare \cite{boneh:2003applications}.
 
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 \section{ID-NIKE}
 \label{sec:id-nike}
 
-Criptografia bazată pe identitatea participanților a fost introdusă de Shamir \cite{shamir:1985identity}. Aceasta presupune folosirea identității (email, nume, stradă), informație care îl identifică pe participant într-un mod unic, fără să genereze o pereche de cheie publică, secretă. Principalul dezavantaj este nevoia de o terță autorizată care să administreze generarea de chei secrete, însă avantajul este utilizarea de mai puține resurse din partea participanților. Așadar criptografia bazată pe ID este ideală într-un mediu în care utilizatorii dețin resurse computaționale limitate (rețea de routere).
+Criptografia bazată pe identitatea participanților a fost introdusă de Shamir în anul 1985 \cite{shamir:1985identity}. Aceasta presupune folosirea identității (email, nume, stradă), informație care îl identifică pe un utilizator într-un mod unic, fără să genereze o pereche de cheie publică, secretă. Principalul dezavantaj este necesitatea unei terțe autorizată care să administreze generarea de chei secrete, însă avantajul este utilizarea de mai puține resurse din partea participanților.
 
-ID-NIKE combină principiile oferite de NIKE cu ID-urile participanților. Formal, ID-NIKE constă în $3$ algoritmi:
-\begin{itemize}
-	\item $Setup(\lambda)$: primește ca date de intrare parametrul de securitate $\lambda$ și întoarce o cheie secretă $msk$ împreună cu parametrii publici $params$;
-	\item $Extract(msk, id_i)$: primește ca date de intrare cheia secretă $msk$, identitatea $id_i \in \mathcal{ID}$ și întoarce cheia privată $sk_{id_i}$;
-	\item $KeyGen(params, sk_{id_i}, id_j)$: primește ca date de intrare parametrii publici $params$, o cheie secretă $sk_{id_i}$, o identitate $id_j \neq id_i$ și întoarce cheia comună $k_{id_i, id_j}$.
-\end{itemize}
+Așadar criptografia bazată pe ID este ideală într-un mediu în care utilizatorii dețin resurse computaționale limitate (rețea de routere).
 
+ID-NIKE combină principiile oferite de NIKE cu ID-urile participanților.
+
+\begin{definitie}
+ 	Formal, ID-NIKE constă în $3$ algoritmi:
+	\begin{itemize}
+		\item $Setup(\lambda)$: primește ca date de intrare parametrul de securitate $\lambda$ și întoarce o cheie secretă $msk$ împreună cu parametrii publici $params$;
+		\item $Extract(msk, id_i)$: primește ca date de intrare cheia master secretă $msk$, identitatea $id_i \in \mathcal{ID}$ și întoarce cheia privată $sk_{id_i}$;
+		\item $KeyGen(params, sk_{id_i}, id_j)$: primește ca date de intrare parametrii publici $params$, o cheie secretă $sk_{id_i}$, o identitate $id_j \neq id_i$ și întoarce cheia comună $k_{id_i, id_j}$.
+	\end{itemize}
+\end{definitie}
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 \subsubsection{Corectitudine}
 Este garantată dacă pentru orice pereche de participanți, $id_i, id_j$ $\in \mathcal{ID}$, $id_i \neq id_j$ $KeyGen(params, sk_{id_i}, id_j)$ $=$ $KeyGen(params, sk_{id_j}, id_i)$. 
 
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 \subsubsection{Securitate}
-Amintim definiția de securitate adaptivă pentru ID-NIKE din \cite{paterson:2009relations}. Fie $EXP(b)$, $b \leftarrow^R \{0,1\}$, două experimente cu un adeversar $PPT$ $\mathcal{A}$. La începutul fiecărui experiment $EXP(b)$ se execută $Setup(\lambda)$ oferind adversarului $\mathcal{A}$ $params$ și menținând $msk$ privat. $\mathcal{A}$ are acces la $3$ oracole:
+\label{subsub:nike-security}
+
+Amintim definiția de securitate adaptivă pentru ID-NIKE din \cite{paterson:2009relations}.
+
+Fie $EXP(b)$, $b \leftarrow^R \{0,1\}$, două experimente cu un adeversar $PPT$ $\mathcal{A}$. La începutul fiecărui experiment $EXP(b)$ se execută $Setup(\lambda)$ oferind adversarului $\mathcal{A}$ $params$ și menținând cheia master $msk$ privată. $\mathcal{A}$ are acces la $3$ oracole:
 \begin{itemize}
 	\item $Ext(id_i)$: primește ca date de intrare o identitate $id_i$, apelează $Extract(msk, id_i)$ și întoarce $sk_{id_i}$;
 	\item $Rev(id_i, id_j)$: primește ca date de intrare $2$ identități $id_i, id_j$, $id_i \neq id_j$, apelează funcția $Extract(msk, id_i)$ și întoarce cheia comună $k_{id_i, id_j}$ din $KeyGen(params, sk_{id_i}, id_j)$;
-	\item $Test(id_i, id_j)$: primește ca date de intrare $2$ identități $id_i, id_j$, $id_i \neq id_j$. Dacă $b = 0$ atunci întoarce $Rev(id_i, id_j)$, altfel întoarce $sk_{id_i, id_j} \leftarrow^R \mathcal{SK}$ unde cu $\mathcal{SK}$ am notat spațiul de chei posibile.
+	\item $Test(id_i, id_j)$: primește ca date de intrare $2$ identități $id_i, id_j$, $id_i \neq id_j$. Dacă $b = 0$ atunci întoarce $Rev(id_i, id_j)$, altfel întoarce $sk_{id_i, id_j} \leftarrow^R \mathcal{SKS}$ unde cu $\mathcal{SKS}$ am notat spațiul de chei comune posibile.
 \end{itemize}
 
 Pentru a elimina situația în care adersarul $\mathcal{A}$ câștigă trivial, acestuia nu îi este permis să interogheze $Ext$ pentru o identitate în $Test$, precum și faptul că toate interogările $Rev$ și $Test$ să fie distincte.
@@ -349,6 +367,8 @@ Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sf
 	ID-NIKE este adaptiv sigură dacă pentru orice adersar PPT, $\mathcal{A}$ funcția $AdvKE_{\mathcal{A}}(\lambda)$ este neglijabilă.
 \end{definitie}
 
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 \subsection{Construcția Boneh-Waters (2013)}
 \label{subsec:boneh-waters}
 În figura \ref{fig:bw-nike} prezentăm construcția Boneh-Waters bazată pe funcții constrânse stânga/dreapta \cite{boneh:2013constrained}.
@@ -360,15 +380,17 @@ Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sf
 
 \\
 \hspace{.1in}
-$\mathsf{Setup}(\lambda)$: Fie $F : \mathcal{K} \times \mathcal{X}^2 \rightarrow \mathcal{Y}$ o funcție PRF stânga/dreapta sigură, alege \\
+$\mathsf{Setup}(\lambda)$: Fie $F : \mathcal{K} \times \mathcal{X}^2 \rightarrow \mathcal{Y}$ o funcție cPRF stânga/dreapta sigură, alege \\
 	\hspace{.3in} în mod aleator $msk \leftarrow^R \mathcal{K}$ și întoarce parametrii publici $params$ \\ 
 	\hspace{.3in} corespunzători funcției $F$; \\
 
+\\
 \hspace{.1in}
 $\mathsf{Extract}(msk, id_i)$: calculează $\mathsf{F.constrain}(msk, \{(id_i, \cdot)\})$ pentru a obține $k^{L}_{id_i}$ \\
 	\hspace{.3in} și $\mathsf{F.constrain}(msk, \{(\cdot, id_i)\})$ pentru a obține $k^{R}_{id_i}$, apoi \\ 
 	\hspace{.3in} întoarce $sk_{id_i} = (k^{L}_{id_i},k^{R}_{id_i})$; \\
 
+\\
 \hspace{.1in}
 $\mathsf{KeyGen}(params, sk_{id_i},id_j)$: întoarce $F(msk, (id_i, id_j))$ dacă $id_i < id_j$ și \\
 	\hspace{.3in} $F(msk, (id_j, id_i))$ dacă $ id_i > id_j$ (în ordine lexicografică).
@@ -380,25 +402,126 @@ $\mathsf{KeyGen}(params, sk_{id_i},id_j)$: întoarce $F(msk, (id_i, id_j))$ dac�
 \label{fig:bw-nike}
 \end{figure*}
 
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 \subsubsection{Corectitudine}
+
+Reiese din funcția cPRF stânga/dreapta. Fie $2$ participanți având identitățile $id_i, id_j$ cu $id_i < id_j$. Participantul cu $id_i$ folosește cheia $k^{L}_{id_i}$ iar cel cu $id_j$ cheia $k^{R}_{id_i}$. În acest moment $id_i$ poate calcula $F(msk, (id_i, \cdot))$ iar $id_j$, $F(msk, (\cdot, id_j))$ în acest mod stabilind cheia comună $F(msk, (id_i, id_j))$.
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 \subsubsection{Securitate}
 
+Reiese din securitatea funcției cPRF stânga/dreapta. Dacă un adversar $\mathcal{B}$ împotriva unei funcții cPRF stânga/dreapta simulează perfect adeversarul $\mathcal{A}$ pentru construcția Boneh-Waters atunci demonstrația este completă. Așadar, luând în considerare cele $3$ oracole din \ref{subsub:nike-security}, în cazul in care $\mathcal{A}$ interoghează:
+\begin{itemize}
+	\item $Ext(id_i)$: $\mathcal{B}$ interoghează $\mathsf{F.constrain}$ pentru toate $S$ având valorile $(id_i, \cdot)$ și $(\cdot, id_i)$; întoarce rezultatul lui $\mathcal{A}$;
+	\item $Rev(id_i, id_j)$: $\mathcal{B}$ interoghează $\mathsf{F.eval}$ pentru $(id_i, id_j)$ dacă $id_i < id_j$, altfel interoghează pentru $(id_j, id_i)$; întoarce rezultatul lui $\mathcal{A}$;
+	\item $Test(id_i, id_j)$: $\mathcal{B}$ interoghează $\mathsf{F.challenge}$ și întoarce răspunsul lui $\mathcal{A}$.
+\end{itemize}
+
+
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 \section{Multi-Party ID-NIKE}
 \label{subsec:multi-party-id}
 
-Multi-Party (mai multe părți) ID-NIKE reprezintă generalizarea protocolului ID-NIKE pentru cazul cu $n$ participanți $(n > 2)$. Mai întâi definim modelul de securitate pentru acest protocol după care introducem construcția multi-party bazată pe funcții bit-fixate \cite{RD:2014}.
+Multi-Party (mai mulți membri) ID-NIKE reprezintă generalizarea protocolului ID-NIKE pentru cazul cu $n$ participanți $(n > 2)$. Mai întâi definim modelul de securitate pentru acest protocol după care introducem construcția multi-party bazată pe funcții cPRF bit-fixate din secțiunea \label{sec:multi-party-contributions} \cite{RD:2014}.
 
-\subsection{Proprietăţi de Securitate}
-\label{subsec:multi-party-security}
+\begin{definitie}
+	O schemă multi-party ID-NIKE este formată din $3$ algoritmi:
+	\begin{itemize}
+		\item $Setup(\lambda, n)$: primește ca date de intrare parametrul de securitate $\lambda$ și $n$, un număr întreg reprezentănd numarul de participanți; calculează cheia secretă master $msk$ și intoarce parametrii publici $params$;
+		\item $Extract(msk, id_i)$: primește cheia secretă master $msk$, o identitate $id_i \in \mathcal{ID}$ și întoarce o cheie secretă $sk_{id_i}$;
+		\item $KeyGen(params, sk_{id_i}, \{id_l\}_{l=1,\dots,n})$: primește parametrii publici $params$, $n$ identități distincte $id_1, id_2, \dots, id_n$, cheia secretă $sk_{id_i}$ a identității $id_i$ și întoarce cheia comună $sk_{id_1, id_2, \dots, id_n}$.
+	\end{itemize}
+\end{definitie}
 
-\subsection{Construcție Multi-Party ID-NIKE bazată pe funcții pseudoaleatoare constrânse}
-%gee, e mult mai usor in engleza
-\label{subsec:multi-party-prf}
+\subsubsection{Corectitudine}
+Este necesar ca toți participanții să obțină aceeași cheie; Pentru orice pereche $i, j, i \neq j$ și $n$ identități distincte $id_1, id_2, \dots, id_n$: $KeyGen(params, sk_{id_i}, \{id_l\}_{l=1,\dots,n})$ = $KeyGen(params, sk_{id_j}, \{id_l\}_{l=1,\dots,n})$.
 
+
+%----------------------------Security Definition--------------------------------------------------
+
+\subsubsection{Securitate}
+
+Definiția de securitate este similară ca în cazul ID-NIKE. La începutul fiecărui experiment $EXP(b)$ se execută $Setup(\lambda, n)$ iar parmetrii $params$ se fac publici. Un adversar $\mathcal{A}$ are acces la $3$ tipuri de oracole:
+\begin{itemize}
+	\item $Ext(id_i)$: pentru o identitate $id_i$ apelează $Extract(msk,id_i)$ și întoarce $sk_{id_i}$;
+	\item $Rev(id_1, id_2, \dots, id_n)$: pentru $n$ identități $id_1, id_2, \dots, id_n$ distincte, apelează $Extract(msk, id_i)$ pentru a afla $sk_{id_i}$; Întoarce $KeyGen(params$ $,sk_{id_i},$ $\{id_l\}_{l=1,\dots,n})$;
+	\item $Test(id_1, id_2, \dots, id_n)$: dacă $b = 0$ întoarce $Rev(id_1, id_2, \dots, id_n)$; dacă $b = 1$ întoarce $sk_{id_1, id_2, \dots, id_n} \leftarrow^R \mathcal{SKS}$.
+\end{itemize}
+
+Pentru a elimina situația în care adersarul $\mathcal{A}$ câștigă trivial, acestuia nu îi este permis să interogheze $Ext$ pentru o identitate în $Test$, precum și faptul că toate interogările $Rev$ și $Test$ trebuie să fie distincte. La finalul experimentului, $\mathcal{A}$ întoarce o valoare $b' \in \{0, 1\}$.
+
+Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sfârșitul jocului. Notăm cu $AdvKE_{\mathcal{A}, n}(\lambda) = |Pr[W_0] - Pr[W_1]|$ avantajul lui $A$.
+
+
+\begin{definitie}
+	Multi-party ID-NIKE este adaptiv sigură dacă pentru orice adersar PPT, $\mathcal{A}$ funcția $AdvKE_{\mathcal{A},n}(\lambda)$ este neglijabilă.
+\end{definitie}
+
+%----------------------------End of Security Definition-------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 \section{Contribuții}
 \label{sec:multi-party-contributions}
 
+Pornind de la construcția Boneh-Waters ID-NIKE extindem protocolul la o schemă având $n$ participanți, înlocuind funcția cPRF stânga/dreapta cu o funcție cPRF bit-fixată \cite{RD:2014}.
 
+\begin{figure*}[h!]
+
+\begin{tabular}{|p{\textwidth}|}
+\hline
+
+\\
+\hspace{.1in}
+$\mathsf{Setup}(\lambda, n)$: Fie $F : \mathcal{K} \times \mathcal{X}^n \rightarrow \mathcal{Y}$ o funcție cPRF bit-fixată sigură, alege \\
+	\hspace{.3in} în mod aleator $msk \leftarrow^R \mathcal{K}$ și întoarce parametrii publici $params$ \\ 
+	\hspace{.3in} corespunzători funcției $F$; \\
+\\
+\hspace{.1in}
+$\mathsf{Extract}(msk, id_i)$: calculează: \\
+	\hspace{.3in} $\mathsf{F.constrain}(msk, \{(id_i, \cdot, \dots, \cdot)\})$ pentru a obține $k^1_{id_i}$, \\
+	\hspace{.3in} $\mathsf{F.constrain}(msk, \{(\cdot, id_i, \dots, \cdot)\})$ pentru a obține $k^2_{id_i}$ $\dots$ \\
+	\hspace{.3in} $\mathsf{F.constrain}(msk, \{(\cdot, \dots, \cdot, id_i)\})$ pentru a obține $k^n_{id_i}$, \\
+	\hspace{.3in} apoi întoarce $sk_{id_i} = (k^{1}_{id_i}, k^{2}_{id_i}, \dots, k^{n}_{id_i})$; \\
+\\
+\hspace{.1in}
+$\mathsf{KeyGen}(params, sk_{id_i},\{id_l\}_{l=1,\dots,n})$: \\
+	\hspace{.3in} întoarce $F(msk, (id_{\pi(1)}, id_{\pi(2)}, \dots, id_{\pi(N)}))$,\\
+	\hspace{.3in} unde $id_{\pi(1)} < id_{\pi(2)} < \dots < id_{\pi(N)}$ (în ordine lexicografică).
+
+\\
+\hline
+\end{tabular}
+\caption{Construcția multi-party ID-NIKE \cite{RD:2014}}
+\label{fig:our-construction}
+\end{figure*}
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+\subsubsection{Corectitudine}
+	Este garantată din construcția funcției cPRF bit-fixate. Pentru a obține cheia comună, participantul cu identitatea $id_i$ folosește $k^{\pi(i)}_{id_i}$ pentru a evalua funcția $F$.
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+\subsubsection{Securitate}
+	Reiese din securitatea funcției cPRF bit-fixate. Dacă un adversar $\mathcal{B}$ împotriva unei funcții cPRF bit-fixate simulează perfect adeversarul $\mathcal{A}$ pentru multi-party ID-NIKE atunci demonstrația este completă. Așadar, luând în considerare cele $3$ oracole din \ref{subsub:nike-security}, în cazul in care $\mathcal{A}$ interoghează:
+	\begin{itemize}
+		\item $Ext(id_i)$: $\mathcal{B}$ interoghează $\mathsf{F.constrain}$ pentru toate punctele din domeniul $\mathcal{X}^n$ care conțin pe $id_i$ și întoarce rezultatul lui $\mathcal{A}$;
+		\item $Rev(id_1, \dots, id_n)$: $\mathcal{B}$ interoghează $\mathsf{F.eval}$ pentru $id_{\pi(1)}, id_{\pi(2)}, \dots, id_{\pi(N)}$ și întoarce rezultatul lui $\mathcal{A}$;
+		\item $Test(id_1, \dots, id_n)$: $\mathcal{B}$ interoghează $\mathsf{F.challenge}$ și întoarce răspunsul lui $\mathcal{A}$.
+	\end{itemize}
+
+	Dacă $\mathcal{A}$ reușește să diferențieze $F(msk, (id_{\pi(1)}, id_{\pi(2)}, \dots, id_{\pi(N)}))$ de obiecte aleatoare din $\mathcal{Y}$ atunci $\mathcal{B}$ poate să rezolve $\mathsf{F.challenge}$ răspunzând cu același bit ca $\mathcal{A}$.
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
