@@ -572,7 +572,7 @@ Schemele de partajare se clasifică în funcție de cantitatea de informație se
 \begin{itemize}
 	\item \textit{Sisteme perfecte de partajare}: componentele nu oferă nici o informație teoretică despre $\mathcal{S}$ indiferent de resursele computaționale.
 	\item \textit{Sisteme statistic sigure}: o fracțiune de informație este dezvaluită despre $\mathcal{S}$, independent de puterea computațională a adversarului.
-	\item \textit{Sisteme computațional-sigure de partajare}: se bazează pe faptul că reconstituirea lui $\mathcal{S}$ se reduce la o problema \textit{dificilă} (spre exemplu, problema Diffie-Hellman \cite{boneh:1998decision} ) în lipsa unor informații oferite doar grupului de acces $\mathcal{A}$. \cite{Martin:2008}
+	\item \textit{Sisteme computațional-sigure de partajare}: se bazează pe faptul că reconstituirea lui $\mathcal{S}$ se reduce la o problema \textit{dificilă} (spre exemplu, problema Diffie-Hellman \cite{boneh:1998decision} ) în lipsa unor informații oferite doar grupului de acces $\mathcal{A}$ \cite{Martin:2008}.
 
 \end{itemize} 
 
@@ -581,14 +581,14 @@ Primele scheme de partajare au fost dezvoltate independent de Shamir și Blakley
 Denumite și scheme majoritare $(k, n)$, acestea rezolvau cazul în care oricare grup de participanți cu un număr mai mare sau egal decât $k$  (mărimea pragului) pot reconstitui secretul $\mathcal{S}$ din componentele primite de la dealerul $\mathcal{D}$. Dacă schema este perfect \textit{sigură} atunci oricare grup cu un număr de participanți mai mic decât $k$ nu obține nici o informație despre $\mathcal{S}$.
 
 
-Schemele majoritare (spre exemplu schema Shamir) sunt insuficiente pentru a permite partajarea pentru anumite structuri de acces. Considerăm cazul în care dorim să partajăm un secret între $4$ participanți: $P_1, P_2, P_3, P_4$ astfel încât $\{P_1,P_2\}$ și $\{P_3,P_4\}$ să fie singurele mulțimi autorizate pentru reconstrucția secretului $S$ (i.e. $\mathcal{A} = \{ \{P_1,P_2\}, \{P_3,P_4\} \}$). În mod evident, problema nu poate fi rezolvată cu o structură de acces de tip prag: anumite mulțimi cu un număr de $2$ participanți trebuie să poată reconstrui secretul ($ \{P_1,P_2\}, \{P_3,P_4\} $), în timp ce altele nu $( \{P_1,P_3\}, \{P_1,P_4\}, \{P_2,P_3\}, \{P_2,P_4\} $)
+Schemele majoritare (spre exemplu schema Shamir) sunt insuficiente pentru a permite partajarea pentru anumite structuri de acces. Considerăm cazul în care dorim să partajăm un secret între $4$ participanți: $P_1, P_2, P_3, P_4$ astfel încât $\{P_1,P_2\}$ și $\{P_3,P_4\}$ să fie singurele mulțimi autorizate pentru reconstrucția secretului $S$ (i.e. $\mathcal{A} = \{ \{P_1,P_2\}, \{P_3,P_4\} \}$). În mod evident, problema nu poate fi rezolvată cu o structură de acces de tip prag: anumite mulțimi cu un număr de $2$ participanți trebuie să poată reconstrui secretul ($ \{P_1,P_2\}, \{P_3,P_4\} $), în timp ce altele nu $( \{P_1,P_3\}, \{P_1,P_4\}, \{P_2,P_3\}, \{P_2,P_4\} $).
 
-Astfel de scheme de partajare pentru structuri de acces generale au fost dezvoltate de Ito, Saito și Nishizeki, realizând o generalizare a schemei Shamir. \cite{ITO:1989}
-Benaloh și Leichter au demonstrat că schemele de partajare de tip prag nu pot fi folosite pe structuri general monotone (familie de submulțimi ale lui $\mathcal{P}$ cu proprietatea că dacă $A \in \mathcal{A}$ și $A \subset A'$, atunci $A' \in \mathcal{A}$) și obțin o construcție mai eficientă ca Ito et. al din punct de vedere al numărului de componente distribuite participanților. \cite{JJ:1990}
+Astfel de scheme de partajare pentru structuri de acces generale au fost dezvoltate de Ito, Saito și Nishizeki, realizând o generalizare a schemei Shamir \cite{ITO:1989}.
+Benaloh și Leichter au demonstrat că schemele de partajare de tip prag nu pot fi folosite pe structuri general monotone (familie de submulțimi ale lui $\mathcal{P}$ cu proprietatea că dacă $A \in \mathcal{A}$ și $A \subset A'$, atunci $A' \in \mathcal{A}$) obținând o construcție mai eficientă ca Ito et. al din punct de vedere al numărului de componente distribuite participanților \cite{JJ:1990}.
 
 \section{Schema unanimă}
 
-Presupunând că împărțim un secret $\mathcal{S}$ la $n$ participanți astfel încât $\mathcal{S}$ să poată fi recuperat doar dacă toți cei $n$ participanți își combină componentele pe care le dețin. Metoda este echivalentă cu o schemă $(n, n)$ majoritară. Un exemplu este schema introdusă de Karin, Greene și Hellman (Fig.\ref{fig:all_or_nothing}). \cite{Karnin:83}
+Presupunând că împărțim un secret $\mathcal{S}$ la $n$ participanți astfel încât $\mathcal{S}$ să poată fi recuperat doar dacă toți cei $n$ participanți își combină componentele pe care le dețin. Metoda este echivalentă cu o schemă $(n, n)$ majoritară. Un exemplu este schema introdusă de Karin, Greene și Hellman (Fig.\ref{fig:all_or_nothing}) \cite{Karnin:83}.
 
 
 %---------------- Figure - all_or_nothing - START ------------------------
@@ -610,7 +610,7 @@ Presupunând că împărțim un secret $\mathcal{S}$ la $n$ participanți astfel
 \textbf{Generare}: Dealerul $\mathcal{D}$:
 	\begin{itemize}
 		\setlength{\itemsep}{5pt}
-		\item Alege $n - 1$ valori aleatoare $s_i \leftarrow^R Z_p$, $i \in \{1,2,\dots,{n-1}\}$;
+		\item Alege $n - 1$ valori aleatoare $s_i \leftarrow^R Z_q$, $i \in \{1,2,\dots,{n-1}\}$;
 		\item $s_n = S + \sum\limits_{i=1}^{n-1} s_i \Mod q $;
 	\end{itemize}
 \medskip
@@ -641,13 +641,13 @@ Presupunând că împărțim un secret $\mathcal{S}$ la $n$ participanți astfel
 \section{Schema Shamir}
 
 Schema Shamir oferă mai multă flexibilitate decât schema unanima prin faptul ca oricare $k$ (sau mai mulți) participanți
-din cei $n$ pot recupera $\mathcal{S}$, însă mai puțin de $k$ participanți nu obțin nicio informație despre $\mathcal{S}$. Schema Shamir este deci o schemă $(k,n)$ majoritară.
+din cei $n$ pot recupera $\mathcal{S}$, însă mai puțin de $k$ participanți nu obțin nicio informație despre $\mathcal{S}$. Schema Shamir este, astfel, o schemă $(k,n)$ majoritară.
 
 Intuitiv, având $k$ puncte in plan $(x_i, y_i)$, $x_i \neq x_j \text{ } i,j \in \{1,2,\dots,k\}$ $\forall i \neq j$, există o curbă polinomială unică de grad $k - 1$ ce trece prin ele.  
 În schimb, pentru a defini o curbă polinomială de grad $k$ care trece prin $k - 1$ puncte date, există o infinitate de soluții.
-Evident, orice submulțime de valori $s_i$ de mărime egală cu $k$ este suficientă și necesară pentru a reconstrui polinomul $f$. După interpolarea componentelor deținute de cel puțin $k$ dintre participanți, secretul $\mathcal{S}$ se află în $f(0)$ (Fig. \ref{fig:shamir_scheme}). \cite{S:1979}
+Evident, orice submulțime de valori $s_i$ de mărime egală cu $k$ este suficientă și necesară pentru a reconstrui polinomul $f$. După interpolarea componentelor deținute de cel puțin $k$ dintre participanți, secretul $\mathcal{S}$ se află în $f(0)$ (Fig. \ref{fig:shamir_scheme}) \cite{S:1979}.
 
-Pentru un atacator care deține chiar și $k-1$ valori $s_i$, acesta nu determină nimic despre $\mathcal{S}$, spațiul de soluții posibile fiind identic față de situația în care deține $0$ componente.
+Pentru un atacator care deține chiar și $k-1$ valori $s_i$, acesta nu determină nimic despre $\mathcal{S}$, spațiul de soluții posibile fiind identic cu situația în care deține $0$ componente.
 
 %---------------- Figure - shamir_scheme - START ------------------------
 \begin{figure*}[h!]
@@ -704,7 +704,7 @@ Pentru un atacator care deține chiar și $k-1$ valori $s_i$, acesta nu determin
 \label{Ito}
 
 În continuare vom descrie modalitatea de distribuire a componentelor de la care au pornit Ito, Saito și Nishizeki pentru ca schema sa aibă o structură de acces $\mathcal{A} \subseteq 2^P$ (submulțime a setului de participanți) monotonă (i.e. $\forall A \in \mathcal{A}, A \subseteq A' \Rightarrow A' \in \mathcal{A}$) \cite{ITO:1989}. 
-Folosind construcția unei scheme majoritare $(k, n)$ autorii au reușit să descrie elementele din $\mathcal{A}$ folosind rezultatul unei reuniuni de mulțimi de componente cu un număr de elemente mai mare sau egal decât $k$ (Fig. \ref{fig:ito_et_al}). \cite{ITO:1989} Notația $x : Pr$, înseamnă că $x$ are proprietatea $Pr$. 
+Folosind construcția unei scheme majoritare $(k, n)$ autorii au reușit să descrie elementele din $\mathcal{A}$ folosind rezultatul unei reuniuni de mulțimi de componente cu un număr de elemente mai mare sau egal decât $k$ (Fig. \ref{fig:ito_et_al}) \cite{ITO:1989}. Notația $x : Pr$, înseamnă că $x$ are proprietatea $Pr$. 
 
 Dezvantajul acestei structuri este numărul de componente necesar pentru o structură de acces oarecare $\mathcal{A}$. Un mod simplu de construire al funcției $Assign$ din figura Fig. \ref{fig:ito_et_al} este următorul: pentru fiecare mulțime minimală $A \in \mathcal{A}$ ($\forall B \in \mathcal{A}$, $B \neq A, B \not\subset A$) se folosește o schemă de partajare unanimă $(|A|, |A|)$ a lui $\mathcal{S}$ pentru participanții din $A$.
 
@@ -733,7 +733,7 @@ Dezvantajul acestei structuri este numărul de componente necesar pentru o struc
 \hspace{.1in}
 \textbf{Inițializare}: 
 	\begin{itemize}
-		\item Fie $q$ un număr prim $q$, $q > 1$, $z \in \mathbb{N}$ nenul și $\mathcal{C} = GF(p^z)$;
+		\item Fie $q$ un număr prim $q$, $q > 1$, $z \in \mathbb{N}$ nenul și $\mathcal{C} = GF(q^z)$;
 		\item Fie $S \in \mathcal{C}$ secretul; 
 		\item Fie structura de acces $\mathcal{A}$;
 		\item Fie $n$ numărul de participanți;
@@ -791,9 +791,9 @@ Dezvantajul acestei structuri este numărul de componente necesar pentru o struc
 \section{Schema Feldman}
 \label{sec:feldman_scheme}
 
-Uneori, canalul de comunicaţie prin intermediul căruia dealerul $\mathcal{D}$ transmite componentele nu este întotdeauna sigur. Din fericire, participanții pot constata cu ușurință integritatea componentelor primite folosind scheme de verificare. Primele direcții către astfel de construcții au fost oferite în anul $1985$ de către Chor et al. \cite{chor:1985verifiable}
+Uneori, canalul de comunicaţie prin intermediul căruia dealerul $\mathcal{D}$ transmite componentele nu este întotdeauna sigur. Din fericire, participanții pot constata cu ușurință integritatea componentelor primite folosind scheme de verificare. Primele direcții către astfel de construcții au fost oferite în anul $1985$ de către Chor et al \cite{chor:1985verifiable}.
 
-În continuare vom exemplifica o schemă de verificare non-interactivă precum cea a lui Feldman, construită pe baza schemei Shamir. (Fig. \ref{fig:feldman_scheme}). \cite{Feldman:1987} Spre deosebire de schema Shamir, securitatea schemei Feldman este una computațională și deține un model de adversar pentru care problema logaritmului discret este dificilă.
+În continuare vom exemplifica o schemă de verificare non-interactivă precum cea a lui Feldman, construită pe baza schemei Shamir. (Fig. \ref{fig:feldman_scheme}) \cite{Feldman:1987}. Spre deosebire de schema Shamir, securitatea schemei Feldman este una computațională și deține un model de adversar pentru care problema logaritmului discret este dificilă.
 
 %---------------- Figure - feldman_scheme - START ------------------------
 \begin{figure*}[h!]
@@ -828,7 +828,7 @@ Uneori, canalul de comunicaţie prin intermediul căruia dealerul $\mathcal{D}$ 
 \hline
 \end{tabular}
 
-\caption{Schema Feldman \cite{Feldman:1987}}
+\caption{Schema Feldman \cite{Feldman:1987}.}
 \label{fig:feldman_scheme}
 \end{figure*}
 %---------------- Figure - feldman_scheme- STOP ------------------------
@@ -882,15 +882,15 @@ Un sistem de stocare, în general, trebuie să satisfacă cel puțin următoarel
 
 Una dintre soluțiile existente pentru a construi acest sistem este criptarea datelor folosind o cheie înainte de inserarea lor in spațiul de stocare. în momentul în care un utilizator autorizat dorește să efectueze o citire a unor date, întrebuințează cheia potrivită pentru a le decripta.
 
-în practică există algoritmi de criptare eficienti precum AES însă aceaștia nu garantează confidențialitatea datelor în cazul în care apare un adversar fără o limita computațională.
+În practică, există algoritmi de criptare eficienți precum AES însă aceștia nu garantează confidențialitatea datelor în cazul în care apare un adversar fără o limită computațională.
 
 Un dezavantaj al criptării este adminstrarea cheilor, standardele de securitate schimbându-se în fiecare an.
 De fiecare dată când cheile sunt înnoite atunci este necesară recriptarea datelor de pe fiecare bază de date. Cu cât disponibilitatea este mai mare - volumul de date crește - recriptarea informației devine o operație foarte costisitoare. 
 
 Majoritatea tehnicilor de criptarea se bazează pe dificultatea factorizării unui număr sau cea a calculării logaritmului discret însă o dată cu posibila dezvoltare a calculatoarelor cuantice aceste probleme nu vor mai fi atât de dificile \cite{Shor:1994}.
-Pentru schemele de partajare, spre desoebire de criptare, avantajul unui adversar nu depinde de puterea sa computațională, acestea garantând securitatea teoretică precum schema Shamir \cite{S:1979}.
+Pentru schemele de partajare, spre desoebire de criptare, avantajul unui adversar nu depinde de puterea sa computațională, acestea garantând securitatea teoretică, precum schema Shamir \cite{S:1979}.
 
-Dezavantajul schemelor generale de partajare este dimensiunea componentelor, exponențială în funcție de numărul de participanți. \cite{Survey:2011}
+Dezavantajul schemelor generale de partajare este dimensiunea componentelor, exponențială în funcție de numărul de participanți \cite{Survey:2011}.
 
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
@@ -922,9 +922,10 @@ O alternativă la soluția cu criptare care asigură atât confidențialitate c�
 %------------------------------------------------------------------------------------------
 \subsection{PASIS}
 \label{sec:desc_pasis}
-PASIS este o soluție pentru un sistem descentralizat care oferă beneficii precum securitate, redundanță a datelor si auto-întreținere \cite{W:2000}
+PASIS este o soluție pentru un sistem descentralizat care oferă beneficii precum securitate, redundanță a datelor si auto-întreținere \cite{W:2000}.
+
 Structurile descentralizate împart informația la mai multe noduri folosind scheme de redundanța precum "Redundant Array of Independent Disks" (RAID) pentru a asigura performanța, scalabilitatea sistemului dar și integritatea datelor \cite{Patterson:1988}.
-RAID reprezintă o tehnologie ce combină 2 concepte ortogonale precum data striping (aranjarea datelor pe discuri multiple într-o manieră secvențială - Fig \ref{fig:raid_strip}) și redundanță pentru o disponibilitate ridicată \cite{Chen:1994}.
+RAID reprezintă o tehnologie ce combină $2$ concepte ortogonale precum data striping (aranjarea datelor pe discuri multiple într-o manieră secvențială - Fig \ref{fig:raid_strip}) și redundanță pentru o disponibilitate ridicată \cite{Chen:1994}.
 
 \begin{figure}
 	\begin{center}
@@ -935,18 +936,18 @@ RAID reprezintă o tehnologie ce combină 2 concepte ortogonale precum data stri
 	\bigskip
 \end{figure}
 
-PASIS folosește schemele de partajare pentru a distribui informația nodurilor de stocare dintr-o rețea. Aceasta introduce agenți pe partea clientului pentru a scrie sau șterge date din noduri, dar și agenți pentru mentenanță. Componentele obținute în urma partajării unui fisier sunt stocate in rețea cu ajutorul agenților (Fig. \ref{fig:pasis}). Pe lângă conținutul brut al componentelor se adaugă metadate pentru a reține adresa nodului din rețea la care au fost stocate dar și noua denumire cu care este salvată in rețea.
+PASIS folosește schemele de partajare pentru a distribui informația nodurilor de stocare dintr-o rețea. Aceasta introduce \textit{agenți} pe partea clientului pentru a scrie sau șterge date din noduri, dar și agenți pentru mentenanță. Componentele obținute în urma partajării unui fișier sunt stocate in rețea cu ajutorul agenților (Fig. \ref{fig:pasis}). Pe lângă conținutul brut al componentelor se adaugă metadate pentru a reține adresa nodului din rețea la care au fost stocate dar și noua denumire cu care este salvată in rețea.
 
-Atunci când un participant inițiază o cerere pentru a citi un fisier, agentul PASIS aflat local procedează dupa cum urmează:
+Atunci când un participant inițiază o cerere pentru a citi un fișier, agentul PASIS aflat local procedează dupa cum urmează:
 \begin{itemize}
 	\item Caută numele celor $n$ componente care alcătuiesc fișierul într-un serviciu care listează toate datele.
-	\item Inițiaza cereri de citire la cel puțin $k$ din cele $n$ noduri.
+	\item Inițiază cereri de citire la cel puțin $k$ din cele $n$ noduri.
 	\item în caz ca acesta nu primește cel puțin $k$ răspunsuri se întoarce la pasul anterior încercând interogări la noduri diferite.
 	\item Reconstituie fișierul obținut din cele $k$ componente.
 \end{itemize}
 Operația de scriere este similară cu cea de citire, aceasta oprindu-se atunci când în cel puțin $n - k + 1$ noduri s-au stocat cu succes componente.
 
-Autorii specifică soluții pentru auto mentenanța sistemului cu ajutorul resurselor umane prin monitorizarea periodică stării sistemului folosind log-uri sau ajustarea parametrilor din cadrul schemei de partajare.
+Autorii specifică soluții pentru auto mentenanța sistemului cu ajutorul resurselor umane prin monitorizarea periodică stării sale, folosind log-uri sau ajustarea parametrilor din cadrul schemei de partajare.
 
 \begin{figure}
 	\includegraphics[width=11cm]{img/PASIS.png}
@@ -966,15 +967,11 @@ Autorii specifică soluții pentru auto mentenanța sistemului cu ajutorul resur
 \subsection{GridSharing} 
 \label{sec:desc_gridsharing}
 
-în 2005, Subbiah și Blough propun o nouă abordare pentru a construi un sistem de stocare securizat și tolerant la erori numit GridSharing \cite{SB:2005}.
-
-Schema Shamir nu oferă siguranță în ceea ce privește detectarea sau actualizarea unor componente incorecte introduse de un atacator.
-Din acest motiv, scheme de verificare precum cele prezentate in Secțiunea {\ref{sec:feldman_scheme}} sunt folosite.
-
+În $2005$, Subbiah și Blough propun o nouă abordare pentru a construi un sistem de stocare securizat și tolerant la erori numit GridSharing \cite{SBM:2005}.
 
 Subbiah și Blough folosesc un sistem care înlocuiește schemele de verificare cu o schemă de partajare unanimă XOR (considerăm cazul $q = 2$ în Fig. \ref{fig:all_or_nothing}) pentru a păstra securitatea construcției.
-în cazul detectării componentelor incorecte, este adoptată o strategie de tipul replicate-and-voting.
-Componentele sunt replicate pe un număr mare de servere astfel încât determinarea validității va fi stabilită în funcție de numărul de servere care le conțin.
+În cazul detectării componentelor incorecte, este adoptată o strategie de tipul replicate-and-voting.
+Componentele sunt replicate pe un număr mare de servere astfel încât determinarea validității va fi stabilită în funcție de numărul de servere pe care le conțin.
 
 Se identifică 3 tipuri de defecțiuni care pot apărea pe serverele unde sunt stocate datele:
 \begin{itemize}
@@ -982,14 +979,16 @@ Se identifică 3 tipuri de defecțiuni care pot apărea pe serverele unde sunt s
 	\item Bizantine: atunci când serverul nu respectă întotdeauna protocoalele inițiale iar componentele salvate local au fost compromise.
 	\item Scurgeri de informații: serverul execută protocoalele corect dar e posibil ca un adversar să fi obținut componentele stocate.
 \end{itemize}
-Primele 2 modele definite mai sus sunt preluate din calculul cu sisteme distribuite. Cel de-al 3-lea model a fost introdus pentru a defini atacatorul care folosește vulnerabilitățile cu intenția de a \textit{învăța} din informații.
+Primele $2$ modele definite mai sus sunt preluate din calculul cu sisteme distribuite. Cel de-al $3$-lea model a fost introdus pentru a defini atacatorul care folosește vulnerabilitățile cu intenția de a \textit{învăța} din informații.
 
-Arhitectura GridSharing constă in $N$ servere unde cel mult $c$ servere pot fi abandonate, $b$ servere bizantine și $l$ cu scurgeri de informații. Cele $N$ pot fi aranjate într-un grid cu $r$ linii și $N/r$ coloane (considerăm pentru simplitate că $N \Mod r = 0$). Caracteristicile modelului bizantin și cel specific scurgerilor de informații permit dezvăluirea componentelor unui adversar de pe cel mult $l + b$ servere.
+Arhitectura GridSharing constă în $N$ servere, unde cel mult $c$ servere pot fi abandonate, $b$ servere bizantine și $l$ cu scurgeri de informații. Cele $N$ pot fi aranjate într-un grid cu $r$ linii și $N/r$ coloane (considerăm pentru simplitate că $N \Mod r = 0$).
+
+Caracteristicile modelului bizantin și cel specific scurgerilor de informații permit dezvăluirea componentelor unui adversar de pe cel mult $l + b$ servere.
 
 \begin{exemplu}
 
 	Notăm ${x \choose y}$ fiind combinări de $x$ elemente grupate câte $y$.
-	Considerăm ca împarțim un secret $\mathcal{S}$ la $4$ linii (participanți) astfel încât sistemul să permită $2$ componente de tip $b$, $1$ componentă de tip $l$ și $20$ servere. în cazul acesta vom folosi o schemă majoritară XOR $\big( {4 \choose 3}, {4 \choose 3}\big) = (4,4)$.
+	Considerăm că împarțim un secret $\mathcal{S}$ la $4$ linii (participanți) astfel încât sistemul să permită $2$ componente de tip $b$, $1$ componentă de tip $l$ și $20$ servere. În cazul acesta vom folosi o schemă majoritară XOR $\big( {4 \choose 3}, {4 \choose 3}\big) = (4,4)$.
 
 	Vom avea $4$ componente, $(s_1, s_2, s_3, s_4)$ a.î. $s_1 \oplus s_2 \oplus s_3 \oplus s_4 = \mathcal{S}$.
 	Distribuirea se face in felul următor:
@@ -1009,7 +1008,7 @@ Arhitectura GridSharing constă in $N$ servere unde cel mult $c$ servere pot fi 
 
 \begin{figure}[H]
 	\includegraphics[width=12cm]{img/GridSharing.png}    % The printed column width is 8.4 cm.
-	\caption{GridSharing cu $4$ linii, $20$ servere dintre care $2$ bizantine, $1$ cu scurgeri de informații \cite{SB:2005}.}
+	\caption{GridSharing cu $4$ linii, $20$ servere dintre care $2$ bizantine, $1$ cu scurgeri de informații \cite{SBM:2005}.}
 	\label{fig:grid_sharing}
 	\bigskip
 \end{figure}
@@ -1025,12 +1024,13 @@ Arhitectura GridSharing constă in $N$ servere unde cel mult $c$ servere pot fi 
 \subsection{POTSHARDS} 
 \label{sec:desc_potshards}
 în $2007$ este propus un nou sistem care combină caracteristicile PASIS și GridSharing adăugând posiblitatea de migrare a datelor la noduri noi: POTSHARDS (Protection Over Time, Securely Harboring And Reliably Distributing Stuff) \cite{SGMV:2009}.
+Este de menționat faptul că autorii acestui sistem au publicat un articol în care au evidențiat vulnerabilități la numeroase sisteme de stocare (printre care și cele descrise în Secțiunile \ref{sec:desc_pasis}, \ref{sec:desc_gridsharing}) \cite{storer:2006long}.
 
 POTSHARDS poate fi gândit ca o aplicație pe partea clientului care comunică cu o mulțime de noduri (arhive) independente, folosind reconstrucția componentelor într-un mod securizat și semnături algebrice pentru a asigura un grad ridicat de păstrare a integritații fișierelor \cite{STM:2006}.
 
 Confidențialitatea este asigurată prin adoptarea unei scheme de partajare XOR unanimă, la fel ca în GridSharing.
 
-Ca prim pas, POTSHARDS preprocesează fișierul într-un obiect, partajează obiectul în fragmente la care adaugă meta-date, numite \textit{shards} (Fig. \ref{fig:data-potshard}). \cite{SGMV:2009} Acestea sunt trimise apoi arhivelor independente, fiecare având propriul domeniu de securitate, localizate in \textit{regiuni}. Pentru a reconstitui cu succes informația inițială, meta-datele shard-urilor conțin detalii despre structura pointerilor aproximativi, indicând regiunea în care se află următorul shard. Pointerii aproximativi sunt folositi pentru a reconstitui intreaga arhiva doar din shard-uri.
+Ca prim pas, POTSHARDS preprocesează fișierul într-un obiect, partajează obiectul în fragmente la care adaugă meta-date, numite \textit{shards} (Fig. \ref{fig:data-potshard}) \cite{SGMV:2009}. Acestea sunt trimise apoi arhivelor independente, fiecare având propriul domeniu de securitate, localizate in \textit{regiuni}. Pentru a reconstitui cu succes informația inițială, meta-datele shard-urilor conțin detalii despre structura pointerilor aproximativi, indicând regiunea în care se află următorul shard. Pointerii aproximativi sunt folositi pentru a reconstitui întreaga arhivă doar din shard-uri.
 
 \begin{figure}[b!]
 	\begin{center}
@@ -1055,7 +1055,7 @@ Procesul de fragmentare a datelor este prezentat in Fig. \ref{fig:potshards-laye
 \end{figure}
 
 Pentru ca reconstituirea unui fișier sa fie fezabilă unui utilizator, acestuia îi este întoarsă o listă cu locațiile exacte shard-urilor corespunzătoare.
-Obținerea unui shard de către un atacator nu este folositoare, pentru a detecta următorul shard, un atac brut force constă în cereri multiple în zona indicată de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este să stocheze datele într-un mod cat mai uniform distribuit\cite{SGMV:2009}.
+Obținerea unui shard de către un atacator nu este fezabilă, pentru a detecta următorul shard, un atac brut force constă în cereri multiple în zona indicată de pointerul aproximativ. Un astfel de atac nu va trece neobservat de POTSHARDS deorece unul dintre scopurile sale este să stocheze datele distribuite într-un mod cât mai uniform \cite{SGMV:2009}.
 
 
 %------------------------------------------------------------------------------------------
@@ -1096,7 +1096,7 @@ Menționăm că toate operațiile se vor efectua in $GF(256)$ modulo un polinom 
 			\begin{itemize}
 			\item Concatenează la sfârsitul lui $\mathcal{S}$ octeți până când $len(\mathcal{S}) \Mod k = 0$;
 			\end{itemize}
-		\item împarte $\mathcal{S}$ în blocuri de lungime $k$;
+		\item Împarte $\mathcal{S}$ în blocuri de lungime $k$;
 		\item Repetă pentru fiecare bloc $B_t$ de lungime $k$:
 		\begin{itemize}
 			\item Construiește polinomul $f(x) = B_{t_{k - 1}}x ^ {k-1} + B_{t_{k - 2}}x ^ {k - 2} + .... + B_{t_1}x + B_{t_0}$;
@@ -1120,7 +1120,7 @@ Menționăm că toate operațiile se vor efectua in $GF(256)$ modulo un polinom 
 %---------------- Figure - alouneh_distribution - STOP ------------------------
 
 \begin{exemplu}
-Vom exemplifica modul de calcul în $GF(256) \Mod {g(x)} $ unde $g(x) = x ^ 8 + x ^ 4 + x ^ 3 + 1$. Luăm polinomul $f(x) = 10 + 15x$ corespunzâtor unui fișier format din octeții (în această ordine) $10$ $15$.
+Vom exemplifica modul de calcul în $GF(256) \Mod {g(x)} $ unde $g(x) = x ^ 8 + x ^ 4 + x ^ 3 + 1$. Luăm polinomul $f(x) = 10 + 15x$ corespunzător unui fișier format din octeții (în această ordine) $10$ $15$.
 	\begin{equation} \label{eq:f_01}
 	\begin{split}
 		f(01) \Mod{g(x)} & = 10 + 15 \Mod{g(x)} \\
@@ -1208,9 +1208,7 @@ Abordarea acestei metode deterministe conduce la insecuritatea sistemului, Aloun
 \section{Contribuții}
 \label{sec:alouneh_contributions}
 
-\todo{Reformulare}
-împreună cu mentorul am analizat sistemul Alouneh et al. prezentat în Secțiunea \ref{sec:desc_alouneh}. \cite{AAMK:2013}
- Am indentificat erori majore ale acestuia și am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic anumite greșeli pe care le vom evidenția în următoarele secțiuni.
+În \cite{RD:2015} am analizat sistemul Alouneh et al. prezentat în Secțiunea \ref{sec:desc_alouneh}. Am indentificat erori majore ale acestuia și am implementat sistemul descris de autori pentru a demonstra practic, nu doar teoretic, anumite greșeli pe care le vom evidenția în următoarele secțiuni.
 
 \subsection{Vulnerabilități evidențiate}
 
@@ -1218,18 +1216,18 @@ Spre deosebire de schema Shamir, unde coeficienții (cu excepția termenului lib
 Alegerea este motivată de faptul ca mulțimea componentelor și efortul computațional depus pentru generarea coeficienților se reduce la un factor de $k$ ori, spre deosebire de schema Shamir.
 
 Datorită determinismului, partajarea unui fișier de mai multe ori implică obținerea de componente identice.
-Determinismul duce la câteva atacuri simple în momentul în care un atacator obține informațiile stocate într-un nod, indiferent de mărimea pragului folosit în metoda de partajare. în acest sens, am evidențiat $2$ atacuri simple în cazul în care componentele sunt calculate in ordine ($f(01), f(02), \dots$):
+Determinismul duce la câteva atacuri simple în momentul în care un atacator obține informațiile stocate într-un nod, indiferent de mărimea pragului folosit în metoda de partajare. În acest sens, am evidențiat $2$ atacuri simple în cazul în care componentele sunt calculate in ordine ($f(01), f(02), \dots$):
 \begin{itemize}
 	\item Detectarea tipului unui fișier
 	\item Detectarea conținutului unui fișier
 \end{itemize}
 
-Deoarece Alouneh et al. nu menționeaă o metoda de padding, am indicat că un atac bazat pe felul în care se realizează completarea fișierului (padding) $\mathcal{S}$ înainte de partajarea sa poate fi fezabil, în condițiile în care s-a demonstrat ca această alegere este esențială în păstrarea securității \cite{Vaudenay:2002}.
+Deoarece Alouneh et al. nu menționeaă o metodă de padding, am indicat că un atac bazat pe felul în care se realizează completarea fișierului (padding) $\mathcal{S}$, înainte de partajarea sa poate fi fezabil, în condițiile în care s-a demonstrat că această alegere este esențială în păstrarea securității \cite{Vaudenay:2002}.
 
 \subsubsection{Detectarea tipului de fișier}\hspace*{\fill} \\
 \label{subsec:file_type_detection}
 
-în tehnologia informației, la inceputul fiecărui fișier se află o secvență de octeți (denumită semnatură sau antet) cu rolul de a identifica tipul acestuia. Tabelul {\ref{table:sign}} indică $7$ din cele mai uzuale antete.
+În tehnologia informației, la inceputul fiecărui fișier se află o secvență de octeți (denumită semnătură sau antet) cu rolul de a identifica tipul acestuia. Tabelul {\ref{table:sign}} indică $7$ din cele mai uzuale antete.
 
 
 %-----------------------------------------------------
@@ -1253,12 +1251,12 @@ zip & 50 & 4B & 03 & 04\\  \hline
 \end{table}
 
 Se consideră cazul în care partajarea unui fișier \textit{pdf} se face cu ajutorul sistemului descris in {S}ecțiunea \ref{sec:desc_alouneh}, folosind $k \leq 4$. Polinomul corespunzător $f(x)$ va fi intotdeauna același. Presupunând ca numerotarea nodului $i$ este aceeași, putem determina cu ușurință dacă este stocat un fișier \textit{pdf} fără a lua în calcul conținutul fișierului.
-Acest atac este fezabil deorece valoarea lui $k$ este publică iar $i$ poate sa fie descoperit în momentul distribuirii.
+Acest atac este fezabil deorece valoarea lui $k$ este publică iar $i$ poate să fie descoperit în momentul distribuirii.
 
 Cu alte cuvinte, dacă un adversar obt\c{i}ne controlul unui singur nod, bazându-se doar pe valoarea primei componente poate detecta tipul unui fișier.
 
-Pentru a exemplifica, un adversar poate distinge cu probabilitate ridicată între fișierele \textit{doc, gif, pdf, png, rar, wav} și \textit{zip}. în Tabelul {\ref{table:shares}} avem generate componentele pentru $k = 2$ și $n = 5$.
-Dacă un adversar descoperă valoarea primului nod iar prima componentă este $14$ atunci acesta știe cu certitunde că aceasta corespunde un fișier \textit{gif}. Dacă obține accesul nodului $4$ și citește valoarea $205$ atunci știe că fișierul este de tipul \textit{rar}. Daca citește valoarea $27$ de pe primul nod atunci știe că poate fi un \textit{wav} sau \textit{zip}; dar poate să distingă cele 2 fișiere cu probabilitate $1$ dacă dezvăluie o singură valoare de pe celelalte noduri ($2$, $3$, $4$ sau $5$) pentru că valorile sunt distincte.
+Pentru a exemplifica, un adversar poate distinge cu probabilitate ridicată între fișierele \textit{doc, gif, pdf, png, rar, wav} și \textit{zip}. În Tabelul {\ref{table:shares}} avem generate componentele pentru $k = 2$ și $n = 5$.
+Dacă un adversar descoperă valoarea primului nod iar prima componentă este $14$ atunci acesta știe cu certitudine că aceasta corespunde un fișier \textit{gif}. Dacă obține accesul nodului $4$ și citește valoarea $205$ atunci știe că fișierul este de tipul \textit{rar}. Daca citește valoarea $27$ de pe primul nod atunci știe că poate fi un \textit{wav} sau \textit{zip}; apoi poate să distingă cele 2 fișiere cu probabilitate $1$ dacă dezvăluie o singură valoare de pe celelalte noduri ($2$, $3$, $4$ sau $5$) pentru că valorile sunt distincte.
 
 
 %-----------------------------------------------------
@@ -1267,7 +1265,7 @@ Dacă un adversar descoperă valoarea primului nod iar prima componentă este $1
 \caption{Componentele primului bloc ($k=2$)}\label{tb:margins}
 \label{table:shares}
 \begin{tabular}{cccccccc}
-Tip fisier & Nod 1 & Nod 2 & Nod 3 & Nod 4 & Nod 5 \\
+Tip fișier & Nod 1 & Nod 2 & Nod 3 & Nod 4 & Nod 5 \\
   & ($i=1$) & ($i=2$) & ($i=3$) & ($i=4$) & ($i=5$) \\
 \hline
 doc & 31 & 85 & 154 & 193 & 14 \\
@@ -1290,7 +1288,7 @@ zip & 27 & 198 & 141 & 103 & 44 \\ \hline
 \subsubsection{Detectarea de conținut}\hspace*{\fill} \\
 \label{subsec:file_content_detection}
 
-Multe documente urmează un anumit tipar precum contracte, chitanțe, bonuri fiscale sau curriculum vitae. Deoarece majoritatea conținutului rămâne neschimbat, există o probabilitate destul de mare ca multe componente sa aiba aceeași valoare. O dată ce un adversar reușește să determine componentele unui nod, poate determina prin analogie tipul de conținut al fișierului original.
+Multe documente urmează un anumit tipar precum contracte, chitanțe, bonuri fiscale sau curriculum vitae. Deoarece majoritatea conținutului rămâne neschimbat, există o probabilitate destul de mare ca multe componente sa aibă aceeași valoare. O dată ce un adversar reușește să determine componentele unui nod, poate determina prin analogie tipul de conținut al fișierului original.
 
 Fișierele vulnerabile sunt cele care conțin o secvență de octeți periodică (imagini cu un pattern repetitiv) sau cele care au preponderent octeți nuli (valoarea componentelor asociată majorității blocurilor fiind $0$). Spre deosebire de prima metodă, aceasta nu necesită compararea cu un al $2$-lea fișier, tratând componentele de sine stătător. Multiple componente identice indică existența unor secvențe repetitive în conținutul fișierului.
 
@@ -1301,12 +1299,12 @@ Fișierele vulnerabile sunt cele care conțin o secvență de octeți periodică
 \subsection{Implementare și rezultate practice}
 Pentru a arăta aplicabilitatea rezultatelor în practică, am implementat propunerea descrisa in Secțiunea {\ref{sec:desc_alouneh}} și am testat pe câteva cazuri.
 
-în cadrul implementării am folosit limbajul Python 3.0 sub sistemul de operare ArchLinux. Python este un limbaj high-level, permițând programatorilor să exprime concepte în mai puține linii de cod față de C++ sau Java și este disponibil sub licență open-source \cite{Python:2015}.
+În cadrul implementării am folosit limbajul Python 3.0 sub sistemul de operare ArchLinux. Python este un limbaj high-level, permițând programatorilor să exprime concepte în mai puține linii de cod față de C++ sau Java și este disponibil sub licență open-source \cite{Python:2015}.
 Pentru a realiza comunicarea între procese am folosit Cerealizer iar distribuția componentelor a fost generată grafic cu ajutorul pachetului Matplotlib \cite{Hunter:2007, PyCerealizer:2015}. De asemenea am folosit sistemul de versionare Git iar în prezent codul folosit este găzduit de GitHub \cite{Github:2015, CodeGit:2015}.
 
 Având în vedere că articolul original nu menționează o metodă de padding, am considerat o metodă standard pentru a completa octeții ultimului bloc: alipim la sfârșitul lui $\mathcal{S}$ octeții $80$ $00$ $\dots$ $00$ $00$ până când lungimea ultimului bloc ajunge la $k$ octeți.
 
-Menționăm această metoda doar pentru completitudine, aceasta neafectând rezultatele, care consideră doar secvențele de octeți din antet sau de la începutul fișierului.
+Menționăm această metodă doar pentru completitudine, aceasta neafectând rezultatele, care consideră doar secvențele de octeți din antet sau de la începutul fișierului.
 
 
 %------------------------------------------------------------------------------------------
@@ -1340,12 +1338,12 @@ Tip Fișier & doc & gif & pdf & png & rar & wav & zip \\\hline
 \end{center}
 \end{table}
 
-Tabelele {\ref{table:k3} și \ref{table:k4}} prezintă rezultatele pentru $k = 3$ si $k = 4$. Pentru $k \geq 5$ este nevoie de un antet cu mai mult de $4$ octeți.
+Tabelele {\ref{table:k3} și \ref{table:k4}} prezintă rezultatele pentru $k = 3$ și $k = 4$. Pentru $k \geq 5$ este nevoie de un antet cu mai mult de $4$ octeți.
 
 Considerăm metoda de distribuire descrisă exact ca în Tabelul {\ref{fig:alouneh_distribution}}, și anume nodul de stocare $i$ primește componenta $f(i)$.
-Dacă un atacator preia controlul nodului cu valoarea $i$ acesta poate face distincția între tipul a $2$ fișiere partajate cu probabilitate $1$ dacă $i$ e mai mic decât valoarea afișată în tabel.
+Dacă un atacator preia controlul nodului cu valoarea $i$, acesta poate face distincția între tipul a $2$ fișiere partajate cu probabilitate $1$ dacă $i$ e mai mic decât valoarea afișată în tabel.
 
-Spre exemplu, un adversar care obține accesul unui singur nod de stocare, iar partajarea a fost făcută pentru $k=2$ poate distinge cu probabilitate $1$ între un fișier $doc$ sau $pdf$ dacă $i \leq 194$. Deoarece $n > 194$ nu se întâmplă în practică, acest atac funcționează. Faptul că multe valori sunt ridicate și majoritatea sunt $-1$ (Tabelul \ref{table:k3}), indică un nivel scăzut de securitate al schemei. în cazul celor cu $-1$ un adversar va caștiga întotdeauna cu probabilitatea $1$, indiferent de indicele nodului de stocare pe care il obține.
+Spre exemplu, un adversar care obține accesul unui singur nod de stocare, iar partajarea a fost făcută pentru $k=2$ poate distinge cu probabilitate $1$ între un fișier $doc$ sau $pdf$ dacă $i \leq 194$. Deoarece $n > 194$ nu se întâmplă în practică, acest atac funcționează. Faptul că multe valori sunt ridicate și majoritatea sunt $-1$ (Tabelul \ref{table:k3}), indică un nivel scăzut de securitate al schemei. În cazul celor cu $-1$ un adversar va câștiga întotdeauna cu probabilitatea $1$, indiferent de indicele nodului de stocare pe care îl obține.
 
 Precizăm că acest atac funcționează doar dacă nodurile de stocare își păstrează indexul în cazul partajării repetate a.î. aplicația disponibilă pe partea de client calculează cele $n$ valori $f(i_1),\dots,f(i_2)$ pentru $i_1,\dots,i_n$ distincte și păstrează nodul $j$ asociat lui $i_j$.
 
@@ -1452,14 +1450,14 @@ Primele două fișiere reprezintă șablonul pentru un CV european în limba bul
 
 Pentru a arăta vulnerabilitatea sistemului Alouneh et al. {\cite{AAMK:2013}}, partajăm cele $3$ fișiere folosind schema $(2, 4)$. Experimentul reprezintă o implementare practică a metodei prezentate in Fig. {\ref{fig:alouneh_distribution}}.
 
-Fig. {\ref{fig:db1}}, {\ref{fig:db2}}, {\ref{fig:db3}}, {\ref{fig:db4}} conțin $2000$ de componente generate pentru cele $3$ fișiere, stocate în baza de date corespunzătoare nodurilor $1,2,3$ și $4$. Presupunem că indicele $i$ este fixat, polinoamele fiind evaluate în același nod $i$. Un adversar care obține componentele unui nod poate deduce cu ușurinta graficul lor.
+Fig. {\ref{fig:db1}}, {\ref{fig:db2}}, {\ref{fig:db3}}, {\ref{fig:db4}} conțin $2000$ de componente generate pentru cele $3$ fișiere, stocate în baza de date corespunzătoare nodurilor $1,2,3$ și $4$. Presupunem că indicele $i$ este fixat, polinoamele fiind evaluate în același nod $i$. Un adversar care obține componentele unui nod poate deduce cu ușurintă graficul lor.
 
 Considerăm că un adversar reușește să obțină componentele din Fig. {\ref{fig:db1}}. Poate deduce ușor că primele două fișiere au un număr mare de componente identice iar cel de-al $3$-lea este diferit de primele.
 
 Din cauza șablonului pe care îl respectă cele două CV-uri, un adversar are nevoie în cazul de față doar de primele $500$ de componente pentru a constata similiaritatea celor $2$ cu o probabilitate ridicată.
 Diferența vizuala este evidentă între oricare din cele $4$ grafice, deci un adversar poate reuși să afle informații despre fișierele partajate indiferent de nodul de stocare vulnerabil.
 
-Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru care informația se repetă. Fie imaginea din Fig. {\ref{fig:carouri}} partajată folosind schema din Secțiunea {\ref{sec:desc_alouneh}} având $4$ noduri iar informația stocată pe cel puțin $2$ din ele pot reconstitui imaginea partajată inițial. {\ref{fig:alouneh_distribution}}. La fel ca în exemplul precedent, Fig. {\ref{fig:carouri_db1}, \ref{fig:carouri_db2}, \ref{fig:carouri_db3}, \ref{fig:carouri_db4}} reprezintă grafic componente imaginii din Fig. {\ref{fig:carouri}}. Un adversar constată cu ușurință prin obținerea informațiilor stocate aflate pe un singur nod (indiferent de mărimea pragului $k$) că fișierul original conține un pattern care se repetă.
+Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru care informația se repetă. Fie imaginea din Fig. {\ref{fig:carouri}} partajată folosind schema din Secțiunea {\ref{sec:desc_alouneh}}, având $4$ noduri iar informația stocată pe cel puțin $2$ din ele pot reconstitui imaginea partajată inițial. {\ref{fig:alouneh_distribution}}. La fel ca în exemplul precedent, Fig. {\ref{fig:carouri_db1}, \ref{fig:carouri_db2}, \ref{fig:carouri_db3}, \ref{fig:carouri_db4}} reprezintă grafic componentele imaginii din Fig. {\ref{fig:carouri}}. Un adversar constată cu ușurință prin obținerea informațiilor stocate aflate pe un singur nod (indiferent de mărimea pragului $k$) că fișierul original conține un pattern care se repetă.
 
 
 %-----------------------------------------------------
