@@ -87,7 +87,7 @@
 
 \hspace*{5mm}Păstrarea confidențialității și redundanței datelor pe perioade lungi de timp reprezintă o sarcină dificilă din cauza multiplelor probleme care pot apărea precum atacuri, erori umane, defecțiunea unor componente hardware sau dezastre naturale \cite{SGMV:2009}. Problemele sunt cu atât mai actuale astăzi, când organizațiile își păstrează datele în cloud pentru scăderea costurilor necesare întreținerii unui centru propriu de date (datacenter), deci informațiile sunt stocate și procesate în afara unui control fizic al roprietarului.
 
-\hspace*{5mm}Lucrarea de față analizează câteva dintre primitivele criptografice prezentând protocoale construite pe baza lor precum şi contribuţii personale în dezvoltarea lor \cite{RD:2014, RD:2015}. În final introducem o arhitectură implementată cu ajutorul schemelor de partajare, eliminând astfel câteva vulnerabilități prezente la sistemele descrise anterior.
+\hspace*{5mm}Lucrarea de față analizează câteva dintre primitivele criptografice prezentând protocoale construite pe baza lor precum şi contribuţii personale în dezvoltarea lor \cite{RD:2014, RD:2015}. În final introducem o arhitectură implementată cu ajutorul schemelor de partajare, eliminând astfel câteva vulnerabilități prezente la sistemele de stocare descrise anterior.
 
 
 %------------------------------------------------------------------------------------------
@@ -267,6 +267,7 @@ O funcție cPRF (pseudoaleatoare constrânsă) $F : \mathcal{K} \times \mathcal{
 \end{definitie}
 
 Alte construcții pe baza cPRF definite în \cite{boneh:2013constrained} și care vor fi folosite ulterior sunt: \textit{stânga/dreapta PRF} - funcții cPRF ce admit evaluarea lor având partea stângă a domeniului fixată; \textit{bit-fixate PRF} - funcții cPRF care pot fi evaluate în domenii corespunzătoare unei expresii având unii biți fixați. Autorii \cite{boneh:2013constrained} menționează că aceste construcții sunt posibile în contextul funcțiilor multiliniare iar problema devine mai interesantă (deocamdată nerezolvată) în contextul LWE \cite{regev2009lattices}. 
+% in case not enough pages go with the construction of bitfixing cprf; just don't let them thing it's easy :D
 
 \begin{definitie}
 	Fie o funcție $F: \mathcal{K} \times \mathcal{X}^2 \rightarrow \mathcal{Y}$ PRF. $\forall v \in \mathcal{X}$ o funcție stânga/dreapta admite $2$ chei de constrângere ${k_v}^L$ și ${k_v}^R$ ce permit evaluarea funcției $F$ în toate punctele $(v, x) \in \mathcal{X}^2$, respectiv $(x, v) \in \mathcal{X}^2$. Notăm această funcție cPRF stânga/dreapta cu $PRF^{L/R}$.
@@ -1527,9 +1528,9 @@ Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru 
 
 Motivația principală vine din eliminarea unor vulnerabiltăți prezentate în Secțiunea  \ref{sec:desc_alouneh} dar și o încercare de creștere a uzabilității schemelor de partajare, crearea unei interfețe intuitive, ușor de folosit.
 
-Uzabiltatea a fost întotdeauna o barieră care rareori a fost depășită; dezvoltarea de unelte care pot fi ușor folosite de utilizatorii generali, păstrând ascuns stratul de criptografie din spatele lor dar menținând o securitate ridicată \cite{gutmann:2005security}.
+Uzabilitatea a fost întotdeauna o barieră care rareori a fost depășită; dezvoltarea de unelte care pot fi ușor folosite de utilizatorii generali, păstrând ascuns stratul de criptografie din spatele lor dar menținând o securitate ridicată \cite{gutmann:2005security}.
 
-Conform \cite{gutmann:2005security} când construim arhitectura unei aplicații avem la îndemână următoarele alegeri când facem referire la uzabilitate și securitate:
+Conform \cite{gutmann:2005security}, când construim arhitectura unei aplicații avem la îndemână următoarele alegeri când facem referire la uzabilitate și securitate:
 
 %------------------------------------usability classes-----------------
 \begin{enumerate}
@@ -1542,7 +1543,7 @@ Conform \cite{gutmann:2005security} când construim arhitectura unei aplicații 
 
 Pentru a vedea de ce uzabilitatea este deseori preferată de utilizatorul general, spre deosebire de securitate, este îndeajuns menționarea câtorva aplicații P2P (peer-to-peer) și VoIp (voice-over-ip). Deși unele au fost construite cu scopul prioritizării securității (Freenet, PGP-phone, Nautilus \cite{website:freenet, website:pgp-phone, website:nautilus}) acestea au eșuat în detrimentul unor aplicații ușor de folosit precum BitTorrent, Skype, dar care au adăugat încet caracterstici pentru securitatea lor.
 
-În ultimii ani, se publică reportaje care încearcă să conștientizeze publicul larg despre importanța securității și intimității persoanelor \cite{greenwald:2013nsa, greenwald:2013edward}.
+În ultimii ani, se publică reportaje care încearcă să conștientizeze publicul larg despre importanța securității și intimității persoanelor, pentru o documentare mai bună înainte de a folosi anumite servicii \cite{greenwald:2013nsa, greenwald:2013edward}.
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
@@ -1551,15 +1552,14 @@ Pentru a vedea de ce uzabilitatea este deseori preferată de utilizatorul genera
 %------------------------------------------------------------------------------------------
 \section{Arhitectură bazată pe scheme de partajare}
 
-Folosind cele $4$ clase descrise mai sus, am ales să decuplăm securitatea de partea de design pentru ca pe viitor modificările aduse aplicației ca întreg să nu fie dificile de realizat. Acest lucru a fost realizat prin crearea de API-uri (interfață pentru programarea aplicațiilor) cu ajutorul frameworkului Django REST (detalii în secțiunea \ref{subsub:rest}). Pentru partea de UI am folosit AngularJS cu scopul de a integra API-urile dezvoltate anterior (secțiunea \ref{sub:angular}).
+Folosind cele $4$ clase descrise mai sus, am ales să decuplăm securitatea de partea de design pentru ca pe viitor modificările aduse aplicației ca întreg să nu fie dificile de realizat. Acest lucru a fost atins prin crearea de API-uri (interfață pentru programarea aplicațiilor) cu ajutorul frameworkului Django REST (detalii în secțiunea \ref{subsub:rest}). Pentru partea de UI am folosit AngularJS cu scopul de a integra API-urile dezvoltate anterior (secțiunea \ref{sub:angular}).
 
 Aducem la cunoștință că această arhitectură nu este una ideală, rezolvând problemele prezentate prezentate in Secțiunea \ref{sec:desc_alouneh} și aduce câteva sugestii de implementare unor metode.
 
-În acest moment dacă un adversar preia controlul serverului ce distribuie componentele (mai exact descoperă cheile secrete folosite pentru AWS), fișierele partajate sunt compromise. Bineînțeles, arhitectura poate fi ușor adaptată la mai multe servere (nu doar unul singur) folosind structura GridSharing evitând astfel atacul anterior \todo{poate?}.
+În acest moment dacă un adversar preia controlul serverului ce distribuie componentele (mai exact descoperă cheile secrete folosite pentru AWS), fișierele partajate sunt compromise. Bineînțeles, arhitectura poate fi ușor extinsă la mai multe servere (nu doar unul singur) folosind structura GridSharing, evitând astfel atacul anterior \todo{poate?}.
 
 
-O privire de ansamblu o oferă figura \ref{fig:dealerapp}.
-
+O privire de ansamblu a structurii proiectului se găsește în figura \ref{fig:dealerapp}.
 
 \begin{figure}
 	\begin{center}
@@ -1569,6 +1569,104 @@ O privire de ansamblu o oferă figura \ref{fig:dealerapp}.
 	\end{center}
 	\bigskip
 \end{figure}
+
+O dată ce utilizatorul se autentifică, acesta are acces la o listă cu toate fișierele partajate de el. Pentru a distribui un fișier pe instanțele EC2, alege alege numărul de mașini la care să-l împartă și dimensiune pragului pentru care se poate face reconstituirea. La reconstituire are la dispoziție o listă cu toate fișierele partajate pe de la înregistrarea sa până în momentul actual.
+
+
+\section{Distribuția unui fișier}
+
+Fișierul postat de utilizatorul autentificat este preluat de un API și distribuit conform figurei \ref{fig:dealerapp_distribution}. Codul pentru schema Shamir a fost preluat de pe GitHub (sub licența Apache) și modificat conform necesităților \cite{website:pysss-github}.
+
+De asemenea, modul în care erau generați coeficienții aleatori în \cite{website:pysss-github} a fost modificat (din $random.randint$ în $os.random$).
+
+Documentația limbajului Python precizează că pentru a folosi un generator criptografic sigur este recomandată funcția $os.random$ (apelează intern $/dev/urandom$).
+
+Studii recente arată că deși, practic, cele mai sigure generatoare de numere pseudo-aleatoare sunt $/dev/random$ și $/dev/urandom$ din sistemele UNIX, acestea nu sunt robuste \cite{dodis2013security}. După Principala problemă fiind extragerea entropiei precum și măsurarea ei.
+
+%---------------- Figure - dealer-app-distribution - START ------------------------
+\begin{figure*}[h!]
+
+\begin{tabular}{|p{\textwidth}|}
+\hline
+
+\\
+\hspace{.1in}
+\textbf{Date de intrare}: Un fișier binar $\mathcal{S}$;
+\medskip
+
+\hspace{.1in}
+\textbf{Date de ieșire}: $n$ șiruri binare distribuite la noduri din rețea;
+\medskip
+
+\hspace{.1in}
+\textbf{Inițializare}: $n$ șiruri binare $s_i \leftarrow \emptyset$, $1 \leq i \leq n$;
+\medskip
+
+\hspace{.1in}
+\textbf{Procesarea componentelor}: Pentru fiecare octet $b$ din $\mathcal{S}$, DealerApp:
+	\begin{itemize}
+		\item Generează un polinom $f$ de grad $k - 1$ având coeficienți aleatori;
+		\item Termenul liber al polinomului devine $b$
+		\begin{itemize}
+			\item Alege $n$ valori aleator distincte $x_i \leftarrow^R GF(256) \setminus \{0\}$, $1 \leq i \leq n$;
+			\item Concatenează perechea $x_i, f(x_i)$ la sfârșitul șirului binar $s_i$, i.e. $s_i \leftarrow s_i || x_i || f(x_i)$;
+		\end{itemize}
+	\end{itemize}
+\medskip
+
+\hspace{.1in}	
+\textbf{Distribuție}: Serverul DealerApp:
+	\begin{itemize}
+		\item Distribuie șirul binar $s_i$ instanței EC2 cu indicele $i$:
+	\end{itemize}
+
+\\
+\hline
+\end{tabular}
+\caption{Schema DealerApp - Generare}
+\label{fig:dealerapp_distribution}
+\end{figure*}
+
+%---------------- Figure - dealer-app-distribution- STOP ------------------------
+
+\section{Reconstituirea fișierelor}
+
+
+%---------------- Figure - dealer-app-reconstruction- START------------------------
+\begin{figure*}[h!]
+
+\begin{tabular}{|p{\textwidth}|}
+\hline
+
+\\
+\hspace{.1in}
+\textbf{Date de intrare}: Cel puțin $k$ șiruri binare $s_i$ provenite din instanțe EC2;
+
+\hspace{.1in}
+\textbf{Date de ieșire}: Fișierul original $\mathcal{S}$;
+\medskip
+
+\hspace{.1in}
+\textbf{Inițializare}: Un șir binar $\mathcal{S} \leftarrow \emptyset$;
+\medskip
+
+\hspace{.1in}
+\textbf{Reconstrucție}: Serverul DealerApp pentru fiecare $x_j, y_j$ din $s_1$:
+	\begin{itemize}
+		\item Pentru fiecare șir binar din cele $k$: $xp_i \leftarrow x_{i_j}, yp_i \leftarrow y_{i_j}$ $1 \leq i \leq k$, unde cu $x_{i_j}, y_{i_j}$ am notat octetul de pe poziția $j$ din șirul $i$ pentru $x$, respectiv $y$;
+		\item Interpolează cele $k$ puncte $xp_i, yp_i$ și obține un octet $b$;
+		\item Concatenează la sfârșitul lui $\mathcal{S}$ pe $b$ i.e. $\mathcal{S} \leftarrow \mathcal{S} || b$
+	\end{itemize}
+\\
+\hline
+\end{tabular}
+\caption{Schema DealerApp - Reconstrucție}
+\label{fig:DealerApp}
+\end{figure*}
+
+
+%---------------- Figure - dealer-app-reconstruction- STOP -------------------------------
+
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
@@ -1578,13 +1676,35 @@ O privire de ansamblu o oferă figura \ref{fig:dealerapp}.
 % poate tehnologii folosite?
 % About automatically startup scripts on EC2. AMI Images. Rest API, Django Framework, Angular
 % Bootstrap, Bootswatch
+
+
+\section{Contribuții}
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+
+\chapter{Concluzii}
 \section{Tehnologii folosite}
 
 \subsection{AWS}
 
 \subsubsection{Boto}
 
-\section{Redis}
+\subsection{Redis}
 
 \subsection{Django}
 
@@ -1595,24 +1715,6 @@ O privire de ansamblu o oferă figura \ref{fig:dealerapp}.
 \label{sub:angular}
 
 \subsubsection{Twitter Bootstrap}
-
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-\section{Reconstituirea fișierelor}
-
-
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-
 \clearpage
 
 \bibliographystyle{splncs}
