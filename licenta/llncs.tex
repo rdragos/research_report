@@ -1,4 +1,4 @@
-\documentclass[oneside]{book}
+\documentclass[oneside, 12pt]{book}
 \usepackage{amsmath, amsthm, amssymb, url,graphicx}
 \usepackage{makeidx}  % allows for indexgeneration
 \usepackage{llncsdoc}
@@ -87,7 +87,7 @@
 
 \hspace*{5mm}Păstrarea confidențialității și redundanței datelor pe perioade lungi de timp reprezintă o sarcină dificilă din cauza multiplelor probleme care pot apărea precum atacuri, erori umane, defecțiunea unor componente hardware sau dezastre naturale \cite{SGMV:2009}. Problemele sunt cu atât mai actuale astăzi, când organizațiile își păstrează datele în cloud pentru scăderea costurilor necesare întreținerii unui centru propriu de date (datacenter), deci informațiile sunt stocate și procesate în afara unui control fizic al roprietarului.
 
-\hspace*{5mm}Lucrarea de față analizează câteva dintre primitivele criptografice prezentând protocoale construite pe baza lor precum şi contribuţii personale în dezvoltarea lor \cite{RD:2014, RD:2015}. În final introducem o arhitectură implementată cu ajutorul schemelor de partajare, eliminând astfel câteva vulnerabilități prezente la sistemele menționate anterior.
+\hspace*{5mm}Lucrarea de față analizează câteva dintre primitivele criptografice prezentând protocoale construite pe baza lor precum şi contribuţii personale în dezvoltarea lor \cite{RD:2014, RD:2015}. În final introducem o arhitectură implementată cu ajutorul schemelor de partajare, eliminând astfel câteva vulnerabilități prezente la sistemele descrise anterior.
 
 
 %------------------------------------------------------------------------------------------
@@ -178,7 +178,7 @@
 \label{sec:intro}
 
 Termenul de criptografie este definit in dicționarul Oxford ca fiind \textit{arta de a scrie și a rezolva coduri}.
-Criptografia modernă s-a desprins de cea clasica în jurul anilor '80, motivând implementarea rigurozității matematice pentru definirea construcțiilor criptografice. Aceasta pentru ca în anii anteriori, experiența a dovedit nesiguranța metodelor de criptare, criptanaliza lor fiind uneori trivială (cifrul lui Cezar, Vigenere \cite{Caesar:2015}, \cite{Vigenere:2015}) sau uneori atinsă cu ceva mai mult efort precum Enigma și alte metode din cel de-al doilea război mondial. \cite{Enigma:2015}
+Criptografia modernă s-a desprins de cea clasica în jurul anilor '80, motivând implementarea rigurozității matematice pentru definirea construcțiilor criptografice. Aceasta pentru ca în anii anteriori, experiența a dovedit nesiguranța metodelor de criptare, criptanaliza lor fiind uneori trivială (cifrul lui Cezar, Vigenere) sau uneori atinsă cu ceva mai mult efort precum Enigma și alte metode din cel de-al doilea război mondial.
 
 Schemele de partajare sunt utilizate în aplicații precum: protejarea și recuperarea cheilor criptografice, vot electronic, certificate distribuite unor autorități, licitații on-line sau sisteme de stocare de lungă durată. \cite{Martin:2008}
 
@@ -1524,6 +1524,25 @@ Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru 
 \chapter{Implementare alternativă a sistemelor de stocare}
 \label{cha:alternave-implementations}
 
+
+Motivația principală vine din eliminarea unor vulnerabiltăți prezentate în Secțiunea  \ref{sec:desc_alouneh} dar și o încercare de creștere a uzabilității schemelor de partajare, crearea unei interfețe intuitive, ușor de folosit.
+
+Uzabiltatea a fost întotdeauna o barieră care rareori a fost depășită; dezvoltarea de unelte care pot fi ușor folosite de utilizatorii generali, păstrând ascuns stratul de criptografie din spatele lor dar menținând o securitate ridicată \cite{gutmann:2005security}.
+
+Conform \cite{gutmann:2005security} când construim arhitectura unei aplicații avem la îndemână următoarele alegeri când facem referire la uzabilitate și securitate:
+
+%------------------------------------usability classes-----------------
+\begin{enumerate}
+\item Uzabilitatea și securitatea vor avea aceeași importanță; 
+\item Securitatea va fi tratată pe primul plan, lăsând un loc mai mic uzabilității;
+\item Uzabilitatea va fi tratată pe primul plan, în dezavantajul securității;
+\item Securitatea va fi un produs separat, incorporată într-un mod natural în aplicație fără a compromite design-ul ei.
+\end{enumerate}
+%------------------------------------end of usability classes-----------------
+
+Pentru a vedea de ce uzabilitatea este deseori preferată de utilizatorul general, spre deosebire de securitate, este îndeajuns menționarea câtorva aplicații P2P (peer-to-peer) și VoIp (voice-over-ip). Deși unele au fost construite cu scopul prioritizării securității (Freenet, PGP-phone, Nautilus \cite{website:freenet, website:pgp-phone, website:nautilus}) acestea au eșuat în detrimentul unor aplicații ușor de folosit precum BitTorrent, Skype, dar care au adăugat încet caracterstici pentru securitatea lor.
+
+În ultimii ani, se publică reportaje care încearcă să conștientizeze publicul larg despre importanța securității și intimității persoanelor \cite{greenwald:2013nsa, greenwald:2013edward}.
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
@@ -1532,6 +1551,24 @@ Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru 
 %------------------------------------------------------------------------------------------
 \section{Arhitectură bazată pe scheme de partajare}
 
+Folosind cele $4$ clase descrise mai sus, am ales să decuplăm securitatea de partea de design pentru ca pe viitor modificările aduse aplicației ca întreg să nu fie dificile de realizat. Acest lucru a fost realizat prin crearea de API-uri (interfață pentru programarea aplicațiilor) cu ajutorul frameworkului Django REST (detalii în secțiunea \ref{subsub:rest}). Pentru partea de UI am folosit AngularJS cu scopul de a integra API-urile dezvoltate anterior (secțiunea \ref{sub:angular}).
+
+Aducem la cunoștință că această arhitectură nu este una ideală, rezolvând problemele prezentate prezentate in Secțiunea \ref{sec:desc_alouneh} și aduce câteva sugestii de implementare unor metode.
+
+În acest moment dacă un adversar preia controlul serverului ce distribuie componentele (mai exact descoperă cheile secrete folosite pentru AWS), fișierele partajate sunt compromise. Bineînțeles, arhitectura poate fi ușor adaptată la mai multe servere (nu doar unul singur) folosind structura GridSharing evitând astfel atacul anterior \todo{poate?}.
+
+
+O privire de ansamblu o oferă figura \ref{fig:dealerapp}.
+
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=1\textwidth]{img/DealerApp.png}
+	\caption{Distribuirea unui fișier în DealerApp la $4$ instanțe EC2}
+	\label{fig:dealerapp}
+	\end{center}
+	\bigskip
+\end{figure}
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
@@ -1541,7 +1578,23 @@ Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru 
 % poate tehnologii folosite?
 % About automatically startup scripts on EC2. AMI Images. Rest API, Django Framework, Angular
 % Bootstrap, Bootswatch
-\section{Instanțe Amazon EC2}
+\section{Tehnologii folosite}
+
+\subsection{AWS}
+
+\subsubsection{Boto}
+
+\section{Redis}
+
+\subsection{Django}
+
+\subsubsection{Django REST Framework}
+\label{subsub:rest}
+
+\subsection{AngularJS}
+\label{sub:angular}
+
+\subsubsection{Twitter Bootstrap}
 
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
