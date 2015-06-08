@@ -30,6 +30,7 @@
 \renewcommand\contentsname{Cuprins}
 \renewcommand{\bibname}{Referinţe}
 \renewcommand{\figurename}{Figura}
+\renewcommand{\tablename}{Tabel}
 \newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
 \newcommand{\todo}[1]{{\color{red}{TODO #1}}}
 
@@ -1556,7 +1557,7 @@ Folosind cele $4$ clase descrise mai sus, am ales să decuplăm securitatea de p
 
 Aducem la cunoștință că această arhitectură nu este una ideală, rezolvând problemele prezentate prezentate in Secțiunea \ref{sec:desc_alouneh} și aduce câteva sugestii de implementare unor metode.
 
-În acest moment dacă un adversar preia controlul serverului ce distribuie componentele (mai exact descoperă cheile secrete folosite pentru AWS), fișierele partajate sunt compromise. Bineînțeles, arhitectura poate fi ușor extinsă la mai multe servere (nu doar unul singur) folosind structura GridSharing, evitând astfel atacul anterior \todo{poate?}.
+În acest moment dacă un adversar preia controlul serverului ce distribuie componentele (mai exact descoperă cheile secrete folosite pentru AWS - Amazon Web Services), fișierele partajate sunt compromise. Bineînțeles, arhitectura poate fi ușor extinsă la mai multe servere (nu doar unul singur) folosind structura GridSharing, evitând astfel atacul anterior \todo{poate?}.
 
 
 O privire de ansamblu a structurii proiectului se găsește în figura \ref{fig:dealerapp}.
@@ -1575,13 +1576,13 @@ O dată ce utilizatorul se autentifică, acesta are acces la o listă cu toate f
 
 \section{Distribuția unui fișier}
 
-Fișierul postat de utilizatorul autentificat este preluat de un API și distribuit conform figurei \ref{fig:dealerapp_distribution}. Codul pentru schema Shamir a fost preluat de pe GitHub (sub licența Apache) și modificat conform necesităților \cite{website:pysss-github}.
+Fișierul postat de utilizatorul autentificat este preluat de un API și distribuit conform figurii \ref{fig:dealerapp_distribution}. Codul sursă pentru schema Shamir a fost preluat de pe GitHub (sub licența Apache) și modificat conform necesităților \cite{website:pysss-github}.
 
-De asemenea, modul în care erau generați coeficienții aleatori în \cite{website:pysss-github} a fost modificat (din $random.randint$ în $os.random$).
+De asemenea, modul în care erau generați coeficienții aleatori în \cite{website:pysss-github} a fost modificat (din $random.randint$ în $os.random$) din motive de securitate.
 
 Documentația limbajului Python precizează că pentru a folosi un generator criptografic sigur este recomandată funcția $os.random$ (apelează intern $/dev/urandom$).
 
-Studii recente arată că deși, practic, cele mai sigure generatoare de numere pseudo-aleatoare sunt $/dev/random$ și $/dev/urandom$ din sistemele UNIX, acestea nu sunt robuste \cite{dodis2013security}. După Principala problemă fiind extragerea entropiei precum și măsurarea ei.
+Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-aleatoare sunt $/dev/random$ și $/dev/urandom$ din sistemele UNIX, acestea nu sunt robuste \cite{dodis2013security}. Principala dificultate fiind extragerea entropiei precum și măsurarea ei.
 
 %---------------- Figure - dealer-app-distribution - START ------------------------
 \begin{figure*}[h!]
@@ -1629,7 +1630,13 @@ Studii recente arată că deși, practic, cele mai sigure generatoare de numere 
 
 %---------------- Figure - dealer-app-distribution- STOP ------------------------
 
-\section{Reconstituirea fișierelor}
+\section{Reconstrucția unui fișier}
+
+Utilizatorului autentificat i se pune la dispoziție o listă cu numele fișierelor partajate. Cănd utilizatorul alege unul dintre ele, serverul DealerApp trimite cereri de componente la fiecare din instanțele EC2. Presupunând că fișierul a fost partajat astfel încât oricare $k$ instanțe să fie capabile să îl reconstituie, serverul DealerApp se va opri din a face cereri atunci când primește cel puțin $k$ răspunsuri (Figura \ref{fig:DealerApp}). În Figura \ref{fig:dealerapp_reconstruction} este prezentată refacerea unui document din $4$ componente.
+
+Pentru ca un adversar pasiv să nu obțină vreo informație despre ce se transmite pe firul de comunicație dintre utilizator (în special numele fișierelor dar și conținutul acestora) este necesar protocolul HTTPS.
+
+HTTPS este protocolul standard de HTTP construit pe baza TLS \cite{dierks2008transport} și necesită autorități certificate pentru generarea de chei private / publice. O dată stabilite aceste chei, datele transmise pot fi criptate. Cu toate acestea, am considerat că adoptarea protocolului HTTPS nu se află printre scopurile acestei lucrări.
 
 
 %---------------- Figure - dealer-app-reconstruction- START------------------------
@@ -1640,7 +1647,7 @@ Studii recente arată că deși, practic, cele mai sigure generatoare de numere 
 
 \\
 \hspace{.1in}
-\textbf{Date de intrare}: Cel puțin $k$ șiruri binare $s_i$ provenite din instanțe EC2;
+\textbf{Date de intrare}: Cel puțin $k$ șiruri binare $s_i$ provenite din instanțe EC2
 
 \hspace{.1in}
 \textbf{Date de ieșire}: Fișierul original $\mathcal{S}$;
@@ -1667,6 +1674,18 @@ Studii recente arată că deși, practic, cele mai sigure generatoare de numere 
 
 %---------------- Figure - dealer-app-reconstruction- STOP -------------------------------
 
+%---------------- Figure - reconstruction-view- start ------------------------------------
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=1\textwidth]{img/DealerApp_Reconstruction.png}
+	\caption{Reconstituirea unui fișier cu numele $F5$ în DealerApp din $4$ instanțe EC2}
+	\label{fig:dealerapp_reconstruction}
+	\end{center}
+	\bigskip
+\end{figure}
+
+%---------------- Figure - reconstruction-view- start -------------------------------------
+
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
@@ -1678,43 +1697,76 @@ Studii recente arată că deși, practic, cele mai sigure generatoare de numere 
 % Bootstrap, Bootswatch
 
 
-\section{Contribuții}
+\section{Autentificare}
+% about 2 factor authentication
+% django is great at usual attacks
+% 
+\subsection{Django-REST Auth}
+
+\section{Date reținute de DealerApp}
+
+\section{Instanțe EC2}
+
+Amazon Web Services pun la dispoziție o gamă largă de servicii specializate pentru calculul în cloud. Acestă tehnică poartă denumirea de \textit{grid computing} (asamblarea de resurse computaționale din locații multiple pentru un anumit scop) \cite{garfinkel2007evaluation}.
+
+Printre uneltele AWS se numără și instanțele EC2, calculatoare cu configurații personalizate (tip de hard-disk, procesor CPU, volum de memorie RAM, procesor GPU, etc). Am considerat că ele reprezintă un început bun pentru crearea unei rețele proprii de calculatoare din motive precum:
+\begin{itemize}
+ 	\item Numărul mare de clienți dar și companii precum Adobe Systems, NetFlix, Pinterest;
+ 	\item Existența unor unelte puternic dezvoltate pentru programatori (Boto, consola AWS-cli);
+ 	\item Posibilitatea de a încerca gratis, timp de $1$ an, serviciile AWS.
+\end{itemize}
+
+Conectarea la serviciile propriu-zise se face prin folosirea unei perechi de chei, ambele generate de AWS:
+\begin{itemize}
+	\item Cheie bazată pe ID (Acces Key ID) - folosită pentru autentificarea cererilor și este unică pentru toți utlizatorii;
+	\item Cheie secretă (Acces Secret Key) - folosită pentru pentru semnarea digitală fiecărei cereri.
+\end{itemize}
+
+AWS recomandă înlocuirea acestei perechi o dată la $90$ de zile pentru creșterea securității contului.
+
+\subsection{Stabilirea unui grup de securitate}
+
+AWS permite definirea unui grup (sau mai multe) de securitate prin care se specifică reguli ale traficului de rețea. O instanță clasică EC2 poate avea asociate cel mult $500$ de astfel de grupuri iar un grup este capabil de maxim $100$ de reguli.
+
+Regulile unui grup constă în blocarea sau admiterea anumitor porturi (sau intervale) corespunzătoare protocoalelor TCP sau UDP dar și un număr de adrese IP care pot accesa mașinile asociate grupului.
+
+În particular, pentru implementarea arhitecturii DealerApp, poate fi aleasă o singură regulă de securitate și anume blocarea traficului de intrare/ieșire pe toate porturile și protocoale, mai puțin pe TCP cu portul $6379$, cu care se realizează transmisia de date între server și baza de date Redis aflată pe instanțele EC2.
+
+Bineînțeles, atunci cănd este necesară obținerea de log-uri de pe o anume instanță, se poate asocia incă un grup pentru efectua conexiunea prin SSH la acea mașină prin protocolul TCP având portul cu numărul $22$.
 
 
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
+\subsection{Imagini AMI}
 
+AMI (Imagini pentru Mașini Amazon) semnifică informația necesară pentru ca o instanță EC2 să poată porni. La prima creare a unei instanțe ($\mathcal{I}$) EC2 acestea sunt echipate cu un sistem de operare standard (Windows, Ubuntu, Redhat) la alegere, în cadrul modelului Free Tier.
 
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
+După ce un utilizator a adăugat uneltele necesare pe $\mathcal{I}$, acesta are posibilitatea de a crea o poză sau snapshot instanței $\mathcal{I}$ care va salva starea într-o AMI. Prin stare înțelegem conținutul volumului rădăcină $/$, nu și starea proceselor din RAM.
 
-\chapter{Concluzii}
-\section{Tehnologii folosite}
+O dată ce poza este finalizată, utilizatorul poate porni oricât de multe instanțe $\mathcal{J}$ care au aceeași stare cu $\mathcal{I}$ în momentul realizării pozei.
 
-\subsection{AWS}
-
-\subsubsection{Boto}
+AMI sunt accesibile atât în consola AWS cât și prin intermediul API-urilor (Boto, AWS-CLI) pentru o manevrare mai ușoară a lor. 
 
 \subsection{Redis}
+%TODO: despre pornirea automată, pereche (id, nume_fisier
 
-\subsection{Django}
+\subsection{Securitate și redundanță}
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 
-\subsubsection{Django REST Framework}
-\label{subsub:rest}
 
-\subsection{AngularJS}
-\label{sub:angular}
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 
-\subsubsection{Twitter Bootstrap}
+\chapter*{Concluzii}
+
 \clearpage
 
 \bibliographystyle{splncs}
