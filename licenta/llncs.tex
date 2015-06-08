@@ -189,8 +189,9 @@ Cum volumul de datelor electronice este în continuă creștere, necesitatea sto
 
 Date sensibile trebuie menținute secrete, câteodată pentru lungi perioade de timp (zeci de ani). Exemple includ informații militare, documete legale sau dosare medicale: informațiile militare pot fi clasificate zeci de ani, un testament trebuie menținut secret până la deschiderea sa oficială, un dosar medical necesită păstrare sigură (cel puțin) pe toată durata vieții pacientului.
 
+\todo{Notatii, PPT, uniform aleator, functie neglijabila}
 
-
+Notăm cu $s \leftarrow^R S$ faptul că $s$ este ales în mod aleator uniform din mulţimea $S$. 
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -224,7 +225,7 @@ Date sensibile trebuie menținute secrete, câteodată pentru lungi perioade de 
 O funcţie pseudoaleatoare (PRF) $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ este un algoritm polinomial determinist definit pe mulţimea cheilor $\mathcal{K}$ unde $\mathcal{X}$, $\mathcal{Y}$ reprezintă domeniul, respectiv codomeniul lui $F$.
 Primele construcţii au fost definite în $1986$ pornind de la un PRG (generator pseudoaleator) sigur \cite{goldreich1986construct}. Această primitivă este folosită în special pentru generarea de chei în protocoale actuale precum TLS (fostul SSL) \cite{dierks2008transport}.
 
-Un caz particular de PRF în care $\mathcal{Y} = \mathcal{X}$ şi $F$ este bijectivă, sunt permutările pseudoaleatoare (PRP): AES, 3DES, având proprietatea utilă de a admite inversă. %as putea un nume mai bun, nu chiar inversabilitate
+Un caz particular de PRF în care $\mathcal{Y} = \mathcal{X}$ şi $F$ este bijectivă, sunt permutările pseudoaleatoare (PRP). Acestea au poprietatea utilă de a admite inversă, fiind utilizate direct în sisteme de criptare simetrice (ex. AES \cite{daemen:2013design}).
 
 Intuitiv, funcţia $F$ poate fi evaluată eficient (în timp polinomial) în toate punctele $x \in \mathcal{X}$ din momentul în care o cheie $k \in \mathcal{K}$ este fixată. 
 Din punct de vedere al securității, un adversar PPT (timp probabilistic polinomial) $\mathcal{A}$ nu poate face diferența între o instanţă aleatoare $F(k, \cdot)$, $k \in \mathcal{K}$ şi o funcție aleasă aleator din toate funcţiile posibile având domeniul $\mathcal{X}$, codomeniul $\mathcal{Y}$.
@@ -237,7 +238,7 @@ Din punct de vedere al securității, un adversar PPT (timp probabilistic polino
 \section{Definiții de Securitate}
 \label{subsec:prf-security}
 
-În procesul formalizării noţiunii de securitate \textit{adaptivă} a unei funcții PRF $F$, vom avea în vedere un adversar PPT $\mathcal{A}$. În definiție sunt prezentate $2$ experimente cu adversarul $\mathcal{A}$: $EXP(b))$, $b \leftarrow ^ R \{0,1\}$, iar avantajul lui va consta în abilitatea de a le distinge. Notăm cu $s \leftarrow^R S$ faptul că $s$ este ales în mod aleator uniform din mulţimea $S$. 
+În procesul formalizării noţiunii de securitate \textit{adaptivă} a unei funcții PRF $F$, vom avea în vedere un adversar PPT $\mathcal{A}$. În definiție sunt prezentate $2$ experimente cu adversarul $\mathcal{A}$: $EXP(b)$, $b \leftarrow ^ R \{0,1\}$, iar avantajul lui va consta în abilitatea de a le distinge. 
 
 La începutul experimentului este apelată funcția $Setup(1^\lambda)$ care primește la intrare un parametru de securitate $\lambda$ și întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Fie $V, C \subseteq X$, $2$ mulțimi de puncte (inițial vide) pentru care $\mathcal{A}$ cunoaște valorile $F(k, \cdot)$ trimise la $\mathsf{F.eval}$, respectiv la $\mathsf{F.challenge}$. De asemenea, $\mathcal{A}$ are acces la $2$ tipuri de oracole:
 \begin{itemize}
@@ -247,7 +248,7 @@ La începutul experimentului este apelată funcția $Setup(1^\lambda)$ care prim
 La finalul experimentului, $\mathcal{A}$ întoarce o valoare $b' \in \{0, 1\}$.
 
 Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sfârșitul jocului. Notăm cu $AdvPRF_{\mathcal{A},F}(\lambda) = |Pr[W_0] - Pr[W_1]|$ avantajul lui $A$.
-
+\\
 \begin{definitie}
 	O funcție PRF $F$ este sigură dacă pentru orice adversar PPT A, $AdvPRF_{\mathcal{A},F}(\lambda)$ este o funcție neglijabilă.
 \end{definitie}
@@ -257,7 +258,7 @@ Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sf
 \label{subsec:cprf}
 
 O funcție cPRF (pseudoaleatoare constrânsă) $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ este o funcție PRF care deține \textit{chei de constrângere} ce permit evaluarea funcției $F$ în subdomenii $S \subseteq 2^{\mathcal{X}}$ menținând proprietățile de securitate ale funcțiilor PRF.
-
+\\
 \begin{definitie}
 \label{def:cprf}
 	O funcție PRF $F : \mathcal{K} \times \mathcal{X} \rightarrow \mathcal{Y}$ este constrânsă la o mulțime $\mathcal{S} \subseteq 2^{\mathcal{X}}$ dacă există o mulțime adițională de chei $\mathcal{K}_c$ și $2$ algoritmi:
@@ -269,17 +270,17 @@ O funcție cPRF (pseudoaleatoare constrânsă) $F : \mathcal{K} \times \mathcal{
 
 Alte construcții pe baza cPRF definite în \cite{boneh:2013constrained} și care vor fi folosite ulterior sunt: \textit{stânga/dreapta PRF} - funcții cPRF ce admit evaluarea lor având partea stângă a domeniului fixată; \textit{bit-fixate PRF} - funcții cPRF care pot fi evaluate în domenii corespunzătoare unei expresii având unii biți fixați. Autorii \cite{boneh:2013constrained} menționează că aceste construcții sunt posibile în contextul funcțiilor multiliniare iar problema devine mai interesantă (deocamdată nerezolvată) în contextul LWE \cite{regev2009lattices}. 
 % in case not enough pages go with the construction of bitfixing cprf; just don't let them thing it's easy :D
-
+\\
 \begin{definitie}
 	Fie o funcție $F: \mathcal{K} \times \mathcal{X}^2 \rightarrow \mathcal{Y}$ PRF. $\forall v \in \mathcal{X}$ o funcție stânga/dreapta admite $2$ chei de constrângere ${k_v}^L$ și ${k_v}^R$ ce permit evaluarea funcției $F$ în toate punctele $(v, x) \in \mathcal{X}^2$, respectiv $(x, v) \in \mathcal{X}^2$. Notăm această funcție cPRF stânga/dreapta cu $PRF^{L/R}$.
 \end{definitie}
-
+\mbox{}\\
 \begin{definitie}
 	Fie o funcție $F: \mathcal{K} \times {\{0, 1\}}^n \rightarrow \mathcal{Y}$ PRF. $\forall v \in {\{0, 1, ? \}}^n$ o funcție bit-fixată admite o cheie de constrângere $k_v$ ce permite evaluarea funcției $F$ în toate punctele $x \in \{0,1\}^n$ ce satisfac modelul lui $v$.
 	Notăm această funcție cPRF bit-fixată cu $PRF^{bf}$.
 \end{definitie}
-
-Noțiunea de securitate pentru cPRF \cite{boneh:2013constrained} este asemănătoare cu cea pentru PRF: $2$ experimente $EXP(0), EXP(1)$, doar că în acest caz este necesară existența unui oracol $F.constrain$ pentru a permite adversarului să interogheze $F$ conform definiției \ref{def:cprf}.
+\mbox{}\\
+Noțiunea de securitate pentru cPRF  este asemănătoare cu cea pentru PRF: $2$ experimente $EXP(0), EXP(1)$, doar că în acest caz este necesară existența unui oracol $F.constrain$ pentru a permite adversarului să interogheze $F$ conform definiției \ref{def:cprf} \cite{boneh:2013constrained}.
 
 La începutul fiecărui experiment este apelată funcția $Setup(\lambda)$ care întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Inițial mulțimile $V, C \subseteq \mathcal{X}$ sunt vide iar adversarul $\mathcal{A}$ are acces la $3$ oracole:
 \begin{itemize}
@@ -291,7 +292,7 @@ La începutul fiecărui experiment este apelată funcția $Setup(\lambda)$ care 
 La finalul experimentului, $\mathcal{A}$ întoarce o valoare $b' \in \{0, 1\}$.
 
 Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sfârșitul jocului. Notăm cu $AdvPRF_{\mathcal{A},F}(\lambda) = |Pr[W_0] - Pr[W_1]|$ avantajul lui $A$.
-
+\mbox{}\\
 \begin{definitie}
 	O funcție cPRF $F$ este sigură dacă pentru orice adversar PPT $\mathcal{A}$, $AdvPRF_{\mathcal{A},F}(\lambda)$ este o funcție neglijabilă.
 \end{definitie}
@@ -432,8 +433,8 @@ Reiese din securitatea funcției cPRF stânga/dreapta. Dacă un adversar $\mathc
 \section{Multi-Party ID-NIKE}
 \label{subsec:multi-party-id}
 
-Multi-Party (mai mulți membri) ID-NIKE reprezintă generalizarea protocolului ID-NIKE pentru cazul cu $n$ participanți $(n > 2)$. Mai întâi definim modelul de securitate pentru acest protocol după care introducem construcția multi-party bazată pe funcții cPRF bit-fixate din secțiunea \label{sec:multi-party-contributions} \cite{RD:2014}.
-
+Multi-Party (mai mulți membri) ID-NIKE reprezintă generalizarea protocolului ID-NIKE pentru cazul cu $n$ participanți $(n > 2)$. Mai întâi definim modelul de securitate pentru acest protocol după care introducem construcția multi-party bazată pe funcții cPRF bit-fixate din secțiunea \ref{sec:multi-party-contributions} \cite{RD:2014}.
+\mbox{}\\
 \begin{definitie}
 	O schemă multi-party ID-NIKE este formată din $3$ algoritmi:
 	\begin{itemize}
@@ -444,7 +445,7 @@ Multi-Party (mai mulți membri) ID-NIKE reprezintă generalizarea protocolului I
 \end{definitie}
 
 \subsubsection{Corectitudine}
-Este necesar ca toți participanții să obțină aceeași cheie; Pentru orice pereche $i, j, i \neq j$ și $n$ identități distincte $id_1, id_2, \dots, id_n$: $KeyGen(params, sk_{id_i}, \{id_l\}_{l=1,\dots,n})$ = $KeyGen(params, sk_{id_j}, \{id_l\}_{l=1,\dots,n})$.
+Este necesar ca toți participanții să obțină aceeași cheie; Pentru orice pereche $i, j, i \neq j$ și $n$ identități distincte $id_1, id_2, \dots, id_n$: $KeyGen(params, sk_{id_i}, $ $\{id_l\}_{l=1,\dots,n})$ = $KeyGen(params, sk_{id_j}, \{id_l\}_{l=1,\dots,n})$.
 
 
 %----------------------------Security Definition--------------------------------------------------
@@ -1632,7 +1633,7 @@ Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-
 
 \section{Reconstrucția unui fișier}
 
-Utilizatorului autentificat i se pune la dispoziție o listă cu numele fișierelor partajate. Cănd utilizatorul alege unul dintre ele, serverul DealerApp trimite cereri de componente la fiecare din instanțele EC2. Presupunând că fișierul a fost partajat astfel încât oricare $k$ instanțe să fie capabile să îl reconstituie, serverul DealerApp se va opri din a face cereri atunci când primește cel puțin $k$ răspunsuri (Figura \ref{fig:DealerApp}). În Figura \ref{fig:dealerapp_reconstruction} este prezentată refacerea unui document din $4$ componente.
+Utilizatorului autentificat i se pune la dispoziție o listă cu numele fișierelor partajate. Când utilizatorul alege unul dintre ele, serverul DealerApp trimite cereri de componente la fiecare din instanțele EC2. Presupunând că fișierul a fost partajat astfel încât oricare $k$ instanțe să fie capabile să îl reconstituie, serverul DealerApp se va opri din a face cereri atunci când primește cel puțin $k$ răspunsuri (Figura \ref{fig:DealerApp}). În Figura \ref{fig:dealerapp_reconstruction} este prezentată refacerea unui document din $4$ componente.
 
 Pentru ca un adversar pasiv să nu obțină vreo informație despre ce se transmite pe firul de comunicație dintre utilizator (în special numele fișierelor dar și conținutul acestora) este necesar protocolul HTTPS.
 
@@ -1713,7 +1714,7 @@ Printre uneltele AWS se numără și instanțele EC2, calculatoare cu configura�
 \begin{itemize}
  	\item Numărul mare de clienți dar și companii precum Adobe Systems, NetFlix, Pinterest;
  	\item Existența unor unelte puternic dezvoltate pentru programatori (Boto, consola AWS-cli);
- 	\item Posibilitatea de a încerca gratis, timp de $1$ an, serviciile AWS.
+ 	\item Posibilitatea de a încerca gratis, timp de $1$ an, serviciile AWS (programul Free-Tier).
 \end{itemize}
 
 Conectarea la serviciile propriu-zise se face prin folosirea unei perechi de chei, ambele generate de AWS:
@@ -1722,31 +1723,44 @@ Conectarea la serviciile propriu-zise se face prin folosirea unei perechi de che
 	\item Cheie secretă (Acces Secret Key) - folosită pentru pentru semnarea digitală fiecărei cereri.
 \end{itemize}
 
-AWS recomandă înlocuirea acestei perechi o dată la $90$ de zile pentru creșterea securității contului.
+AWS recomandă înlocuirea acestei perechi de chei o dată la $90$ de zile pentru creșterea securității contului.
 
 \subsection{Stabilirea unui grup de securitate}
 
 AWS permite definirea unui grup (sau mai multe) de securitate prin care se specifică reguli ale traficului de rețea. O instanță clasică EC2 poate avea asociate cel mult $500$ de astfel de grupuri iar un grup este capabil de maxim $100$ de reguli.
 
-Regulile unui grup constă în blocarea sau admiterea anumitor porturi (sau intervale) corespunzătoare protocoalelor TCP sau UDP dar și un număr de adrese IP care pot accesa mașinile asociate grupului.
+Regulile unui grup constă în blocarea sau admiterea anumitor porturi corespunzătoare protocoalelor TCP sau UDP dar și un număr de adrese IP care pot accesa mașinile asociate grupului.
 
 În particular, pentru implementarea arhitecturii DealerApp, poate fi aleasă o singură regulă de securitate și anume blocarea traficului de intrare/ieșire pe toate porturile și protocoale, mai puțin pe TCP cu portul $6379$, cu care se realizează transmisia de date între server și baza de date Redis aflată pe instanțele EC2.
 
-Bineînțeles, atunci cănd este necesară obținerea de log-uri de pe o anume instanță, se poate asocia incă un grup pentru efectua conexiunea prin SSH la acea mașină prin protocolul TCP având portul cu numărul $22$.
+
+
+Bineînțeles, atunci când este necesară obținerea de log-uri de pe o anume instanță, se poate asocia incă un grup pentru efectua conexiunea prin SSH la mașina respectivă prin protocolul TCP având portul cu numărul $22$.
 
 
 \subsection{Imagini AMI}
 
-AMI (Imagini pentru Mașini Amazon) semnifică informația necesară pentru ca o instanță EC2 să poată porni. La prima creare a unei instanțe ($\mathcal{I}$) EC2 acestea sunt echipate cu un sistem de operare standard (Windows, Ubuntu, Redhat) la alegere, în cadrul modelului Free Tier.
+AMI (Imagini pentru Mașini Amazon) semnifică informația necesară pentru ca o instanță EC2 să poată porni. La prima creare a unei instanțe ($\mathcal{I}$) EC2 acestea sunt echipate cu un sistem de operare standard (Windows, Ubuntu, Redhat) la alegere, în cadrul modelului Free- Tier.
 
 După ce un utilizator a adăugat uneltele necesare pe $\mathcal{I}$, acesta are posibilitatea de a crea o poză sau snapshot instanței $\mathcal{I}$ care va salva starea într-o AMI. Prin stare înțelegem conținutul volumului rădăcină $/$, nu și starea proceselor din RAM.
 
 O dată ce poza este finalizată, utilizatorul poate porni oricât de multe instanțe $\mathcal{J}$ care au aceeași stare cu $\mathcal{I}$ în momentul realizării pozei.
 
-AMI sunt accesibile atât în consola AWS cât și prin intermediul API-urilor (Boto, AWS-CLI) pentru o manevrare mai ușoară a lor. 
+AMI sunt accesibile atât în consola AWS cât și prin intermediul API-urilor folosind Boto sau AWS-CLI pentru o manevrare mai ușoară a lor. 
+
+În cazul DealerApp, instanțele EC2 au fost pornite dintr-un AMI care conține un sistem de operare Ubuntu 14.04 și un server de Redis (Secțiunea \ref{subsec:redis}).
+
+Pentru pornirea automată a serverului Redis impreună cu instanța a fost necesară configurarea unui serviciu (Upstart) ce se ocupă cu startul, oprirea și supervizarea aplicațiilor unei mașini. Upstart funcționează doar pe calculatoarele prezente cu un sistem de operare bazat pe Linux.
 
 \subsection{Redis}
-%TODO: despre pornirea automată, pereche (id, nume_fisier
+\label{subsec:redis}
+
+%TODO: despre pornirea automată, pereche (id, nume_fisier)
+Redis (REmote DIctionary Server)
+La adresa TCP cu portul $6379$ trebuie să se poate conecta doar adrese IP-uri autorizate, spre exemplu, adresa IP la care rulează DealerApp. În cazul acesta, instanța EC2 rămâne în continuare vulnerabilă la atacuri care implică falsificarea unor adrese IP. Pentru o securitate mai puternică este necesară semnarea interogărilor la baza de date, posibilă prin pornirea unei aplicații mai complexe (web-server) care să funcționeze cu același server Redis.
+
+Din motive de simplitate, am renunțat la adăugarea unui alt strat de securitate pastrând doar serverul de Redis, profitând de avantajul că un adversar trebuie să compromită cel puțin $n-k+1$ instanțe pentru ca reconstituirea să nu fie posibilă. În cazul în care un adversar corupe integritatea serverului de Redis, se poate folosi schema Feldman pentru verificarea componentei distribuite.
+
 
 \subsection{Securitate și redundanță}
 %------------------------------------------------------------------------------------------
