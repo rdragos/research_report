@@ -1554,12 +1554,9 @@ Pentru a vedea de ce uzabilitatea este deseori preferată de utilizatorul genera
 %------------------------------------------------------------------------------------------
 \section{Arhitectură bazată pe scheme de partajare}
 
-Folosind cele $4$ clase descrise mai sus, am ales să decuplăm securitatea de partea de design pentru ca pe viitor modificările aduse aplicației ca întreg să nu fie dificile de realizat. Acest lucru a fost atins prin crearea de API-uri (interfață pentru programarea aplicațiilor) cu ajutorul frameworkului Django REST (detalii în secțiunea \ref{subsub:rest}). Pentru partea de UI am folosit AngularJS cu scopul de a integra API-urile dezvoltate anterior (secțiunea \ref{sub:angular}).
+Folosind cele $4$ clase descrise mai sus, am ales să decuplăm securitatea de partea de design pentru ca pe viitor modificările aduse aplicației ca întreg să nu fie dificile de realizat. Acest lucru a fost atins prin crearea de API-uri (interfață pentru programarea aplicațiilor) cu ajutorul frameworkului Django REST (detalii în secțiunea \ref{sub:django-rest}). Pentru partea de UI am folosit AngularJS cu scopul de a integra API-urile dezvoltate anterior \cite{website:angularjs}.
 
-Aducem la cunoștință că această arhitectură nu este una ideală, rezolvând problemele prezentate prezentate in Secțiunea \ref{sec:desc_alouneh} și aduce câteva sugestii de implementare unor metode.
-
-În acest moment dacă un adversar preia controlul serverului ce distribuie componentele (mai exact descoperă cheile secrete folosite pentru AWS - Amazon Web Services), fișierele partajate sunt compromise. Bineînțeles, arhitectura poate fi ușor extinsă la mai multe servere (nu doar unul singur) folosind structura GridSharing, evitând astfel atacul anterior \todo{poate?}.
-
+Aducem la cunoștință că implementarea acestei arhitecturi este departe de a fi una ideală și nu trebuie folosită în producție, fiind vulnerabilă la atacuri (side-channel, bazate pe generatoare de numere pseudo-aleatoare, etc) \cite{kocher:1996timing, gutterman:2006analysis}.
 
 O privire de ansamblu a structurii proiectului se găsește în figura \ref{fig:dealerapp}.
 
@@ -1572,12 +1569,12 @@ O privire de ansamblu a structurii proiectului se găsește în figura \ref{fig:
 	\bigskip
 \end{figure}
 
-O dată ce utilizatorul se autentifică, acesta are acces la o listă cu toate fișierele partajate de el. Pentru a distribui un fișier pe instanțele EC2, alege alege numărul de mașini la care să-l împartă și dimensiune pragului pentru care se poate face reconstituirea. La reconstituire are la dispoziție o listă cu toate fișierele partajate pe de la înregistrarea sa până în momentul actual.
+O dată ce utilizatorul se autentifică, acesta are acces la o listă cu toate fișierele partajate de el. Pentru a distribui un fișier pe instanțele EC2, alege numărul de mașini la care să-l împartă și dimensiunea pragului pentru care se poate face reconstituirea. La reconstituire are la dispoziție o listă cu toate fișierele partajate pe de la înregistrarea sa până în momentul actual.
 
 
 \section{Distribuția unui fișier}
 
-Fișierul postat de utilizatorul autentificat este preluat de un API și distribuit conform figurii \ref{fig:dealerapp_distribution}. Codul sursă pentru schema Shamir a fost preluat de pe GitHub (sub licența Apache) și modificat conform necesităților \cite{website:pysss-github}.
+Fișierul postat de utilizatorul autentificat este preluat de un API și distribuit conform figurii \ref{fig:dealerapp_distribution}. Codul sursă pentru schema Shamir a fost preluat de pe GitHub (sub licență Apache) și modificat potrivit 1necesităților \cite{website:pysss-github}.
 
 De asemenea, modul în care erau generați coeficienții aleatori în \cite{website:pysss-github} a fost modificat (din $random.randint$ în $os.random$) din motive de securitate.
 
@@ -1597,7 +1594,7 @@ Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-
 \medskip
 
 \hspace{.1in}
-\textbf{Date de ieșire}: $n$ șiruri binare distribuite la noduri din rețea;
+\textbf{Date de ieșire}: $n$ șiruri binare $s_i$, distribuite la noduri din rețea;
 \medskip
 
 \hspace{.1in}
@@ -1655,13 +1652,13 @@ HTTPS este protocolul standard de HTTP construit pe baza TLS \cite{dierks2008tra
 \medskip
 
 \hspace{.1in}
-\textbf{Inițializare}: Un șir binar $\mathcal{S} \leftarrow \emptyset$;
+\textbf{Inițializare}: Un șir binar $\mathcal{S} \leftarrow \emptyset$; $L$ lungimea unui șir binar $s_i$; $L \leftarrow \frac{L}{2}$.
 \medskip
 
 \hspace{.1in}
-\textbf{Reconstrucție}: Serverul DealerApp pentru fiecare $x_j, y_j$ din $s_1$:
+\textbf{Reconstrucție}: DealerApp pentru fiecare $j$, $1 \leq j \leq L$:
 	\begin{itemize}
-		\item Pentru fiecare șir binar din cele $k$: $xp_i \leftarrow x_{i_j}, yp_i \leftarrow y_{i_j}$ $1 \leq i \leq k$, unde cu $x_{i_j}, y_{i_j}$ am notat octetul de pe poziția $j$ din șirul $i$ pentru $x$, respectiv $y$;
+		\item Pentru fiecare șir binar din cele $k$: $xp_i \leftarrow x_{i_j}, yp_i \leftarrow y_{i_j}$ $1 \leq i \leq k$, unde cu $x_{i_j}, y_{i_j}$ am notat cel de-al $j$-lea octet corespunzător pentru $x$ din șirul $i$, respectiv $y$;
 		\item Interpolează cele $k$ puncte $xp_i, yp_i$ și obține un octet $b$;
 		\item Concatenează la sfârșitul lui $\mathcal{S}$ pe $b$ i.e. $\mathcal{S} \leftarrow \mathcal{S} || b$
 	\end{itemize}
@@ -1703,6 +1700,7 @@ HTTPS este protocolul standard de HTTP construit pe baza TLS \cite{dierks2008tra
 % django is great at usual attacks
 % 
 \subsection{Django-REST Auth}
+\label{sub:django-rest}
 
 \section{Date reținute de DealerApp}
 
