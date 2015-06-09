@@ -28,7 +28,7 @@
 
 \renewcommand{\chaptername}{Capitolul}
 \renewcommand\contentsname{Cuprins}
-\renewcommand{\bibname}{Referinţe}
+\renewcommand{\bibname}{Referințe}
 \renewcommand{\figurename}{Figura}
 \renewcommand{\tablename}{Tabel}
 \newcommand{\Mod}[1]{\ (\text{mod}\ #1)}
@@ -44,7 +44,7 @@
 \newtheorem{exemplu}{\textbf{Exemplu}}[section]
  
 \begin{document}
-%  de titlu
+%  pagina de titlu
 \thispagestyle{empty}
 
 \begin{center}
@@ -1725,40 +1725,54 @@ AWS recomandă înlocuirea acestei perechi de chei o dată la $90$ de zile pentr
 
 \subsection{Stabilirea unui grup de securitate}
 
-AWS permite definirea unui grup (sau mai multe) de securitate prin care se specifică reguli ale traficului de rețea. O instanță clasică EC2 poate avea asociate cel mult $500$ de astfel de grupuri iar un grup este capabil de maxim $100$ de reguli.
+AWS permite definirea unui grup (sau mai multe) de securitate prin care se specifică reguli ale traficului de rețea. O instanță clasică EC2 poate avea asociate cel mult $500$ de astfel de grupuri iar un grup este capabil de maxim $100$ de reguli \cite{website:aws-docs}.
 
-Regulile unui grup constă în blocarea sau admiterea anumitor porturi corespunzătoare protocoalelor TCP sau UDP dar și un număr de adrese IP care pot accesa mașinile asociate grupului.
+Regulile unui grup constă în blocarea sau admiterea anumitor porturi corespunzătoare protocoalelor TCP sau UDP dar și un număr de adrese IP care pot accesa mașinile asociate grupului \cite{protocol:1980rfc, forouzan:2002tcp}.
 
 În particular, pentru implementarea arhitecturii DealerApp, poate fi aleasă o singură regulă de securitate și anume blocarea traficului de intrare/ieșire pe toate porturile și protocoale, mai puțin pe TCP cu portul $6379$, cu care se realizează transmisia de date între server și baza de date Redis aflată pe instanțele EC2.
 
 
 
-Bineînțeles, atunci când este necesară obținerea de log-uri de pe o anume instanță, se poate asocia incă un grup pentru efectua conexiunea prin SSH la mașina respectivă prin protocolul TCP având portul cu numărul $22$.
+Bineînțeles, atunci când este necesară obținerea de log-uri de pe o anume instanță, se poate asocia incă un grup pentru efectua conexiunea prin SSH la mașina respectivă prin protocolul TCP având portul cu numărul $22$ \cite{ylonen:2006secure}.
 
 
 \subsection{Imagini AMI}
 
-AMI (Imagini pentru Mașini Amazon) semnifică informația necesară pentru ca o instanță EC2 să poată porni. La prima creare a unei instanțe ($\mathcal{I}$) EC2 acestea sunt echipate cu un sistem de operare standard (Windows, Ubuntu, Redhat) la alegere, în cadrul modelului Free- Tier.
+AMI (Imagini pentru Mașini Amazon) semnifică informația necesară pentru ca o instanță EC2 să poată porni. La prima creare a unei instanțe ($\mathcal{I}$) EC2 acestea sunt echipate cu un sistem de operare standard (Windows, Ubuntu, Redhat) la alegere, în cadrul programului Free-Tier \cite{website:aws-docs}.
 
 După ce un utilizator a adăugat uneltele necesare pe $\mathcal{I}$, acesta are posibilitatea de a crea o poză sau snapshot instanței $\mathcal{I}$ care va salva starea într-o AMI. Prin stare înțelegem conținutul volumului rădăcină $/$, nu și starea proceselor din RAM.
 
 O dată ce poza este finalizată, utilizatorul poate porni oricât de multe instanțe $\mathcal{J}$ care au aceeași stare cu $\mathcal{I}$ în momentul realizării pozei.
 
-AMI sunt accesibile atât în consola AWS cât și prin intermediul API-urilor folosind Boto sau AWS-CLI pentru o manevrare mai ușoară a lor. 
+AMI sunt accesibile atât în consola AWS cât și prin intermediul API-urilor (exemplu Boto) pentru o manevrare mai ușoară a lor \cite{website:boto-docs}. 
 
 În cazul DealerApp, instanțele EC2 au fost pornite dintr-un AMI care conține un sistem de operare Ubuntu 14.04 și un server de Redis (Secțiunea \ref{subsec:redis}).
 
-Pentru pornirea automată a serverului Redis impreună cu instanța a fost necesară configurarea unui serviciu (Upstart) ce se ocupă cu startul, oprirea și supervizarea aplicațiilor unei mașini. Upstart funcționează doar pe calculatoarele prezente cu un sistem de operare bazat pe Linux.
+Pentru pornirea automată a serverului Redis impreună cu instanța a fost necesară configurarea unui serviciu (Upstart) ce se ocupă cu startul, oprirea și supervizarea aplicațiilor unei mașini. Upstart funcționează doar pe calculatoarele prezente cu un sistem de operare bazat pe Linux \cite{website:upstart}.
 
 \subsection{Redis}
 \label{subsec:redis}
 
 %TODO: despre pornirea automată, pereche (id, nume_fisier)
-Redis (REmote DIctionary Server)
-La adresa TCP cu portul $6379$ trebuie să se poate conecta doar adrese IP-uri autorizate, spre exemplu, adresa IP la care rulează DealerApp. În cazul acesta, instanța EC2 rămâne în continuare vulnerabilă la atacuri care implică falsificarea unor adrese IP. Pentru o securitate mai puternică este necesară semnarea interogărilor la baza de date, posibilă prin pornirea unei aplicații mai complexe (web-server) care să funcționeze cu același server Redis.
+Redis (REmote DIctionary Server) este o bază de date \textit{cheie-valoare} întemeiată pe asocierea unică unei chei cu o valoare \cite{cattell:2011scalable}. Redis, spre deosebire celelalte baze de date \textit{cheie-valoare}, poate asocia unei chei structuri de date complexe (nu doar șiruri de caractere) precum liste, mulțimi, mulțimi sortate, tabele de dispersie, etc \cite{website:redis-documentation}.
 
-Din motive de simplitate, am renunțat la adăugarea unui alt strat de securitate pastrând doar serverul de Redis, profitând de avantajul că un adversar trebuie să compromită cel puțin $n-k+1$ instanțe pentru ca reconstituirea să nu fie posibilă. În cazul în care un adversar corupe integritatea serverului de Redis, se poate folosi schema Feldman pentru verificarea componentei distribuite.
+Motivul pentru care am ales Redis este datorat simplității folosirii sale, rapiditatea cu care efectuează operațiile de citire, scriere dar și existența uneltor specializate pentru lucrul în limbajul Python \cite{website:redis-documentation, website:redis-py}.
 
+Conexiunile prin intermediul clientului Redis pentru Python sunt realizate prin conectarea la numele de host al serverului și numărul portului, fiind instanțiate de DealerApp.
+
+În cazul intanțelor, la adresa TCP cu portul $6379$ trebuie să se poate conecta doar adrese IP autorizate, spre exemplu adresa IP a clienților la care rulează DealerApp. În cazul acesta, instanța EC2 rămâne în continuare vulnerabilă la atacuri care implică falsificarea unor adrese IP. Pentru o securitate mai puternică este necesară semnarea interogărilor la baza de date, posibilă prin pornirea unei aplicații mai complexe (web-server) care să funcționeze cu același server Redis.
+
+Din motive de simplitate, am renunțat la adăugarea unui alt strat de securitate pastrând doar serverul de Redis, profitând de avantajul că un adversar trebuie să compromită cel puțin $n-k+1$ instanțe pentru ca reconstituirea să nu fie posibilă, considerând că fișierul inițial a fost partajat folosind o schema $(k, n)$ majoritară.
+
+Presupunând că un utilizator Bob, avănd email-ul \textit{bob@mail.com} vrea să partajeze un fișier cu numele \textit{sample.txt} către $3$ instanțe iar reconstituirea lui să fie posibilă din oricare $2$ mașini. DealerApp parcurge următorii pași:
+\begin{itemize}
+	\item Rulează schema de distribuire definită în Figura \ref{fig:dealerapp_distribution};
+	\item Se calculează $sgn_i \leftarrow \mathcal{H}(s_i || sk || sample.txt)$ $1 \leq i \leq 3$;
+	\item Trimite unei instanțe $i$ perechea $(sgn_i, s_i)$ $1 \leq i \leq 3$;
+	\item Instanța $i$ salvează într-o tabelă hash cu cheia $sgn_i$ valoarea $s_i$ (\textit{hset $sgn_i$ $s_i$}) $1 \leq i \leq 3$.
+\end{itemize}
+
+Pentru că funcția $\mathcal{H}$ este resistentă la coliziuni iar cheia $sk$ este întotdeauna privată lui Bob, unui atacator îi este dificil să modifice integritatea unei componente $sgn_i, s_i$ de pe un server Redis fără ca acesta să fie detectat.
 
 \subsection{Securitate și redundanță}
 %------------------------------------------------------------------------------------------
