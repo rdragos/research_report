@@ -1556,7 +1556,7 @@ Pentru a vedea de ce uzabilitatea este deseori preferată de utilizatorul genera
 
 Folosind cele $4$ clase descrise mai sus, am ales să decuplăm securitatea de partea de design pentru ca pe viitor modificările aduse aplicației ca întreg să nu fie dificile de realizat. Acest lucru a fost atins prin crearea de API-uri (interfață pentru programarea aplicațiilor) cu ajutorul frameworkului Django REST (detalii în secțiunea \ref{sub:django-rest}). Pentru partea de UI am folosit AngularJS cu scopul de a integra API-urile dezvoltate anterior \cite{website:angularjs}.
 
-Aducem la cunoștință că implementarea acestei arhitecturi este departe de a fi una ideală și nu trebuie folosită în producție, fiind vulnerabilă la atacuri (side-channel, bazate pe generatoare de numere pseudo-aleatoare, etc) \cite{kocher:1996timing, gutterman:2006analysis}.
+Aducem la cunoștință că implementarea acestei arhitecturi este departe de a fi una ideală și nu trebuie folosită în producție, fiind vulnerabilă la atacuri (side-channel, bazate pe generatoare de numere pseudo-aleatoare, etc) \cite{kocher:1996timing, fgutterman:2006analysis}.
 
 O privire de ansamblu a structurii proiectului se găsește în figura \ref{fig:dealerapp}.
 
@@ -1569,12 +1569,15 @@ O privire de ansamblu a structurii proiectului se găsește în figura \ref{fig:
 	\bigskip
 \end{figure}
 
+
 O dată ce utilizatorul se autentifică, acesta are acces la o listă cu toate fișierele partajate de el. Pentru a distribui un fișier pe instanțele EC2, alege numărul de mașini la care să-l împartă și dimensiunea pragului pentru care se poate face reconstituirea. La reconstituire are la dispoziție o listă cu toate fișierele partajate pe de la înregistrarea sa până în momentul actual.
 
 
 \section{Distribuția unui fișier}
 
-Fișierul postat de utilizatorul autentificat este preluat de un API și distribuit conform figurii \ref{fig:dealerapp_distribution}. Codul sursă pentru schema Shamir a fost preluat de pe GitHub (sub licență Apache) și modificat potrivit 1necesităților \cite{website:pysss-github}.
+Fie $\mathcal{H}$ o funcție hash criptografic sigură \cite{Katz:2007}. La înregistrarea unei persoane, DealerApp generează în mod aleator $rpad \leftarrow^R \{0,1\}^{256}$ și îl păstrează privat.
+
+Fișierul încărcat de utilizatorul autentificat este preluat de un API iar acesta este distribuit conform figurii \ref{fig:dealerapp_distribution}. Codul sursă pentru schema Shamir a fost preluat de pe GitHub (sub licență Apache) și modificat potrivit necesităților \cite{website:pysss-github}.
 
 De asemenea, modul în care erau generați coeficienții aleatori în \cite{website:pysss-github} a fost modificat (din $random.randint$ în $os.random$) din motive de securitate.
 
@@ -1590,11 +1593,11 @@ Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-
 
 \\
 \hspace{.1in}
-\textbf{Date de intrare}: Un fișier binar $\mathcal{S}$;
+\textbf{Date de intrare}: Un fișier binar $\mathcal{S}$ având numele $name$;
 \medskip
 
 \hspace{.1in}
-\textbf{Date de ieșire}: $n$ șiruri binare $s_i$, distribuite la noduri din rețea;
+\textbf{Date de ieșire}: $n$ perechi de șiruri binare $s_i, sgn_i$;
 \medskip
 
 \hspace{.1in}
@@ -1613,16 +1616,24 @@ Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-
 	\end{itemize}
 \medskip
 
-\hspace{.1in}	
-\textbf{Distribuție}: Serverul DealerApp:
+\hspace{.1in}
+\medskip
+\textbf{Generarea semnăturilor}: Pentru fiecare componentă $s_i$:
 	\begin{itemize}
-		\item Distribuie șirul binar $s_i$ instanței EC2 cu indicele $i$:
+		\item $sgn_i \leftarrow \mathcal{H}(s_i || rpad || name)$
+	\end{itemize}
+
+\medskip
+\hspace{.1in}	
+\textbf{Distribuție}: DealerApp:
+	\begin{itemize}
+		\item Distribuie șirul binar $s_i$ împreună cu $sgn_i$ instanței EC2 cu indicele $i$.
 	\end{itemize}
 
 \\
 \hline
 \end{tabular}
-\caption{Schema DealerApp - Generare}
+\caption{Schema DealerApp - Distribuire}
 \label{fig:dealerapp_distribution}
 \end{figure*}
 
@@ -1630,7 +1641,11 @@ Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-
 
 \section{Reconstrucția unui fișier}
 
-Utilizatorului autentificat i se pune la dispoziție o listă cu numele fișierelor partajate. Când utilizatorul alege unul dintre ele, serverul DealerApp trimite cereri de componente la fiecare din instanțele EC2. Presupunând că fișierul a fost partajat astfel încât oricare $k$ instanțe să fie capabile să îl reconstituie, serverul DealerApp se va opri din a face cereri atunci când primește cel puțin $k$ răspunsuri (Figura \ref{fig:DealerApp}). În Figura \ref{fig:dealerapp_reconstruction} este prezentată refacerea unui document din $4$ componente.
+Utilizatorului autentificat i se pune la dispoziție o listă cu numele fișierelor partajate. Când utilizatorul alege unul dintre ele, DealerApp trimite cereri de componente la fiecare din instanțele EC2. Presupunând că fișierul a fost partajat astfel încât oricare $k$ instanțe să fie capabile să îl reconstituie, DealerApp se va opri din a face cereri atunci când primește cel puțin $k$ răspunsuri valide (Figura \ref{fig:DealerApp}).
+
+O componentă $(s, h)$ provenită dintr-un fișier cu numele $name$ este validă dacă $H(s || rpad || name) = h$.
+
+În Figura \ref{fig:dealerapp_reconstruction} este prezentată refacerea unui document din $4$ componente.
 
 Pentru ca un adversar pasiv să nu obțină vreo informație despre ce se transmite pe firul de comunicație dintre utilizator (în special numele fișierelor dar și conținutul acestora) este necesar protocolul HTTPS.
 
@@ -1645,7 +1660,7 @@ HTTPS este protocolul standard de HTTP construit pe baza TLS \cite{dierks2008tra
 
 \\
 \hspace{.1in}
-\textbf{Date de intrare}: Cel puțin $k$ șiruri binare $s_i$ provenite din instanțe EC2
+\textbf{Date de intrare}: Cel puțin $k$ componente valide $(s_i, h_i)$ provenite din instanțe EC2.
 
 \hspace{.1in}
 \textbf{Date de ieșire}: Fișierul original $\mathcal{S}$;
@@ -1693,14 +1708,6 @@ HTTPS este protocolul standard de HTTP construit pe baza TLS \cite{dierks2008tra
 % poate tehnologii folosite?
 % About automatically startup scripts on EC2. AMI Images. Rest API, Django Framework, Angular
 % Bootstrap, Bootswatch
-
-
-\section{Autentificare}
-% about 2 factor authentication
-% django is great at usual attacks
-% 
-\subsection{Django-REST Auth}
-\label{sub:django-rest}
 
 \section{Date reținute de DealerApp}
 
@@ -1764,17 +1771,23 @@ Conexiunile prin intermediul clientului Redis pentru Python sunt realizate prin 
 
 Din motive de simplitate, am renunțat la adăugarea unui alt strat de securitate pastrând doar serverul de Redis, profitând de avantajul că un adversar trebuie să compromită cel puțin $n-k+1$ instanțe pentru ca reconstituirea să nu fie posibilă, considerând că fișierul inițial a fost partajat folosind o schema $(k, n)$ majoritară.
 
-Presupunând că un utilizator Bob, avănd email-ul \textit{bob@mail.com} vrea să partajeze un fișier cu numele \textit{sample.txt} către $3$ instanțe iar reconstituirea lui să fie posibilă din oricare $2$ mașini. DealerApp parcurge următorii pași:
-\begin{itemize}
-	\item Rulează schema de distribuire definită în Figura \ref{fig:dealerapp_distribution};
-	\item Se calculează $sgn_i \leftarrow \mathcal{H}(s_i || sk || sample.txt)$ $1 \leq i \leq 3$;
-	\item Trimite unei instanțe $i$ perechea $(sgn_i, s_i)$ $1 \leq i \leq 3$;
-	\item Instanța $i$ salvează într-o tabelă hash cu cheia $sgn_i$ valoarea $s_i$ (\textit{hset $sgn_i$ $s_i$}) $1 \leq i \leq 3$.
-\end{itemize}
+La primirea unei componente $(sgn_i, s_i)$, instanța $i$ salvează într-o tabelă hash cu cheia $sgn_i$ valoarea $s_i$ (folosind comanda Redis \textit{hset $sgn_i$ $s_i$}).
 
-Pentru că funcția $\mathcal{H}$ este resistentă la coliziuni iar cheia $sk$ este întotdeauna privată lui Bob, unui atacator îi este dificil să modifice integritatea unei componente $sgn_i, s_i$ de pe un server Redis fără ca acesta să fie detectat.
 
-\subsection{Securitate și redundanță}
+\subsection{Evaluarea arhitecturii}
+
+
+Din punct de vedere al securității, aceasta este garantată dacă un adversar nu reușește să obțină cel puțin $k$ componente la partajarea unui fișier.
+\todo{dezvoltă}
+%demontrații de baltă
+
+Integritatea componentelor este păstrată pentru că $rpad$ râmăne privată. Dificultatea unui adversar constă în generarea de perechi $(sgn_i, s_i)$ valide iar acest lucru este posibil doar dacă reușește să găsească o coliziune pentru funcția $\mathcal{H}$ ($rpad$ este privat).
+
+Găsirea unei coliziuni pentru o funcție hash criptografic sigure necesită resurse computaționale extraordinar de mari iar atacul nu este fezabil pentru un adversar PPT \cite{Katz:2007}. În particular, pentru funcția de hash SHA3-256 cele mai eficiente atacuri sunt bazate pe paradoxul zilei de naștere și au o complexitate de aproximativ $2^{128}$ operații \cite{dinur:2014collision}.
+
+Corectitudinea protocolului este asigurată din schema Shamir și faptul că la reconstituire se folosesc doar componente care au fost semnate inițial de utilizator cu ajutorul funcției SHA3 \cite{bertoni:2009keccak}.
+
+
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
