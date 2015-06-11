@@ -1575,7 +1575,7 @@ O dată ce utilizatorul se autentifică, acesta are acces la o listă cu toate f
 
 \section{Distribuția unui fișier}
 
-Fie $\mathcal{H}$ o funcție hash criptografic sigură \cite{Katz:2007}. La înregistrarea unei persoane, DealerApp generează în mod aleator $rpad \leftarrow^R \{0,1\}^{256}$ și îl păstrează privat.
+Fie $\mathcal{H}$ o funcție hash criptografic sigură \cite{Katz:2007}. $HMAC(k, m)$ reprezintă o extensie a funcției $\mathcal{H}$ care are în plus o cheie $k$ și este folosit pentru a verifica integritatea dar și autenticitatea unui mesaj $m$ \cite{krawczyk1997hmac}. Pentru generarea cheii $k$ am considerat ca în momentului înregistrării unei persoane, DealerApp generează în mod aleator $rpad \leftarrow^R \{0,1\}^{256}$ și îl păstrează privat.
 
 Fișierul încărcat de utilizatorul autentificat este preluat de un API iar acesta este distribuit conform figurii \ref{fig:dealerapp_distribution}. Codul sursă pentru schema Shamir a fost preluat de pe GitHub (sub licență Apache) și modificat potrivit necesităților \cite{website:pysss-github}.
 
@@ -1593,7 +1593,7 @@ Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-
 
 \\
 \hspace{.1in}
-\textbf{Date de intrare}: Un fișier binar $\mathcal{S}$ având numele $name$;
+\textbf{Date de intrare}: Un fișier binar $\mathcal{S}$ având numele $fname$;
 \medskip
 
 \hspace{.1in}
@@ -1620,7 +1620,7 @@ Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-
 \medskip
 \textbf{Generarea semnăturilor}: Pentru fiecare componentă $s_i$:
 	\begin{itemize}
-		\item $sgn_i \leftarrow \mathcal{H}(s_i || rpad || name)$
+		\item $sgn_i \leftarrow \mathcal{HMAC}(rpad, s_i || fname)$
 	\end{itemize}
 
 \medskip
@@ -1643,7 +1643,7 @@ Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-
 
 Utilizatorului autentificat i se pune la dispoziție o listă cu numele fișierelor partajate. Când utilizatorul alege unul dintre ele, DealerApp trimite cereri de componente la fiecare din instanțele EC2. Presupunând că fișierul a fost partajat astfel încât oricare $k$ instanțe să fie capabile să îl reconstituie, DealerApp se va opri din a face cereri atunci când primește cel puțin $k$ răspunsuri valide (Figura \ref{fig:DealerApp}).
 
-O componentă $(s, h)$ provenită dintr-un fișier cu numele $name$ este validă dacă $H(s || rpad || name) = h$.
+O componentă $(s, h)$ provenită dintr-un fișier cu numele $fname$, este validă dacă $\mathcal{HMAC}(rpad, s || fname) = h$.
 
 În Figura \ref{fig:dealerapp_reconstruction} este prezentată refacerea unui document din $4$ componente.
 
@@ -1711,6 +1711,8 @@ HTTPS este protocolul standard de HTTP construit pe baza TLS \cite{dierks2008tra
 
 \section{Date reținute de DealerApp}
 
+DealerApp memorează pentru fiecare utilizator mail-ul, $rpad$ și numele fișierelor care au fost partajate.
+
 \section{Instanțe EC2}
 
 Amazon Web Services pun la dispoziție o gamă largă de servicii specializate pentru calculul în cloud. Acestă tehnică poartă denumirea de \textit{grid computing} (asamblarea de resurse computaționale din locații multiple pentru un anumit scop) \cite{garfinkel2007evaluation}.
@@ -1761,7 +1763,7 @@ Pentru pornirea automată a serverului Redis impreună cu instanța a fost neces
 \label{subsec:redis}
 
 %TODO: despre pornirea automată, pereche (id, nume_fisier)
-Redis (REmote DIctionary Server) este o bază de date \textit{cheie-valoare} întemeiată pe asocierea unică unei chei cu o valoare \cite{cattell:2011scalable}. Redis, spre deosebire celelalte baze de date \textit{cheie-valoare}, poate asocia unei chei structuri de date complexe (nu doar șiruri de caractere) precum liste, mulțimi, mulțimi sortate, tabele de dispersie, etc \cite{website:redis-documentation}.
+Redis (REmote DIctionary Server) este o bază de date \textit{cheie-valoare} întemeiată pe asocierea unică unei chei cu o valoare \cite{cattell:2011scalable}. Redis, spre deosebire de celelalte baze de date \textit{cheie-valoare}, poate asocia unei chei, structuri de date complexe (nu doar șiruri de caractere) precum liste, mulțimi, mulțimi sortate, tabele de dispersie, etc \cite{website:redis-documentation}.
 
 Motivul pentru care am ales Redis este datorat simplității folosirii sale, rapiditatea cu care efectuează operațiile de citire, scriere dar și existența uneltor specializate pentru lucrul în limbajul Python \cite{website:redis-documentation, website:redis-py}.
 
@@ -1774,16 +1776,16 @@ Din motive de simplitate, am renunțat la adăugarea unui alt strat de securitat
 La primirea unei componente $(sgn_i, s_i)$, instanța $i$ salvează într-o tabelă hash cu cheia $sgn_i$ valoarea $s_i$ (folosind comanda Redis \textit{hset $sgn_i$ $s_i$}).
 
 
-\subsection{Evaluarea arhitecturii}
+\section{Evaluarea arhitecturii}
 
 
 Din punct de vedere al securității, aceasta este garantată dacă un adversar nu reușește să obțină cel puțin $k$ componente la partajarea unui fișier.
 \todo{dezvoltă}
 %demontrații de baltă
 
-Integritatea componentelor este păstrată pentru că $rpad$ râmăne privată. Dificultatea unui adversar constă în generarea de perechi $(sgn_i, s_i)$ valide iar acest lucru este posibil doar dacă reușește să găsească o coliziune pentru funcția $\mathcal{H}$ ($rpad$ este privat).
+Integritatea componentelor este păstrată pentru că $rpad$ râmăne privată. Dificultatea unui adversar constă în generarea de perechi $(sgn_i, s_i)$ valide iar acest lucru este posibil doar dacă reușește să găsească o coliziune pentru funcția $\mathcal{HMAC}$ ($rpad$ este privat).
 
-Găsirea unei coliziuni pentru o funcție hash criptografic sigure necesită resurse computaționale extraordinar de mari iar atacul nu este fezabil pentru un adversar PPT \cite{Katz:2007}. În particular, pentru funcția de hash SHA3-256 cele mai eficiente atacuri sunt bazate pe paradoxul zilei de naștere și au o complexitate de aproximativ $2^{128}$ operații \cite{dinur:2014collision}.
+Găsirea unei coliziuni pentru o funcție hash criptografic sigură necesită resurse computaționale mari iar atacul nu este fezabil pentru un adversar PPT \cite{Katz:2007}. În particular, pentru funcția de hash SHA3-256 cele mai eficiente atacuri sunt bazate pe paradoxul zilei de naștere și au o complexitate de aproximativ $2^{128}$ operații \cite{dinur:2014collision}.
 
 Corectitudinea protocolului este asigurată din schema Shamir și faptul că la reconstituire se folosesc doar componente care au fost semnate inițial de utilizator cu ajutorul funcției SHA3 \cite{bertoni:2009keccak}.
 
