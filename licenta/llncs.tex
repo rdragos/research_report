@@ -85,11 +85,12 @@
 
 \chapter*{Abstract}
 
-\hspace*{5mm} Criptografia modernă se găsește pretutindeni în viața de zi cu zi de la ATM-uri, cartele telefonice la protocoale de autentificare, licitații electronice sau bani digitali, luând amploare o dată cu apariția sistemelor cu cheie publică. O definiție potrivită este \textit{studiul științific al tehnicilor pentru a securiza informația digitală, tranzacțiile și calculul distribuit} \cite{Katz:2007}. În cadrul criptografiei există primitive multiple care stau la baza tutoror protocoalelor precum: semnături digitale, vot electronic, scheme de partajare, schimbul sigur de chei. Un rol important îl deține criptografia de grup, care permite definirea și analiza securității unor protocoale la care iau parte mai mult de 2 participanți (vot elecronic, semnături de grup, partajarea de secrete).
+\hspace*{5mm} Criptografia modernă se găsește pretutindeni în viața de zi cu zi de la ATM-uri, cartele telefonice la protocoale de autentificare, licitații electronice sau bani digitali, luând amploare o dată cu apariția sistemelor cu cheie publică. O definiție potrivită este \textit{studiul științific al tehnicilor pentru a securiza informația digitală, tranzacțiile și calculul distribuit} \cite{Katz:2007}. În cadrul criptografiei există primitive multiple care stau la baza tutoror protocoalelor precum: semnături digitale, vot electronic, scheme de partajare, schimbul sigur de chei. Un rol important îl deține criptografia de grup, care permite definirea și analiza securității unor protocoale la care iau parte mai mult de 2 participanți (vot electronic, semnături de grup, partajarea de secrete).
 
-\hspace*{5mm}Lucrarea de față analizează câteva din primitivele criptografice prezentând protocoale construite pe baza lor precum şi contribuţii personale în dezvoltarea lor \cite{RD:2014, RD:2015}.
+\hspace*{5mm}Lucrarea de față analizează câteva din primitivele criptografice prezentând protocoale construite pe baza lor, introducând constribuții personale în criptografia de grup: schimbul de chei și sisteme de stocare de lungă durată bazate pe scheme de partajare \cite{RD:2014, RD:2015}.
 
-\hspace*{5mm}Schimbul de chei în criptografie este maniera în care un grup de $2$ sau mai multe persoane pot stabili o cheie comună cunoscută doar grupului. Această problemă este una de actualitate, recent fiind descoperită o eroare de implementare în TLS bazată pe schimbul de chei, afectând $8.4 \%$ din cele mai populare $1$ milion de domenii \cite{adrianimperfect:2015}. În lucrare studiem schimbul de chei în contextul non-interactiv folosind funcții pseudoaleatoare constrânse, realizând o extindere pentru un număr oarecare de persoane \cite{RD:2014}.
+\hspace*{5mm}Schimbul de chei în criptografie este protocolul în care un grup de $2$ sau mai multe persoane pot stabili o cheie comună privată oricărei entități externe.
+Această problemă este una de actualitate, recent fiind descoperită o eroare de implementare în TLS privind schimbul de chei, afectând $8.4 \%$ din cele mai populare $1$ milion de domenii \cite{adrianimperfect:2015}. În lucrare studiem schimbul de chei în contextul non-interactiv folosind funcții pseudoaleatoare constrânse realizând o generalizare a unui protocol existent \cite{RD:2014}.
 
 \hspace*{5mm}Păstrarea confidențialității și redundanței datelor pe perioade lungi de timp reprezintă o sarcină dificilă din cauza multiplelor probleme care pot apărea precum atacuri, erori umane, defecțiunea unor componente hardware sau dezastre naturale \cite{SGMV:2009}. Problemele sunt cu atât mai actuale astăzi, când organizațiile își păstrează datele în cloud pentru scăderea costurilor necesare întreținerii unui centru propriu de date (datacenter), deci informațiile sunt stocate și procesate în afara unui control fizic al roprietarului. În această lucrare studiem o arhitectură propusă de Alouneh et al. demonstrând teoretic și practic vulnerabilități existente \cite{RD:2015}. Ca urmare, am implementat un sistem de stocare sigur, eliminând astfel câteva vulnerabilități prezente anterior.
 
@@ -1545,7 +1546,7 @@ Conform \cite{gutmann:2005security}, când construim arhitectura unei aplicații
 \end{enumerate}
 %------------------------------------end of usability classes-----------------
 
-Pentru a vedea de ce uzabilitatea este deseori preferată de utilizatorul general, spre deosebire de securitate, este îndeajuns menționarea câtorva aplicații P2P (peer-to-peer) și VoIp (voice-over-ip). Deși unele au fost construite cu scopul prioritizării securității (Freenet, PGP-phone, Nautilus \cite{website:freenet, website:pgp-phone, website:nautilus}) acestea au eșuat în detrimentul unor aplicații ușor de folosit precum BitTorrent, Skype, dar care au adăugat încet caracterstici pentru securitatea lor.
+Pentru a vedea de ce uzabilitatea este deseori preferată de utilizatorul general, spre deosebire de securitate, este îndeajuns menționarea câtorva aplicații P2P (Peer-To-Peer) și VoIp (Voice-Over-Iiip). Deși unele au fost construite cu scopul prioritizării securității (Freenet, PGP-phone, Nautilus \cite{website:freenet, website:pgp-phone, website:nautilus}) acestea au eșuat în detrimentul unor aplicații ușor de folosit precum BitTorrent, Skype, dar care au adăugat încet caracterstici pentru securitatea lor.
 
 În ultimii ani, se publică reportaje care încearcă să conștientizeze publicul larg despre importanța securității și intimității persoanelor, pentru o documentare mai bună înainte de a folosi anumite servicii \cite{greenwald:2013nsa, greenwald:2013edward}.
 %------------------------------------------------------------------------------------------
@@ -1572,7 +1573,7 @@ O privire de ansamblu a structurii proiectului se găsește în figura \ref{fig:
 \end{figure}
 
 
-O dată ce utilizatorul se autentifică, acesta are acces la o listă cu toate fișierele partajate de el. Pentru a distribui un fișier pe instanțele EC2, alege numărul de mașini la care să-l împartă și dimensiunea pragului pentru care se poate face reconstituirea. La reconstituire are la dispoziție o listă cu toate fișierele partajate pe de la înregistrarea sa până în momentul actual.
+O dată ce utilizatorul se autentifică, acesta are acces la o listă cu toate fișierele partajate de el. Pentru a distribui un fișier pe instanțele EC2, alege numărul de mașini la care să-l împartă și dimensiunea pragului pentru care se poate face reconstituirea. La reconstituire are la dispoziție o listă cu toate fișierele partajate de la înregistrarea sa până în momentul actual.
 
 
 \section{Distribuția unui fișier}
@@ -1583,7 +1584,7 @@ Fișierul încărcat de utilizatorul autentificat este preluat de un API iar ace
 
 De asemenea, modul în care erau generați coeficienții aleatori în \cite{website:pysss-github} a fost modificat (din $random.randint$ în $os.random$) din motive de securitate.
 
-Documentația limbajului Python precizează că pentru a folosi un generator criptografic sigur este recomandată funcția $os.random$ (apelează intern $/dev/urandom$).
+Documentația limbajului Python precizează că pentru a folosi un generator criptografic sigur este recomandată funcția $os.random$ (apelează intern $/dev/urandom$) \cite{website:python-random}.
 
 Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-aleatoare sunt $/dev/random$ și $/dev/urandom$ din sistemele UNIX, acestea nu sunt robuste \cite{dodis2013security}. Principala dificultate fiind extragerea entropiei precum și măsurarea ei.
 
@@ -1767,7 +1768,7 @@ Pentru pornirea automată a serverului Redis impreună cu instanța a fost neces
 %TODO: despre pornirea automată, pereche (id, nume_fisier)
 Redis (REmote DIctionary Server) este o bază de date \textit{cheie-valoare} întemeiată pe asocierea unică unei chei cu o valoare \cite{cattell:2011scalable}. Redis, spre deosebire de celelalte baze de date \textit{cheie-valoare}, poate asocia unei chei, structuri de date complexe (nu doar șiruri de caractere) precum liste, mulțimi, mulțimi sortate, tabele de dispersie, etc \cite{website:redis-documentation}.
 
-Motivul pentru care am ales Redis este datorat simplității folosirii sale, rapiditatea cu care efectuează operațiile de citire, scriere dar și existența uneltor specializate pentru lucrul în limbajul Python \cite{website:redis-documentation, website:redis-py}.
+Motivul pentru care am ales Redis este datorat simplității folosirii sale, rapiditatea cu care efectuează operațiile de citire, scriere dar și existența uneltelor specializate pentru lucrul în limbajul Python \cite{website:redis-documentation, website:redis-py}.
 
 Conexiunile prin intermediul clientului Redis pentru Python sunt realizate prin conectarea la numele de host al serverului și numărul portului, fiind instanțiate de DealerApp.
 
@@ -1775,7 +1776,7 @@ Conexiunile prin intermediul clientului Redis pentru Python sunt realizate prin 
 
 Din motive de simplitate, am renunțat la adăugarea unui alt strat de securitate pastrând doar serverul de Redis, profitând de avantajul că un adversar trebuie să compromită cel puțin $n-k+1$ instanțe pentru ca reconstituirea să nu fie posibilă, considerând că fișierul inițial a fost partajat folosind o schema $(k, n)$ majoritară.
 
-La primirea unei componente $(sgn_i, s_i)$, instanța $i$ salvează într-o tabelă hash cu cheia $sgn_i$ valoarea $s_i$ (folosind comanda Redis \textit{hset $sgn_i$ $s_i$}).
+La primirea unei componente $(sgn_i, s_i)$, instanța $i$ salvează într-o tabelă hash cu cheia $sgn_i$ valoarea $s_i$ (folosind comanda Redis \textit{hset $sgn_i$ $s_i$}). Operația această este efectuată pentru verificarea integrității $s_i$.
 
 
 \section{Evaluarea arhitecturii}
