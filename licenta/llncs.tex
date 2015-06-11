@@ -1556,9 +1556,9 @@ Pentru a vedea de ce uzabilitatea este deseori preferată de utilizatorul genera
 %------------------------------------------------------------------------------------------
 \section{Arhitectură bazată pe scheme de partajare}
 
-Folosind cele $4$ clase descrise mai sus, am ales să decuplăm securitatea de partea de design pentru ca pe viitor modificările aduse aplicației ca întreg să nu fie dificile de realizat. Acest lucru a fost atins prin crearea de API-uri (interfață pentru programarea aplicațiilor) cu ajutorul frameworkului Django REST (detalii în secțiunea \ref{sub:django-rest}). Pentru partea de UI am folosit AngularJS cu scopul de a integra API-urile dezvoltate anterior \cite{website:angularjs}.
+Folosind cele $4$ clase descrise mai sus, am ales să decuplăm securitatea de partea de design pentru ca pe viitor modificările aduse aplicației ca întreg să nu fie dificile de realizat. Acest lucru a fost atins prin crearea de API-uri (interfață pentru programarea aplicațiilor) cu ajutorul frameworkului Django REST. Pentru partea de UI am folosit AngularJS cu scopul de a integra API-urile dezvoltate anterior \cite{website:angularjs, website:django-rest}.
 
-Aducem la cunoștință că implementarea acestei arhitecturi este departe de a fi una ideală și nu trebuie folosită în producție, fiind vulnerabilă la atacuri (side-channel, bazate pe generatoare de numere pseudo-aleatoare, etc) \cite{kocher:1996timing, fgutterman:2006analysis}.
+Aducem la cunoștință că implementarea acestei arhitecturi este departe de a fi una ideală și nu trebuie folosită în producție, fiind vulnerabilă la atacuri (side-channel, bazate pe generatoare de numere pseudo-aleatoare, etc) \cite{kocher:1996timing, gutterman:2006analysis}.
 
 O privire de ansamblu a structurii proiectului se găsește în figura \ref{fig:dealerapp}.
 
@@ -1577,7 +1577,7 @@ O dată ce utilizatorul se autentifică, acesta are acces la o listă cu toate f
 
 \section{Distribuția unui fișier}
 
-Fie $\mathcal{H}$ o funcție hash criptografic sigură \cite{Katz:2007}. $HMAC(k, m)$ reprezintă o extensie a funcției $\mathcal{H}$ care are în plus o cheie $k$ și este folosit pentru a verifica integritatea dar și autenticitatea unui mesaj $m$ \cite{krawczyk1997hmac}. Pentru generarea cheii $k$ am considerat ca în momentului înregistrării unei persoane, DealerApp generează în mod aleator $rpad \leftarrow^R \{0,1\}^{256}$ și îl păstrează privat.
+Fie $\mathcal{H}$ o funcție hash criptografic sigură \cite{Katz:2007}. $\mathcal{H_{MAC}}(k, m)$ reprezintă o extensie a funcției $\mathcal{H}$ care are în plus o cheie $k$ și este folosit pentru a verifica integritatea dar și autenticitatea unui mesaj $m$ \cite{krawczyk1997hmac}. Pentru generarea cheii $k$ am considerat ca în momentului înregistrării unei persoane, DealerApp generează în mod aleator $rpad \leftarrow^R \{0,1\}^{256}$ și îl păstrează privat.
 
 Fișierul încărcat de utilizatorul autentificat este preluat de un API iar acesta este distribuit conform figurii \ref{fig:dealerapp_distribution}. Codul sursă pentru schema Shamir a fost preluat de pe GitHub (sub licență Apache) și modificat potrivit necesităților \cite{website:pysss-github}.
 
@@ -1622,7 +1622,7 @@ Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-
 \medskip
 \textbf{Generarea semnăturilor}: Pentru fiecare componentă $s_i$:
 	\begin{itemize}
-		\item $sgn_i \leftarrow \mathcal{HMAC}(rpad, s_i || fname)$
+		\item $sgn_i \leftarrow \mathcal{H_{MAC}}(rpad, s_i || fname)$
 	\end{itemize}
 
 \medskip
@@ -1645,7 +1645,7 @@ Studii recente arată că practic, cele mai sigure generatoare de numere pseudo-
 
 Utilizatorului autentificat i se pune la dispoziție o listă cu numele fișierelor partajate. Când utilizatorul alege unul dintre ele, DealerApp trimite cereri de componente la fiecare din instanțele EC2. Presupunând că fișierul a fost partajat astfel încât oricare $k$ instanțe să fie capabile să îl reconstituie, DealerApp se va opri din a face cereri atunci când primește cel puțin $k$ răspunsuri valide (Figura \ref{fig:DealerApp}).
 
-O componentă $(s, h)$ provenită dintr-un fișier cu numele $fname$, este validă dacă $\mathcal{HMAC}(rpad, s || fname) = h$.
+O componentă $(s, h)$ provenită dintr-un fișier cu numele $fname$, este validă dacă $\mathcal{H_{MAC}}(rpad, s || fname) = h$.
 
 În Figura \ref{fig:dealerapp_reconstruction} este prezentată refacerea unui document din $4$ componente.
 
@@ -1784,13 +1784,13 @@ La primirea unei componente $(sgn_i, s_i)$, instanța $i$ salvează într-o tabe
 Din punct de vedere al securității, aceasta este garantată dacă un adversar nu reușește să obțină cel puțin $k$ componente la partajarea unui fișier.
 %demontrații de baltă
 
-Integritatea componentelor este păstrată pentru că $rpad$ râmăne privată. Dificultatea unui adversar constă în generarea de perechi $(sgn_i, s_i)$ valide iar acest lucru este posibil doar dacă reușește să găsească o coliziune pentru funcția $\mathcal{HMAC}$ ($rpad$ este privat).
+Integritatea componentelor este păstrată pentru că $rpad$ râmăne privată. Dificultatea unui adversar constă în generarea de perechi $(sgn_i, s_i)$ valide iar acest lucru este posibil doar dacă reușește să găsească o coliziune pentru funcția $\mathcal{H_{MAC}}$ ($rpad$ este privat).
 
 Găsirea unei coliziuni pentru o funcție hash criptografic sigură necesită resurse computaționale mari iar atacul nu este fezabil pentru un adversar PPT \cite{Katz:2007}. În particular, pentru funcția de hash SHA2-256 cele mai eficiente atacuri sunt bazate pe paradoxul zilei de naștere și criptanaliză diferențială, având o complexitate de aproximativ $2^{255}$ operații \cite{khovratovich2012bicliques}.
 
 Corectitudinea protocolului este asigurată din schema Shamir și faptul că la reconstituire se folosesc doar componente care au fost semnate inițial de utilizator cu ajutorul familiilor de funcții SHA2.
 
-Remarcăm eficiența prin care se realizează interogările la instanțele EC2 cu ajutorul bazei de date Redis, stocând componentele cu ajutorul unei tabele de dispersie, complexitatea pentru recuperarea unei componente existente pe o instanță fiind în $\theta(1)$ amortizat \cite{cormen:2009introduction}.
+Remarcăm eficiența prin care se realizează interogările la instanțele EC2 cu ajutorul bazei de date Redis, stocând componentele cu ajutorul unei tabele de dispersie, complexitatea pentru recuperarea unei componente existente pe o instanță fiind în $\Theta(1)$ amortizat \cite{cormen:2009introduction}.
 
 
 %------------------------------------------------------------------------------------------
