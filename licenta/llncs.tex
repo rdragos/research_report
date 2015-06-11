@@ -87,10 +87,11 @@
 
 \hspace*{5mm} Criptografia modernă se găsește pretutindeni în viața de zi cu zi de la ATM-uri, cartele telefonice la protocoale de autentificare, licitații electronice sau bani digitali, luând amploare o dată cu apariția sistemelor cu cheie publică. O definiție potrivită este \textit{studiul științific al tehnicilor pentru a securiza informația digitală, tranzacțiile și calculul distribuit} \cite{Katz:2007}. În cadrul criptografiei există primitive multiple care stau la baza tutoror protocoalelor precum: semnături digitale, vot electronic, scheme de partajare, schimbul sigur de chei. Un rol important îl deține criptografia de grup, care permite definirea și analiza securității unor protocoale la care iau parte mai mult de 2 participanți (vot elecronic, semnături de grup, partajarea de secrete).
 
-\hspace*{5mm}Păstrarea confidențialității și redundanței datelor pe perioade lungi de timp reprezintă o sarcină dificilă din cauza multiplelor probleme care pot apărea precum atacuri, erori umane, defecțiunea unor componente hardware sau dezastre naturale \cite{SGMV:2009}. Problemele sunt cu atât mai actuale astăzi, când organizațiile își păstrează datele în cloud pentru scăderea costurilor necesare întreținerii unui centru propriu de date (datacenter), deci informațiile sunt stocate și procesate în afara unui control fizic al roprietarului.
+\hspace*{5mm}Lucrarea de față analizează câteva din primitivele criptografice prezentând protocoale construite pe baza lor precum şi contribuţii personale în dezvoltarea lor \cite{RD:2014, RD:2015}.
 
-\hspace*{5mm}Lucrarea de față analizează câteva dintre primitivele criptografice prezentând protocoale construite pe baza lor precum şi contribuţii personale în dezvoltarea lor \cite{RD:2014, RD:2015}. În final introducem o arhitectură implementată cu ajutorul schemelor de partajare, eliminând astfel câteva vulnerabilități prezente la sistemele de stocare descrise anterior.
+\hspace*{5mm}Schimbul de chei în criptografie este maniera în care un grup de $2$ sau mai multe persoane pot stabili o cheie comună cunoscută doar grupului. Această problemă este una de actualitate, recent fiind descoperită o eroare de implementare în TLS bazată pe schimbul de chei, afectând $8.4 \%$ din cele mai populare $1$ milion de domenii \cite{adrianimperfect:2015}. În lucrare studiem schimbul de chei în contextul non-interactiv folosind funcții pseudoaleatoare constrânse, realizând o extindere pentru un număr oarecare de persoane \cite{RD:2014}.
 
+\hspace*{5mm}Păstrarea confidențialității și redundanței datelor pe perioade lungi de timp reprezintă o sarcină dificilă din cauza multiplelor probleme care pot apărea precum atacuri, erori umane, defecțiunea unor componente hardware sau dezastre naturale \cite{SGMV:2009}. Problemele sunt cu atât mai actuale astăzi, când organizațiile își păstrează datele în cloud pentru scăderea costurilor necesare întreținerii unui centru propriu de date (datacenter), deci informațiile sunt stocate și procesate în afara unui control fizic al roprietarului. În această lucrare studiem o arhitectură propusă de Alouneh et al. demonstrând teoretic și practic vulnerabilități existente \cite{RD:2015}. Ca urmare, am implementat un sistem de stocare sigur, eliminând astfel câteva vulnerabilități prezente anterior.
 
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
@@ -327,12 +328,12 @@ NIKE (Non Interactive Key Exchange - schimb de chei non-interactiv) reprezintă 
 \section{ID-NIKE}
 \label{sec:id-nike}
 
-Criptografia bazată pe identitatea participanților a fost introdusă de Shamir în anul 1985 \cite{shamir:1985identity}. Aceasta presupune folosirea identității (email, nume, stradă), informație care îl identifică pe un utilizator într-un mod unic, fără să genereze o pereche de cheie publică, secretă. Principalul dezavantaj este necesitatea unei terțe autorizată care să administreze generarea de chei secrete, însă avantajul este utilizarea de mai puține resurse din partea participanților.
+Criptografia bazată pe identitatea participanților a fost introdusă de Shamir în anul 1985 \cite{shamir:1985identity}. Aceasta presupune folosirea identității (email, nume, stradă), informație care îl identifică pe un utilizator într-un mod unic, fără să genereze o pereche de cheie publică, secretă. Principalul dezavantaj este necesitatea unei terțe autorizate care să administreze generarea de chei secrete, însă avantajul este utilizarea de mai puține resurse din partea participanților.
 
 Așadar criptografia bazată pe ID este ideală într-un mediu în care utilizatorii dețin resurse computaționale limitate (rețea de routere).
 
 ID-NIKE combină principiile oferite de NIKE cu ID-urile participanților.
-
+\\
 \begin{definitie}
  	Formal, ID-NIKE constă în $3$ algoritmi:
 	\begin{itemize}
@@ -1812,16 +1813,12 @@ Remarcăm eficiența prin care se realizează interogările la instanțele EC2 c
 
 În lucrarea de față sunt prezentate aspecte atât teoretice cât și practice ale criptografiei de grup bazate pe scheme de partajare și funcții pseudoaleatoare constrânse \cite{S:1979, boneh:2013constrained}.
 
-În prima parte sunt prezentate preliminariile necesare pentru generalizarea unui protocol pentru $n$ persoane dintr-o lucrare apărută în anul $2013$ \cite{boneh:2013constrained}. Generalizarea este însoțită de demonstrații de corectitudine și securitate.
+În prima parte sunt prezentate preliminariile necesare pentru generalizarea unui protocol pentru $n$ persoane dintr-o lucrare apărută în anul $2013$ \cite{boneh:2013constrained}. Generalizarea este însoțită de demonstrații riguroase de corectitudine și securitate.
 
 Pentru a doua parte am analizat un sistem de stocare bazat pe scheme de partajare, în cele din urmă implementând un sistem alternativ corect și sigur, contrar celui descris în Secțiunea \ref{sec:desc_alouneh}.
 
-Ca direcții ulterioare sistemul alternativ propus poate avea îmbunătățiri semnificative prin:
+Ca direcții ulterioare, sistemul alternativ propus poate avea îmbunătățiri semnificative prin folosirea protocolului HTTPS pentru transmiterea componentelor criptate. Acest lucru este posibil prin dezvoltarea unei aplicații integrate cu Redis pe instanțele EC2 unde se realizează stocarea.
 
-\begin{itemize}
-	\item Folosirea protocolului HTTPS pentru transmiterea componentelor;
-	\item Dezvoltarea unor aplicații client pe instanțele EC2 (pentru a adăuga un strat de securitate) unde se realizează stocarea.
-\end{itemize}
 
 
 \clearpage
