@@ -18,7 +18,6 @@
 \usepackage{newunicodechar}
 \newunicodechar{ș}{\cb{s}}
 \newunicodechar{ț}{\cb{t}}
-
 \newunicodechar{Ș}{\cb{S}}
 \newunicodechar{Ț}{\cb{S}}
 
@@ -46,6 +45,8 @@
 \begin{document}
 %  pagina de titlu
 \thispagestyle{empty}
+
+\nocite*{}
 
 \begin{center}
 \centerline{\bf UNIVERSITATEA BUCUREȘTI}
@@ -238,7 +239,7 @@ Din punct de vedere al securității, un adversar PPT (timp probabilistic polino
 \section{Definiții de Securitate}
 \label{subsec:prf-security}
 
-În procesul formalizării noţiunii de securitate \textit{adaptivă} a unei funcții PRF $F$, vom avea în vedere un adversar PPT $\mathcal{A}$. În definiție sunt prezentate $2$ experimente cu adversarul $\mathcal{A}$: $EXP(b)$, $b \leftarrow ^ R \{0,1\}$, iar avantajul lui va consta în abilitatea de a le distinge. 
+În procesul formalizării noţiunii de securitate \textit{adaptivă} a unei funcții PRF $F$, vom avea în vedere un adversar PPT $\mathcal{A}$. În definiție sunt prezentate $2$ experimenpseudorandomte cu adversarul $\mathcal{A}$: $EXP(b)$, $b \leftarrow ^ R \{0,1\}$, iar avantajul lui va consta în abilitatea de a le distinge. 
 
 La începutul experimentului este apelată funcția $Setup(1^\lambda)$ care primește la intrare un parametru de securitate $\lambda$ și întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Fie $V, C \subseteq X$, $2$ mulțimi de puncte (inițial vide) pentru care $\mathcal{A}$ cunoaște valorile $F(k, \cdot)$ trimise la $\mathsf{F.eval}$, respectiv la $\mathsf{F.challenge}$. De asemenea, $\mathcal{A}$ are acces la $2$ tipuri de oracole:
 \begin{itemize}
@@ -1711,7 +1712,7 @@ HTTPS este protocolul standard de HTTP construit pe baza TLS \cite{dierks2008tra
 
 \section{Date reținute de DealerApp}
 
-DealerApp memorează pentru fiecare utilizator mail-ul, $rpad$ și numele fișierelor care au fost partajate.
+DealerApp memorează pentru fiecare utilizator $rpad$ și numele fișierelor care au fost partajate.
 
 \section{Instanțe EC2}
 
@@ -1780,22 +1781,15 @@ La primirea unei componente $(sgn_i, s_i)$, instanța $i$ salvează într-o tabe
 
 
 Din punct de vedere al securității, aceasta este garantată dacă un adversar nu reușește să obțină cel puțin $k$ componente la partajarea unui fișier.
-\todo{dezvoltă}
 %demontrații de baltă
 
 Integritatea componentelor este păstrată pentru că $rpad$ râmăne privată. Dificultatea unui adversar constă în generarea de perechi $(sgn_i, s_i)$ valide iar acest lucru este posibil doar dacă reușește să găsească o coliziune pentru funcția $\mathcal{HMAC}$ ($rpad$ este privat).
 
-Găsirea unei coliziuni pentru o funcție hash criptografic sigură necesită resurse computaționale mari iar atacul nu este fezabil pentru un adversar PPT \cite{Katz:2007}. În particular, pentru funcția de hash SHA3-256 cele mai eficiente atacuri sunt bazate pe paradoxul zilei de naștere și au o complexitate de aproximativ $2^{128}$ operații \cite{dinur:2014collision}.
+Găsirea unei coliziuni pentru o funcție hash criptografic sigură necesită resurse computaționale mari iar atacul nu este fezabil pentru un adversar PPT \cite{Katz:2007}. În particular, pentru funcția de hash SHA2-256 cele mai eficiente atacuri sunt bazate pe paradoxul zilei de naștere și criptanaliză diferențială, având o complexitate de aproximativ $2^{255}$ operații \cite{khovratovich2012bicliques}.
 
-Corectitudinea protocolului este asigurată din schema Shamir și faptul că la reconstituire se folosesc doar componente care au fost semnate inițial de utilizator cu ajutorul funcției SHA3 \cite{bertoni:2009keccak}.
+Corectitudinea protocolului este asigurată din schema Shamir și faptul că la reconstituire se folosesc doar componente care au fost semnate inițial de utilizator cu ajutorul familiilor de funcții SHA2.
 
-
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
+Remarcăm eficiența prin care se realizează interogările la instanțele EC2 cu ajutorul bazei de date Redis, stocând componentele cu ajutorul unei tabele de dispersie, complexitatea pentru recuperarea unei componente existente pe o instanță fiind în $\theta(1)$ amortizat \cite{cormen:2009introduction}.
 
 
 %------------------------------------------------------------------------------------------
@@ -1804,9 +1798,31 @@ Corectitudinea protocolului este asigurată din schema Shamir și faptul că la 
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
+
+
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 
-\chapter*{Concluzii}
+\chapter{Concluzii}
+
+În lucrarea de față sunt prezentate aspecte atât teoretice cât și practice ale criptografiei de grup bazate pe scheme de partajare și funcții pseudoaleatoare constrânse \cite{S:1979, boneh:2013constrained}.
+
+În prima parte sunt prezentate preliminariile necesare pentru generalizarea unui protocol pentru $n$ persoane dintr-o lucrare apărută în anul $2013$ \cite{boneh:2013constrained}. Generalizarea este însoțită de demonstrații de corectitudine și securitate.
+
+Pentru a doua parte am analizat un sistem de stocare bazat pe scheme de partajare, în cele din urmă implementând un sistem alternativ corect și sigur, contrar celui descris în Secțiunea \ref{sec:desc_alouneh}.
+
+Ca direcții ulterioare sistemul alternativ propus poate avea îmbunătățiri semnificative prin:
+
+\begin{itemize}
+	\item Folosirea protocolului HTTPS pentru transmiterea componentelor;
+	\item Dezvoltarea unor aplicații client pe instanțele EC2 (pentru a adăuga un strat de securitate) unde se realizează stocarea.
+\end{itemize}
+
 
 \clearpage
 
