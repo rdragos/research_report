@@ -119,46 +119,6 @@ Această problemă este una de actualitate, recent fiind descoperită o eroare d
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-
-
-
-% 					Structura
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-
-\chapter*{Introducere şi organizarea lucrării}
-\addcontentsline{toc}{chapter}{Structură}
-
-\begin{itemize}
-	%\item Secțiunea {\ref{sec:intro}} descrie pe scurt obiectul de studiu.
-	\item \todo{Completeaza descrierea}
-	\item Secțiunea {\ref{sec:splitting_schemes}} oferă o scurtă introducere în domeniul schemelor de partajare și descrie în detaliu construcțiile care vor fi folosite în secțiunile următoare.
-	\item Secțiunea {\ref{sec:long_term_systems_full}} conține cerințele pe care trebuie să le îndeplinească un sistem de stocare de lunga durată și compară sistemele de stocare de lungă durată care utilizează criptarea cu sistemele de stocare bazate pe scheme de partajare a secretelor. De asemenea, sunt descrise câteva sisteme considerate relevante pentru întelegerea contribuțiilor până în prezent.
-	\item Secțiunea {\ref{sec:desc_alouneh}} introduce un sistem de stocare criptanalizat.
-	\item Secțiunea {\ref{sec:alouneh_contributions}} conține contribuțiile de cercetare, punând în evidență problemele cauzate de determinismul sistemului introdus în Secțiunea {\ref{sec:desc_alouneh}}.
-\end{itemize}
-
-
-
-
-
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
-%------------------------------------------------------------------------------------------
 
 
 
@@ -178,19 +138,22 @@ Această problemă este una de actualitate, recent fiind descoperită o eroare d
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 
-\section{Introducere + Motivatie - deocamdata text reciclabil}
-\label{sec:intro}
+\chapter*{Introducere}
+\addcontentsline{toc}{chapter}{Introducere}
 
 Termenul de criptografie este definit in dicționarul Oxford ca fiind \textit{arta de a scrie și a rezolva coduri}.
-Criptografia modernă s-a desprins de cea clasica în jurul anilor '80, motivând implementarea rigurozității matematice pentru definirea construcțiilor criptografice. Aceasta pentru ca în anii anteriori, experiența a dovedit nesiguranța metodelor de criptare, criptanaliza lor fiind uneori trivială (cifrul lui Cezar, Vigenere) sau uneori atinsă cu ceva mai mult efort precum Enigma și alte metode din cel de-al doilea război mondial.
+Criptografia modernă s-a desprins de cea clasică în jurul anilor '70, motivând implementarea rigurozității matematice pentru definirea construcțiilor criptografice \cite{diffie1976new}. Aceasta pentru că în anii anteriori, experiența a dovedit nesiguranța metodelor de criptare, criptanaliza lor fiind uneori trivială (cifrul lui Cezar, Vigenere) sau atinsă cu ceva mai mult efort, precum Enigma și alte metode din cel de-al doilea război mondial.
 
-Schemele de partajare sunt utilizate în aplicații precum: protejarea și recuperarea cheilor criptografice, vot electronic, certificate distribuite unor autorități, licitații on-line sau sisteme de stocare de lungă durată. \cite{Martin:2008}
+Schemele de partajare sunt utilizate în aplicații precum: protejarea și recuperarea cheilor criptografice, vot electronic, certificate distribuite unor autorități, licitații on-line sau sisteme de stocare de lungă durată \cite{Martin:2008}.
 
 O schemă de partajare reprezintă o metodă de a distribui un secret unor participanți, oferind fiecărui participant o componentă (share) astfel încât doar o submulțime de participanți pot recupera secretul inițial.
 
 Cum volumul de datelor electronice este în continuă creștere, necesitatea stocării sigure a devenit extrem de necesară.
 
-Date sensibile trebuie menținute secrete, câteodată pentru lungi perioade de timp (zeci de ani). Exemple includ informații militare, documete legale sau dosare medicale: informațiile militare pot fi clasificate zeci de ani, un testament trebuie menținut secret până la deschiderea sa oficială, un dosar medical necesită păstrare sigură (cel puțin) pe toată durata vieții pacientului.
+Date sensibile trebuie menținute secrete, câteodată pentru lungi perioade de timp (zeci de ani). Exemple includ informații militare, documente legale sau dosare medicale: informațiile militare pot fi clasificate zeci de ani, un testament trebuie menținut secret până la deschiderea sa oficială, un dosar medical necesită păstrare sigură (cel puțin) pe toată durata vieții pacientului.
+
+
+\section*{Notații}
 
 \todo{Notatii, PPT, uniform aleator, functie neglijabila}
 
@@ -202,6 +165,17 @@ Notăm cu $s \leftarrow^R S$ faptul că $s$ este ales în mod aleator uniform di
 
 
 
+\chapter*{Structură}
+\addcontentsline{toc}{chapter}{Structură}
+
+\begin{itemize}
+	%\item Secțiunea {\ref{sec:intro}} descrie pe scurt obiectul de studiu.
+	\item \todo{Completeaza descrierea}
+	\item Secțiunea {\ref{sec:splitting_schemes}} oferă o scurtă introducere în domeniul schemelor de partajare și descrie în detaliu construcțiile care vor fi folosite în secțiunile următoare.
+	\item Secțiunea {\ref{sec:long_term_systems_full}} conține cerințele pe care trebuie să le îndeplinească un sistem de stocare de lunga durată și compară sistemele de stocare de lungă durată care utilizează criptarea cu sistemele de stocare bazate pe scheme de partajare a secretelor. De asemenea, sunt descrise câteva sisteme considerate relevante pentru întelegerea contribuțiilor până în prezent.
+	\item Secțiunea {\ref{sec:desc_alouneh}} introduce un sistem de stocare criptanalizat.
+	\item Secțiunea {\ref{sec:alouneh_contributions}} conține contribuțiile de cercetare, punând în evidență problemele cauzate de determinismul sistemului introdus în Secțiunea {\ref{sec:desc_alouneh}}.
+\end{itemize}
 
 
 
@@ -231,7 +205,7 @@ Primele construcţii au fost definite în $1986$ pornind de la un PRG (generator
 Un caz particular de PRF în care $\mathcal{Y} = \mathcal{X}$ şi $F$ este bijectivă, sunt permutările pseudoaleatoare (PRP). Acestea au poprietatea utilă de a admite inversă, fiind utilizate direct în sisteme de criptare simetrice (ex. AES \cite{daemen:2013design}).
 
 Intuitiv, funcţia $F$ poate fi evaluată eficient (în timp polinomial) în toate punctele $x \in \mathcal{X}$ din momentul în care o cheie $k \in \mathcal{K}$ este fixată. 
-Din punct de vedere al securității, un adversar PPT (timp probabilistic polinomial) $\mathcal{A}$ nu poate face diferența între o instanţă aleatoare $F(k, \cdot)$, $k \in \mathcal{K}$ şi o funcție aleasă aleator din toate funcţiile posibile având domeniul $\mathcal{X}$, codomeniul $\mathcal{Y}$.
+Din punct de vedere al securității, un adversar PPT $\mathcal{A}$ nu poate face diferența între o instanţă aleatoare $F(k, \cdot)$, $k \in \mathcal{K}$ şi o funcție aleasă aleator din toate funcţiile posibile având domeniul $\mathcal{X}$, codomeniul $\mathcal{Y}$.
 
 %----------------------------------------------------------------
 %----------------------------------------------------------------
@@ -241,7 +215,7 @@ Din punct de vedere al securității, un adversar PPT (timp probabilistic polino
 \section{Definiții de Securitate}
 \label{subsec:prf-security}
 
-În procesul formalizării noţiunii de securitate \textit{adaptivă} a unei funcții PRF $F$, vom avea în vedere un adversar PPT $\mathcal{A}$. În definiție sunt prezentate $2$ experimenpseudorandomte cu adversarul $\mathcal{A}$: $EXP(b)$, $b \leftarrow ^ R \{0,1\}$, iar avantajul lui va consta în abilitatea de a le distinge. 
+În procesul formalizării noţiunii de securitate \textit{adaptivă} a unei funcții PRF $F$, vom avea în vedere un adversar PPT $\mathcal{A}$. În definiție sunt prezentate $2$ experimente cu adversarul $\mathcal{A}$: $EXP(b)$, $b \leftarrow ^ R \{0,1\}$, iar avantajul lui va consta în abilitatea de a le distinge. 
 
 La începutul experimentului este apelată funcția $Setup(1^\lambda)$ care primește la intrare un parametru de securitate $\lambda$ și întoarce o cheie secretă $k \leftarrow^R \mathcal{K}$. Fie $V, C \subseteq X$, $2$ mulțimi de puncte (inițial vide) pentru care $\mathcal{A}$ cunoaște valorile $F(k, \cdot)$ trimise la $\mathsf{F.eval}$, respectiv la $\mathsf{F.challenge}$. De asemenea, $\mathcal{A}$ are acces la $2$ tipuri de oracole:
 \begin{itemize}
@@ -1810,13 +1784,14 @@ Remarcăm eficiența prin care se realizează interogările la instanțele EC2 c
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
 
-\chapter{Concluzii}
+\chapter*{Concluzii}
+\addcontentsline{toc}{chapter}{Concluzii}
 
-În lucrarea de față sunt prezentate aspecte atât teoretice cât și practice ale criptografiei de grup bazate pe scheme de partajare și funcții pseudoaleatoare constrânse \cite{S:1979, boneh:2013constrained}.
+În lucrarea de față sunt prezentate aspecte atât teoretice cât și practice ale criptografiei de grup bazate pe scheme de partajare și funcții pseudoaleatoare constrânse.
 
-În prima parte sunt prezentate preliminariile necesare pentru generalizarea unui protocol pentru $n$ persoane dintr-o lucrare apărută în anul $2013$ \cite{boneh:2013constrained}. Generalizarea este însoțită de demonstrații riguroase de corectitudine și securitate.
+În prima parte sunt prezentate preliminariile necesare pentru definirea unei protocol NIKE bazat pe funcții constrânse pseudoaleatoare. Ca rezultate personale introducem generalizarea construcției Boneh-Waters insoțită de demonstrații riguroase de corectitudine și securitate.
 
-Pentru a doua parte am analizat un sistem de stocare bazat pe scheme de partajare, în cele din urmă implementând un sistem alternativ corect și sigur, contrar celui descris în Secțiunea \ref{sec:desc_alouneh}.
+Pentru a doua parte am analizat un sistem de stocare bazat pe scheme de partajare propus de Alouneh et al. propunând $2$ atacuri mizate pe determinismul partajării. În final, am implementat un sistem alternativ corect și sigur, contrar celui descris în Secțiunea \ref{sec:desc_alouneh} folosind tehnologii curente cu standardele recente.
 
 Ca direcții ulterioare, sistemul alternativ propus poate avea îmbunătățiri semnificative prin folosirea protocolului HTTPS pentru transmiterea componentelor criptate. Acest lucru este posibil prin dezvoltarea unei aplicații integrate cu Redis pe instanțele EC2 unde se realizează stocarea.
 
