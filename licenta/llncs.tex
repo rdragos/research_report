@@ -38,6 +38,7 @@
 \newtheorem{definitie}{\textbf{Definiția}}[section]
 \newtheorem{teorema}{\textbf{Teorema}}[section]
 \newtheorem{lema}{\textbf{Lema}}[section]
+\newtheorem{definitie2}{\textbf{Definiție}}
 %\def\examplename{Exemplul}
 
 \newtheorem{exemplu}{\textbf{Exemplu}}[section]
@@ -144,20 +145,26 @@ Această problemă este una de actualitate, recent fiind descoperită o eroare d
 Termenul de criptografie este definit in dicționarul Oxford ca fiind \textit{arta de a scrie și a rezolva coduri}.
 Criptografia modernă s-a desprins de cea clasică în jurul anilor '70, motivând implementarea rigurozității matematice pentru definirea construcțiilor criptografice \cite{diffie1976new}. Aceasta pentru că în anii anteriori, experiența a dovedit nesiguranța metodelor de criptare, criptanaliza lor fiind uneori trivială (cifrul lui Cezar, Vigenere) sau atinsă cu ceva mai mult efort, precum Enigma și alte metode din cel de-al doilea război mondial.
 
-Schemele de partajare sunt utilizate în aplicații precum: protejarea și recuperarea cheilor criptografice, vot electronic, certificate distribuite unor autorități, licitații on-line sau sisteme de stocare de lungă durată \cite{Martin:2008}.
+La începutul criptografiei moderne, comunicarea între $2$ participanți se făcea prin alegerea unei chei comune private cu care se criptau mesajele ulterior. Cheia privată era transmisă anterior printr-un canal de comunicație în care un atacator îi era dificil să observe fluxul de comunicație (adversar pasiv). Pentru că această cerință era greu de atins uneori, s-a făcut trecerea la criptografia cu cheie publică.
 
-O schemă de partajare reprezintă o metodă de a distribui un secret unor participanți, oferind fiecărui participant o componentă (share) astfel încât doar o submulțime de participanți pot recupera secretul inițial.
+Criptografia cu cheie publică presupune stabilirea unei perechi de chei (secretă, privată) și face posibilă comunicarea folosind un canal de comunicație nesigur. Discutăm în detaliu despre modalități de obținere a cheilor secrete folosind identitatea ca cheie publică.
 
-Cum volumul de datelor electronice este în continuă creștere, necesitatea stocării sigure a devenit extrem de necesară.
+Schemele de partajare sunt utilizate în aplicații precum: protejarea și recuperarea cheilor criptografice, vot electronic, certificate distribuite unor autorități, licitații on-line sau sisteme de stocare de lungă durată \cite{Martin:2008}. O schemă de partajare reprezintă o metodă de a distribui un secret unor participanți, oferind fiecărui participant o componentă (share) astfel încât doar o submulțime de participanți pot recupera secretul inițial.
 
-Date sensibile trebuie menținute secrete, câteodată pentru lungi perioade de timp (zeci de ani). Exemple includ informații militare, documente legale sau dosare medicale: informațiile militare pot fi clasificate zeci de ani, un testament trebuie menținut secret până la deschiderea sa oficială, un dosar medical necesită păstrare sigură (cel puțin) pe toată durata vieții pacientului.
+Cum volumul de datelor electronice este în continuă creștere, necesitatea stocării sigure a devenit extrem de necesară. Date sensibile trebuie menținute secrete, câteodată pentru lungi perioade de timp (zeci de ani). Exemple includ informații militare, documente legale sau dosare medicale: informațiile militare pot fi clasificate zeci de ani, un testament trebuie menținut secret până la deschiderea sa oficială, un dosar medical necesită păstrare sigură (cel puțin) pe toată durata vieții pacientului.
+
+Având aceste repere în minte, aprofundăm noțiunile necesare sistemelor de stocare bazate pe scheme de partajare pentru a analiza construcții existente precum și implementarea unuia folosind tehnologii actuale.
 
 
-\section*{Notații}
-
-\todo{Notatii, PPT, uniform aleator, functie neglijabila}
+\section*{Preliminarii}
 
 Notăm cu $s \leftarrow^R S$ faptul că $s$ este ales în mod aleator uniform din mulţimea $S$. 
+
+Pe parcursul lucrării folosim în definiții de securitate, noțiunea de funcție neglijabilă. O funcție $f : R \rightarrow R$ este neglijabilă dacă pentru orice polinom cu valori pozitive $p(x)$, există un rang $n > 0$ pentru care $|f(x)| < \frac{1}{p(x)}$, oricare $x \geq n$
+
+
+De asemenea, noțiunea de adversar PPT (timp probabilistic polinomial) reprezintă un algoritm $\mathcal{A}$ care execută un număr de operații mărginit de un polinom. $\mathcal{A}$ este probabilitic pentru că are la dispoziție o sursă de aleatorism oferind posiblitatea de a scrie $2$ biți: $0,1$, independent cu probabilitate $\frac{1}{2}$ fiecare \cite{Katz:2007}.
+
 %----------------------------------------------------------------
 %----------------------------------------------------------------
 %----------------------------------------------------------------
