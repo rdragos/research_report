@@ -16,6 +16,7 @@
 \usepackage{combelow}% provides \cb to place comma below character
 
 \usepackage{newunicodechar}
+
 \newunicodechar{ș}{\cb{s}}
 \newunicodechar{ț}{\cb{t}}
 \newunicodechar{Ș}{\cb{S}}
@@ -177,11 +178,11 @@ De asemenea, noțiunea de adversar PPT (timp probabilistic polinomial) reprezint
 
 \begin{itemize}
 	%\item Secțiunea {\ref{sec:intro}} descrie pe scurt obiectul de studiu.
-	\item \todo{Completeaza descrierea}
-	\item Secțiunea {\ref{sec:splitting_schemes}} oferă o scurtă introducere în domeniul schemelor de partajare și descrie în detaliu construcțiile care vor fi folosite în secțiunile următoare.
-	\item Secțiunea {\ref{sec:long_term_systems_full}} conține cerințele pe care trebuie să le îndeplinească un sistem de stocare de lunga durată și compară sistemele de stocare de lungă durată care utilizează criptarea cu sistemele de stocare bazate pe scheme de partajare a secretelor. De asemenea, sunt descrise câteva sisteme considerate relevante pentru întelegerea contribuțiilor până în prezent.
-	\item Secțiunea {\ref{sec:desc_alouneh}} introduce un sistem de stocare criptanalizat.
-	\item Secțiunea {\ref{sec:alouneh_contributions}} conține contribuțiile de cercetare, punând în evidență problemele cauzate de determinismul sistemului introdus în Secțiunea {\ref{sec:desc_alouneh}}.
+	\item \textbf{Capitolul \ref{cha:prf}} descrie primitive criptografice precum funcții pseudoaleatoare și o construcție recent dezvoltată (funcții pseudoaleatoare constrânse) împreună cu definițiile de securitate necesare lor.
+	\item \textbf{Capitolul \ref{cha:nike}} introduce protocoale pentru schimbul de chei non-interactiv bazate pe funcțiile definite în capitolul anterior, finalizând cu generalizarea din \cite{RD:2014}.
+	\item \textbf{Capitolul \ref{cha:secret_sharing}} oferă o scurtă introducere în domeniul schemelor de partajare și descrie în detaliu construcțiile care vor fi folosite în secțiunile următoare.
+	\item \textbf{Capitolul \ref{cha:long_term}} conține cerințele pe care trebuie să le îndeplinească un sistem de stocare de lunga durată și compară sistemele de stocare de lungă durată care utilizează criptarea cu sistemele de stocare bazate pe scheme de partajare a secretelor. De asemenea, conține contribuțiile de cercetare, punând în evidență problemele cauzate de determinismul existent în \cite{AAMK:2013}.
+	\item \textbf{Capitolul \ref{cha:alternave-implementations}} descrie implementarea alternativă a unui sistem de stocare, eliminând astfel problemele cauzate de determinimul schemei prezentate în capitolul \ref{cha:long_term}.
 \end{itemize}
 
 
@@ -533,7 +534,7 @@ $\mathsf{KeyGen}(params, sk_{id_i},\{id_l\}_{l=1,\dots,n})$: \\
 %------------------------------------------------------------------------------------------
 
 \chapter{Scheme de Partajare}
-\label{chap:secret_sharing}
+\label{cha:secret_sharing}
 
 
 \section{Introducere}
@@ -845,7 +846,7 @@ Pentru verificarea componentei $s_i = f(i)$, participantul $i$ probează ecuați
 
 
 \chapter{Sisteme de stocare de lungă durată}
-
+\label{cha:long_term}
 
 \section{Introducere}
 \label{sec:long_term_systems_intro}
@@ -1211,7 +1212,7 @@ Determinismul duce la câteva atacuri simple în momentul în care un atacator o
 
 Deoarece Alouneh et al. nu menționeaă o metodă de padding, am indicat că un atac bazat pe felul în care se realizează completarea fișierului (padding) $\mathcal{S}$, înainte de partajarea sa poate fi fezabil, în condițiile în care s-a demonstrat că această alegere este esențială în păstrarea securității \cite{Vaudenay:2002}.
 
-\subsubsection{Detectarea tipului de fișier}\hspace*{\fill} \\
+\subsubsection{Detectarea tipului de fișier}
 \label{subsec:file_type_detection}
 
 În tehnologia informației, la inceputul fiecărui fișier se află o secvență de octeți (denumită semnătură sau antet) cu rolul de a identifica tipul acestuia. Tabelul {\ref{table:sign}} indică $7$ din cele mai uzuale antete.
@@ -1272,7 +1273,7 @@ zip & 27 & 198 & 141 & 103 & 44 \\ \hline
 %------------------------------------------------------------------------------------------
 
 
-\subsubsection{Detectarea de conținut}\hspace*{\fill} \\
+\subsubsection{Detectarea de conținut}
 \label{subsec:file_content_detection}
 
 Multe documente urmează un anumit tipar precum contracte, chitanțe, bonuri fiscale sau curriculum vitae. Deoarece majoritatea conținutului rămâne neschimbat, există o probabilitate destul de mare ca multe componente sa aibă aceeași valoare. O dată ce un adversar reușește să determine componentele unui nod, poate determina prin analogie tipul de conținut al fișierului original.
@@ -1308,7 +1309,7 @@ Deoarece pe diagonala principală toate componentele sunt identice pentru $k \le
 
 
 %-----------------------------------------------------
-\begin{table}[b]
+\begin{table}[h]
 \begin{center}
 \caption{Indicele maxim $i$ a.î. componentele primului bloc sa fie distincte($k=2$)}\label{tb:margins}
 \label{table:k2}
@@ -1337,7 +1338,7 @@ Precizăm că acest atac funcționează doar dacă nodurile de stocare își pă
 
 %------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------
-\begin{table}[t]
+\begin{table}[h]
 \begin{center}
 \caption{Indicele maxim $i$ a.î. componentele primului bloc sa fie distincte($k=3$)}\label{tb:margins}
 \label{table:k3}
@@ -1356,7 +1357,7 @@ Tip Fișier & doc & gif & pdf & png & rar & wav & zip \\\hline
 \end{table}
 
 %-----------------------------------------------------
-\begin{table}[t]
+\begin{table}[h]
 \begin{center}
 \caption{Indicele maxim $i$ a.î. componentele primului bloc sa fie distincte($k=4$)}\label{tb:margins}
 \label{table:k4}
@@ -1374,7 +1375,9 @@ Tip Fișier & doc & gif & pdf & png & rar & wav & zip \\\hline
 \bigskip
 \end{table}
 
-\subsubsection{Detectarea de conținut} \hspace*{\fill} \\
+\clearpage
+
+\subsubsection{Detectarea de conținut}
 
 Considerăm scenariul pentru detectarea conținutului unui fișier, demonstrând practic cum un adversar poate să facă diferența între $2$ componente stocate pe același nod aparțin unor documente similare. Atacul presupune accesul la un singur nod, indiferent de mărimea pragului $k$.
 
@@ -1410,7 +1413,7 @@ Pentru experiment am ales $3$ fișiere \textit{pdf} disponibile online la {\cite
 %-----------------------------------------------------
 
 %-----------------------------------------------------
-\begin{figure}[b!]
+\begin{figure}[t!]
 \begin{center}
 \includegraphics[width=0.53\textwidth]{img/db3.png}    % The printed column width is 8.4 cm.
 \caption{Nod 3: Graficul componentelor pentru primele 2000 de blocuri} 
@@ -1448,7 +1451,7 @@ Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru 
 
 
 %-----------------------------------------------------
-\begin{figure}[H]
+\begin{figure}[b]
 \begin{center}
 \includegraphics[width=0.35\textwidth]{img/carouri.png}    % The printed column width is 8.4 cm.
 \caption{Imagine conținând pattern-uri} 
@@ -1459,7 +1462,7 @@ Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru 
 
 
 %-----------------------------------------------------
-\begin{figure}[t!]
+\begin{figure}[h!]
 \begin{center}
 \includegraphics[width=0.55\textwidth]{img/carouri_db1.png}    % The printed column width is 8.4 cm.
 \caption{Nod 1: Graficul componentelor pentru primele 2000 de blocuri} 
@@ -1469,7 +1472,7 @@ Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru 
 %-----------------------------------------------------
 
 %-----------------------------------------------------
-\begin{figure}[t!]
+\begin{figure}[h!]
 \begin{center}
 \includegraphics[width=0.55\textwidth]{img/carouri_db2.png}    % The printed column width is 8.4 cm.
 \caption{Nod 2: Graficul componentelor pentru primele 2000 de blocuri} 
@@ -1479,7 +1482,7 @@ Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru 
 %-----------------------------------------------------
 
 %-----------------------------------------------------
-\begin{figure}[t!]
+\begin{figure}[h!]
 \begin{center}
 \includegraphics[width=0.55\textwidth]{img/carouri_db3.png}    % The printed column width is 8.4 cm.
 \caption{Nod 3: Graficul componentelor pentru primele 2000 de blocuri} 
@@ -1494,6 +1497,95 @@ Considerăm în continuare un alt scenariu, în care partajăm o imagine pentru 
 \includegraphics[width=0.55\textwidth]{img/carouri_db4.png}    % The printed column width is 8.4 cm.
 \caption{Nod 4: Graficul componentelor pentru primele 2000 de blocuri} 
 \label{fig:carouri_db4}
+\end{center}
+\end{figure}
+%-----------------------------------------------------
+
+\clearpage
+\section{Utilizarea Corectă a Schemei Shamir}
+
+Pentru completitudine, menționăm utilizarea schemei Alouneh et al. (Fig. \ref{fig:alouneh_distribution}) în care coeficienții sunt aleși aleator uniform și executăm algoritmul pe cele $3$ CV-uri (Fig. \ref{fig:db1_c}, Fig. \ref{fig:db2_c}, Fig. \ref{fig:db3_c}, Fig. \ref{fig:db4_c}). Pentru că schema Shamir înlocuiește un singur coeficient cu date din fișierul original, primele $2000$ de blocuri generate reprezintă acum primele $4000$ de blocuri, numărul componentelor dublându-se.
+
+
+%-----------------------------------------------------
+\begin{figure}[b!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/db1_c.png}    % The printed column width is 8.4 cm.
+\caption{Nod 1: Graficul componentelor pentru primele 4000 de blocuri} 
+\label{fig:db1_c}
+\end{center}
+\end{figure}
+%-----------------------------------------------------
+
+%-----------------------------------------------------
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/db2_c.png}    % The printed column width is 8.4 cm.
+\caption{Nod 2: Graficul componentelor pentru primele 4000 de blocuri} 
+\label{fig:db2_c}
+\end{center}
+\end{figure}
+%-----------------------------------------------------
+
+%-----------------------------------------------------
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/db3_c.png}    % The printed column width is 8.4 cm.
+\caption{Nod 3: Graficul componentelor pentru primele 4000 de blocuri} 
+\label{fig:db3_c}
+\end{center}
+\end{figure}
+%-----------------------------------------------------
+
+%-----------------------------------------------------
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/db4_c.png}    % The printed column width is 8.4 cm.
+\caption{Nod 4: Graficul componentelor pentru primele 4000 de blocuri} 
+\label{fig:db4_c}
+\end{center}
+\end{figure}
+%-----------------------------------------------------
+
+\clearpage
+E evident că atacurile precedente nu mai sunt de folos, sistemul devenind nedeterminist. Același lucru se întâmplă și cu imaginea ce conține multe secvențe periodice de octeți (Fig. \ref{fig:carouri_db1_c}, Fig. \ref{fig:carouri_db2_c}, Fig. \ref{fig:carouri_db3_c}, Fig. \ref{fig:carouri_db4_c}).
+
+%-----------------------------------------------------
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/carouri_db1_c.png}    % The printed column width is 8.4 cm.
+\caption{Nod 1: Graficul componentelor pentru primele 4000 de blocuri} 
+\label{fig:carouri_db1_c}
+\end{center}
+\end{figure}
+%-----------------------------------------------------
+
+%-----------------------------------------------------
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/carouri_db2_c.png}    % The printed column width is 8.4 cm.
+\caption{Nod 2: Graficul componentelor pentru primele 4000 de blocuri} 
+\label{fig:carouri_db2_c}
+\end{center}
+\end{figure}
+%-----------------------------------------------------
+
+%-----------------------------------------------------
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/carouri_db3_c.png}    % The printed column width is 8.4 cm.
+\caption{Nod 3: Graficul componentelor pentru primele 4000 de blocuri} 
+\label{fig:carouri_db3_c}
+\end{center}
+\end{figure}
+%-----------------------------------------------------
+
+%-----------------------------------------------------
+\begin{figure}[t]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/carouri_db4_c.png}    % The printed column width is 8.4 cm.
+\caption{Nod 4: Graficul componentelor pentru primele 4000 de blocuri} 
+\label{fig:carouri_db4_c}
 \end{center}
 \end{figure}
 %-----------------------------------------------------
