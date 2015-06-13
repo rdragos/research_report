@@ -350,7 +350,7 @@ Pentru a elimina situația în care adersarul $\mathcal{A}$ câștigă trivial, 
 La finalul experimentului, $\mathcal{A}$ întoarce o valoare $b' \in \{0, 1\}$.
 
 Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sfârșitul jocului. Notăm cu $AdvKE_{\mathcal{A}}(\lambda) = |Pr[W_0] - Pr[W_1]|$ avantajul lui $A$.
-
+\\
 \begin{definitie}
 	ID-NIKE este adaptiv sigură dacă pentru orice adersar PPT, $\mathcal{A}$ funcția $AdvKE_{\mathcal{A}}(\lambda)$ este neglijabilă.
 \end{definitie}
@@ -404,7 +404,7 @@ Reiese din securitatea funcției cPRF stânga/dreapta. Dacă un adversar $\mathc
 \begin{itemize}
 	\item $Ext(id_i)$: $\mathcal{B}$ interoghează $\mathsf{F.constrain}$ pentru toate $S$ având valorile $(id_i, \cdot)$ și $(\cdot, id_i)$; întoarce rezultatul lui $\mathcal{A}$;
 	\item $Rev(id_i, id_j)$: $\mathcal{B}$ interoghează $\mathsf{F.eval}$ pentru $(id_i, id_j)$ dacă $id_i < id_j$, altfel interoghează pentru $(id_j, id_i)$; întoarce rezultatul lui $\mathcal{A}$;
-	\item $Test(id_i, id_j)$: $\mathcal{B}$ interoghează $\mathsf{F.challenge}$ și întoarce răspunsul lui $\mathcal{A}$.
+	\item $Test(id_i, id_j)$: $\mathcal{B}$ interoghează $\mathsf{F.challenge}$; întoarce răspunsul lui $\mathcal{A}$.
 \end{itemize}
 
 
@@ -447,8 +447,7 @@ Definiția de securitate este similară ca în cazul ID-NIKE. La începutul fiec
 Pentru a elimina situația în care adersarul $\mathcal{A}$ câștigă trivial, acestuia nu îi este permis să interogheze $Ext$ pentru o identitate în $Test$, precum și faptul că toate interogările $Rev$ și $Test$ trebuie să fie distincte. La finalul experimentului, $\mathcal{A}$ întoarce o valoare $b' \in \{0, 1\}$.
 
 Fie $W_b$ evenimentul ca în urma eperimentului $EXP(b)$, $b'$ să fie $1$ la sfârșitul jocului. Notăm cu $AdvKE_{\mathcal{A}, n}(\lambda) = |Pr[W_0] - Pr[W_1]|$ avantajul lui $A$.
-
-
+\\
 \begin{definitie}
 	Multi-party ID-NIKE este adaptiv sigură dacă pentru orice adersar PPT, $\mathcal{A}$ funcția $AdvKE_{\mathcal{A},n}(\lambda)$ este neglijabilă.
 \end{definitie}
@@ -506,7 +505,7 @@ $\mathsf{KeyGen}(params, sk_{id_i},\{id_l\}_{l=1,\dots,n})$: \\
 	\begin{itemize}
 		\item $Ext(id_i)$: $\mathcal{B}$ interoghează $\mathsf{F.constrain}$ pentru toate punctele din domeniul $\mathcal{X}^n$ care conțin pe $id_i$ și întoarce rezultatul lui $\mathcal{A}$;
 		\item $Rev(id_1, \dots, id_n)$: $\mathcal{B}$ interoghează $\mathsf{F.eval}$ pentru $id_{\pi(1)}, id_{\pi(2)}, \dots, id_{\pi(N)}$ și întoarce rezultatul lui $\mathcal{A}$;
-		\item $Test(id_1, \dots, id_n)$: $\mathcal{B}$ interoghează $\mathsf{F.challenge}$ și întoarce răspunsul lui $\mathcal{A}$.
+		\item $Test(id_1, \dots, id_n)$: $\mathcal{B}$ interoghează $\mathsf{F.challenge}$ apoi întoarce răspunsul lui $\mathcal{A}$.
 	\end{itemize}
 
 	Dacă $\mathcal{A}$ reușește să diferențieze $F(msk, (id_{\pi(1)}, id_{\pi(2)}, \dots, id_{\pi(N)}))$ de obiecte aleatoare din $\mathcal{Y}$ atunci $\mathcal{B}$ poate să rezolve $\mathsf{F.challenge}$ răspunzând cu același bit ca $\mathcal{A}$.
