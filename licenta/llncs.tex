@@ -90,7 +90,7 @@
 
 \hspace*{5mm} Criptografia modernă se găsește pretutindeni în viața de zi cu zi de la ATM-uri, cartele telefonice la protocoale de autentificare, licitații electronice sau bani digitali. O definiție potrivită este \textit{studiul științific al tehnicilor pentru a securiza informația digitală, tranzacțiile și calculul distribuit} \cite{Katz:2007}. În cadrul criptografiei există primitive multiple care stau la baza tutoror protocoalelor precum: semnături digitale, vot electronic, scheme de partajare, schimbul sigur de chei. Un rol important îl deține criptografia de grup, care permite definirea și analiza securității unor protocoale la care iau parte mai mult de 2 participanți (vot electronic, semnături de grup, partajarea de secrete).
 
-\hspace*{5mm}Lucrarea de față analizează două direcții ale criptografiie de grup: schimbul de chei și sisteme de stocare de lungă durată bazate pe scheme de partajare, aducând pentru fiecare contribuții personale \cite{RD:2014, RD:2015}.
+\hspace*{5mm}Lucrarea de față analizează două direcții ale criptografiei de grup: schimbul de chei și sisteme de stocare de lungă durată bazate pe scheme de partajare, aducând pentru fiecare contribuții personale \cite{RD:2014, RD:2015}.
 
 \hspace*{5mm}Schimbul de chei permite unui grup de $2$ sau mai multe persoane să stabilească o cheie comună, privată oricărei entități externe.
 Această problemă este una de actualitate, recent fiind descoperită o eroare de implementare în TLS privind schimbul de chei, afectând $8.4 \%$ din cele mai populare $1$ milion de domenii \cite{adrianimperfect:2015}. În lucrare studiem schimbul de chei în contextul non-interactiv folosind funcții pseudoaleatoare constrânse realizând o generalizare a unui protocol existent la mai mult de $2$ participanți \cite{RD:2014}.
@@ -1897,7 +1897,7 @@ Remarcăm eficiența prin care se realizează interogările la instanțele EC2 c
 
 În lucrarea de față sunt prezentate atât aspecte teoretice cât și practice ale criptografiei de grup bazate pe funcții pseudoaleatoare constrânse și scheme de partajare.
 
-În prima parte sunt prezentate preliminariile necesare pentru definirea unei protocol NIKE bazat pe funcții constrânse pseudoaleatoare. Ca rezultate personale introducem generalizarea construcției Boneh-Waters \cite{boneh:2013constrained}, insoțită de demonstrații riguroase de corectitudine și securitate \cite{RD:2014}.
+În prima parte sunt prezentate preliminariile necesare pentru definirea unui protocol NIKE bazat pe funcții constrânse pseudoaleatoare. Ca rezultate personale introducem generalizarea construcției Boneh-Waters \cite{boneh:2013constrained}, insoțită de demonstrații riguroase de corectitudine și securitate \cite{RD:2014}.
 
 Pentru a doua parte am analizat un sistem de stocare bazat pe scheme de partajare propus de Alouneh et al. \cite{AAMK:2013}, propunând $2$ atacuri mizate pe determinismul partajării \cite{RD:2015}. În final, am implementat un sistem alternativ corect și sigur, contrar celui descris în Secțiunea \ref{sec:desc_alouneh} folosind tehnologii curente cu standardele recente.
 
